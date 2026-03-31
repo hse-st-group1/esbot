@@ -35,7 +35,7 @@ You need to have access and/or installed the following tools:
 
 ## Exercise 3.1 (10 Points): UX Factor Identification
 
-Based on `docs/esbot.md`, identify and justify the **five most relevant UX factors** for ESBot in a learning context.
+In your opinion, identify and justify the **five most relevant UX factors** for ESBot in a learning context based on `docs/esbot.md`
 
 Examples of UX factors you may consider include:
 * learnability

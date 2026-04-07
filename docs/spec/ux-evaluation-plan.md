@@ -46,6 +46,9 @@
 
 ## 2. Method set
 
+The evaluation is split into two phases.
+The first phase is an internal Cognitive walkthrough and heuristic evaluation.
+
 - **Heuristic evaluation**
     - Visibility of System Status 
         - Output: thinking/evaluating.
@@ -63,10 +66,18 @@
     - Users are able to interpret and understand outputs.
     - Users know the next steps in their workflow.
 
+In the second phase, a combination of think-aloud sessions and scenario-based tests is used. The participants will get learning tasks and verbalize their thoughts while using ESBot.
+
 - **Scenario-based Tests**
     - "Explain heuristic evaluation"
     - "Generate Questions to Cognitive Walkthrough"
     - "Analyse Answers regarding questions"
+
+- **Think-aloud Session**
+    -Participants verbalize every step and every thought while interacting
+    -user experience can be evaluated based on the observations
+    -identify misunderstandings and issues
+
 
 ## 3. Participants and Setup
 
@@ -100,7 +111,7 @@
 |**Credibility**| Similarity of answers of the same prompt | >70% similarity |
 
 - System Usability Scale (SUS)
-    - SUS Score has to be in the acceptable range. That means an average score of atleast 72pts must be achieved.
+    - SUS Score has to be in the acceptable range. That means an average score of more than 70pts must be achieved.
     - If the score is between 50 and 70pts the questions and answers must be reviewed. The test system has to be adjusted.
     - If the score is below 50pts, the system requires a full review with major adjustments.
 
@@ -122,14 +133,14 @@
 
 ## 6. Quality gate proposal
 
-- **Learnability:** First time user cant submit a prompt <5 minutes.
+- **Learnability:** First time user can't submit a prompt <5 minutes. 
 - **Usability:** SUS Score <70%.
 - **Experience:** UEQ Score <4pts. average.
 - **Appearance:** Messages are not distiguishable from eachother.
-- **Pragmatic Quality:** Generated responses dont meet usefulness criteria <50%.
+- **Pragmatic Quality:** Generated responses don't meet usefulness criteria <50%.
 - **Efficiency:** Time of receiving a response exceeds the defined threshold.
 - **Trust:** AI generated responses are not recognizable as AI generated.
 - **Consistency:** Similarity of answers are <50%.
-- **UX Criteria which cant be measured must be reviewed and redone before release.**
+- **UX Criteria which can't be measured must be reviewed and redone before release.**
 
 

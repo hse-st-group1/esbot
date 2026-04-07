@@ -8,27 +8,31 @@
     - Fast first prompt to the LLM.
 - **Operability**
     - Refining, editing and controlling the chat messages.
-    - Usage of Copy and Paste for convinience.
-    - Notice Edge Cases
-- **User Interface Aestetics**
+    - Efficient Interaction (Response Time).
+    - Handling of unclear input.
+    - Get notified in Edge Cases.
+- **Accessibility**
     - Clear and readable output.
 
 ### 1.2 User Journeys
 
 - **First use of ESBot**
     - User visits the website.
-    - User submits their first prompt intuitively.
+    - User submits their first prompt.
     - User is able to read and understand the response.
 
 - **Editing and Refining Chat Messages**
     - User submits a prompt.
-    - User tries to refine their desired output and control the chat messages.
+    - User receives an answer from the LLM.
+    - User submits additional prompts to refine the request to the desired output.
     - User is able to control the messages to their desired output.
 
-- **Copy and Paste for Chat Messages**
-    - User submits a prompt.
-    - User copies the answer and reuse it as part of a new question.
-    - User is able to see that the copied part is used for the generation of the new answer.
+- **Handling of Unclear Input**
+    - User submits an unclear prompt.
+    - User receives an answer from the LLM.
+    - User is able to see that the request was unclear or ambiguous and needs to correct the prompt.
+    - User submits a corrected prompt.
+    - User is able to read and understand the response.
 
 - **Readable Output**
     - User submits a prompt.
@@ -37,8 +41,8 @@
 
 - **Notice Edge Cases**
     - User submits a prompt.
-    - User receives the answer of the prompt.
-    - User is able to detect that the required prompt is out of scope.
+    - User receives an answer from the LLM.
+    - User is notified by the LLM that the required prompt is not in the scope of the course material.
 
 ## 2. Method set
 
@@ -86,13 +90,14 @@
 
 | **Factors**    | **Metric** | **Acceptance**                |
 |----------------|------------|-------------------------------|
-|**Learnability**| Time to submitting first prompt | <5 minutes |
+|**Learnability**| Time to submitting first prompt | <2 minutes |
 |**Usability**| SUS Score | >70pts. |
 |**Experience**| UEQ Score | >4pts. in average|
-|**User Interface Aestetics**| Time to identify own messages and AI generated messages in the chat history | <1 minute|
-|**Efficiency**| Measured usefulness of a generated responses | >70%|
-|**Constitution**| Time to identify a AI generated response | <2 minute of receiving an answer |
-|**Consistency**| Similarity of answers of the same prompt | >70% similarity |
+|**Appearance**| Time to identify own messages and AI generated messages in the chat history | <1 minute |
+|**Pragmatic Quality**| Measured usefulness of a generated responses | >70% |
+|**Efficiency**| Time of receiving an AI generated response | >30 seconds |
+|**Trust**| Time to identify an AI generated response | <1 minute of receiving an answer |
+|**Credibility**| Similarity of answers of the same prompt | >70% similarity |
 
 - System Usability Scale (SUS)
     - SUS Score has to be in the acceptable range. That means an average score of atleast 72pts must be achieved.
@@ -100,8 +105,8 @@
     - If the score is below 50pts, the system requires a full review with major adjustments.
 
 - User Experience Questionaire (UEQ)
-    - The UEQ must be in an acceptable range. Every Score below 3 must be examined thoroughly and the system evaluated according to this metric.
-    - The scores should build an average value, which counts as the baseline for the score measurement.
+    - The UEQ must be in an acceptable range. Every Score below 4 must be examined thoroughly and the system evaluated for the measured metric.
+    - The scores build an average value, which counts as the baseline for the score measurement.
 
 ## 5. Findings template
 
@@ -118,11 +123,12 @@
 ## 6. Quality gate proposal
 
 - **Learnability:** First time user cant submit a prompt <5 minutes.
-- **Usability:** SUS Score <60%.
-- **Experience:** UEQ Score <3pts. average.
-- **User Interface Aestetics:** Messages are not distiguishable from eachother.
-- **Efficiency:** Generated responses dont meet usefulness criteria <50%.
-- **Constitution:** AI generated responses are not recognizable as AI generated.
+- **Usability:** SUS Score <70%.
+- **Experience:** UEQ Score <4pts. average.
+- **Appearance:** Messages are not distiguishable from eachother.
+- **Pragmatic Quality:** Generated responses dont meet usefulness criteria <50%.
+- **Efficiency:** Time of receiving a response exceeds the defined threshold.
+- **Trust:** AI generated responses are not recognizable as AI generated.
 - **Consistency:** Similarity of answers are <50%.
 - **UX Criteria which cant be measured must be reviewed and redone before release.**
 

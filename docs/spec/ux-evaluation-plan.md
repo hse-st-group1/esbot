@@ -74,9 +74,9 @@ In the second phase, a combination of think-aloud sessions and scenario-based te
     - "Analyse Answers regarding questions"
 
 - **Think-aloud Session**
-    -Participants verbalize every step and every thought while interacting
-    -user experience can be evaluated based on the observations
-    -identify misunderstandings and issues
+    - Participants verbalize every step and every thought while interacting
+    - User experience can be evaluated based on the observations
+    - Identify misunderstandings and issues
 
 
 ## 3. Participants and Setup

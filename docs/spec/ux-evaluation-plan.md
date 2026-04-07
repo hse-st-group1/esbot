@@ -106,7 +106,7 @@ In the second phase, a combination of think-aloud sessions and scenario-based te
 |**Experience**| UEQ Score | >4pts. in average|
 |**Appearance**| Time to identify own messages and AI generated messages in the chat history | <1 minute |
 |**Pragmatic Quality**| Measured usefulness of a generated responses | >70% |
-|**Efficiency**| Time of receiving an AI generated response | >30 seconds |
+|**Efficiency**| Time of receiving an AI generated response | <30 seconds |
 |**Trust**| Time to identify an AI generated response | <1 minute of receiving an answer |
 |**Credibility**| Similarity of answers of the same prompt | >70% similarity |
 

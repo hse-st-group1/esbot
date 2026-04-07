@@ -1,7 +1,7 @@
 ## UX-Factors
 
 
-#### Transperency of AI responses:
+### Transperency of AI responses:
 **Definition:** AI responses are explained thoroughly and structured in a understandable way. Sources for individual responses are given if possible. AI-Model rules and training data are known.
 
 **Reasoning:** AI responses should be examined closely, due to the possibility of AIs to make mistakes.
@@ -10,7 +10,7 @@ A good structure of the AI response helps with understanding the origin of the a
 **Example interaction:** A student asks for an detailed explanation of a topic. The AI provides a well structured and understandable explanation with sources. The student can understand the process behind the AI-model and validate the answer with the given sources, enhancing the effectiveness of the learning process.
 
 
-#### Learnability:
+### Learnability:
 **Definition:** The product is usable without prior training or further explanation. It is easy to navigate between functions and use them. 
 
 **Reasoning:**  
@@ -21,7 +21,7 @@ The value of the ESBot application is the time it allows students to save during
 **Example interaction 2:** A user wants to generate a quiz to gain some exercise. Questions should be asked one after the other with indication how many questions he has already answered and how many are left. The student can focus at one question at a time, and after he finished the quiz the review is generated.
 
 
-#### Interaction Efficiency
+### Interaction Efficiency
 
 **Definition:**
 Users can reach their goals with minimum effort on their side. 
@@ -39,7 +39,7 @@ A student asks ESBot to clarify or explain a difficult concept. The response is 
 A student asks ESBot to clarify a concept relevant to the lecture they are attending at the moment. They should be able to concentrate on the lecture as much as possible, and can therefore not give much attention or time to formulating the question to ESBot. They also do not have a lot of time when it comes to reading and understanding the response. Therefore the question should be able to be formulated as short as possible. The response should also be to the point and easy to understand (= efficient and effective).
 
 
-#### Accessibility:
+### Accessibility:
 **Definition:** Accessible to diffrent kind of users despite of their cognitive, sensory and physical capabilities. 
 
 **Reasoning:** The ESBot application implies to be a service provides by the University of applied science Esslingen for their students. According to this it could fall under the [BITV2.0](https://www.barrierefreiheit-dienstekonsolidierung.bund.de/Webs/PB/DE/gesetze-und-richtlinien/bitv2-0/bitv2-0-node.html) regulations for accessible software design.
@@ -47,7 +47,7 @@ A student asks ESBot to clarify a concept relevant to the lecture they are atten
 **Example interaction:** A visually impared person is asking ESBot a question. The resulting chat interface should be structered in a way, which can be interpreted by a screen reader, so the user can access the answers and revisit his conversation in a later session.
 
 
-#### Easy to Access
+### Easy to Access
 **Definition:**
 The app should be easily accessible and require no special installations or hardware. It should work on any device. 
 

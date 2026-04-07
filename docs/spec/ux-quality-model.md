@@ -4,7 +4,7 @@
 ### Learnability: 
 #### Simplicity:
 - **Criteria:** On a scale of 0-5 from very hard a survey of users averages >= 4.0
-**Test:** Ask users (or test users) in a questionnaire.
+- **Test:** Ask users (or test users) in a questionnaire.
 #### Intuitive operations:
 - **Criteria:** A new user gets from loading the page to his first prompt and response in less than a minute, without requiring explanations.
 - **Test:** Collect test users from the potential user group. Give them a topic or question. Load up the page, let them use ESBot to get an answer and take the time.

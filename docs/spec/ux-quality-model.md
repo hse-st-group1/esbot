@@ -28,7 +28,7 @@
     - user effort required
 
 ## Functional Suitability:
-### transparency of ai responses
+### Transparency of AI Responses
 - **Criteria:** 
     - \>= 90% of the answers are reasonable explained 
     - \>= 70% of answers have source material attached

@@ -47,7 +47,7 @@ A student asks ESBot to clarify a concept relevant to the lecture they are atten
 **Example interaction:** A visually impared person is asking ESBot a question. The resulting chat interface should be structered in a way, which can be interpreted by a screen reader, so the user can access the answers and revisit his conversation in a later session.
 
 
-### Easy to Access
+### Easy to Access:
 **Definition:**
 The app should be easily accessible and require no special installations or hardware. It should work on any device. 
 

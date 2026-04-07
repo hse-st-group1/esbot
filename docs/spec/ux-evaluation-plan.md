@@ -47,9 +47,9 @@
 ## 2. Method set
 
 The evaluation is split into two phases.
-The first phase is an internal Cognitive walkthrough and heuristic evaluation.
+The first phase is an internal cognitive walkthrough and heuristic evaluation.
 
-- **Heuristic evaluation**
+- **Heuristic Evaluation**
     - Visibility of System Status 
         - Output: thinking/evaluating.
     - Aesthetic and Minimalist Design
@@ -74,9 +74,9 @@ In the second phase, a combination of think-aloud sessions and scenario-based te
     - "Analyse Answers regarding questions"
 
 - **Think-aloud Session**
-    - Participants verbalize every step and every thought while interacting
-    - User experience can be evaluated based on the observations
-    - Identify misunderstandings and issues
+    - Participants verbalize every step and every thought while interacting.
+    - User experience can be evaluated based on the observations.
+    - Identify misunderstandings and issues.
 
 
 ## 3. Participants and Setup

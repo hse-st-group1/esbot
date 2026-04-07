@@ -42,7 +42,7 @@ A student asks ESBot to clarify a concept relevant to the lecture they are atten
 ### Accessibility:
 **Definition:** Accessible to diffrent kind of users despite of their cognitive, sensory and physical capabilities. 
 
-**Reasoning:** The ESBot application implies to be a service provides by the University of applied science Esslingen for their students. According to this it could fall under the [BITV2.0](https://www.barrierefreiheit-dienstekonsolidierung.bund.de/Webs/PB/DE/gesetze-und-richtlinien/bitv2-0/bitv2-0-node.html) regulations for accessible software design.
+**Reasoning:** The ESBot application implies to be a service provides by the University of applied science Esslingen for their students. According to this the [BITV2.0](https://www.barrierefreiheit-dienstekonsolidierung.bund.de/Webs/PB/DE/gesetze-und-richtlinien/bitv2-0/bitv2-0-node.html) regulations for accessible software design must be applied.
 
 **Example interaction:** A visually impared person is asking ESBot a question. The resulting chat interface should be structered in a way, which can be interpreted by a screen reader, so the user can access the answers and revisit his conversation in a later session.
 
@@ -52,7 +52,7 @@ A student asks ESBot to clarify a concept relevant to the lecture they are atten
 The app should be easily accessible and require no special installations or hardware. It should work on any device. 
 
 **Reasoning:**
-Students can access the App immediately and flexibly. 
+Students can access the app immediately. 
  
 **Example:**
-A student can simply open the corresponding site on their browser from whatever device they are currently using and immediately start using the app. 
+A student can simply open the webapp with their browser from whatever device they are currently using and immediately start using the app. 

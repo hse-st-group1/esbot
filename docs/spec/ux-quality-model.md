@@ -3,14 +3,14 @@
 ## Usability:
 ### Learnability: 
 #### Simplicity:
-- **Criteria:** On a scale of 0-5 from very hard a survey of users averages >= 4.0
+- **Criteria:** On a scale of 1-7 the UEQ survey of users averages >= 4.0 in simplicity related aspects.
 - **Test:** Ask users (or test users) in a questionnaire.
 #### Intuitive operations:
 - **Criteria:** A new user gets from loading the page to his first prompt in less than two minutes, without requiring explanations.
 - **Test:** Collect test users from the potential user group. Give them a topic or question. Load up the page, let them use ESBot to get an answer and take the time.
 ### Accessibility:
-- **Criteria:** Usability-Expert-Approval >= 95%
-- **Test:** Get a Review from usability experts on the accessibilty of ESBot based on the known norms and laws. (A self test should be sufficient for our lab I suppose.)
+- **Criteria:** Usability-Expert-Approval >= 70%
+- **Test:** Get a Review from usability experts on the accessibilty of ESBot based on the known norms and laws.
 ### Easy to Access
 - **Criteria:** Web-App can be accesed from the most widely used browsers and support both mobile and desktop format:
     - Chrome

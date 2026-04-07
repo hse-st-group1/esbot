@@ -82,7 +82,6 @@ A student wants to see an overview of their learning activity, including topics 
 - **What happens when the LLM inference service is unavailable?** The system should display a user-friendly error message and allow the user to retry the request or report the issue.
 - **How does the system handle very long or complex questions?** Questions should be accepted within reasonable length limits; if exceeded, the user should receive guidance on reformulating the question.
 - **What if a student's question is outside the scope of course material?** The system should recognize out-of-scope queries and either redirect to course material or decline to answer with an explanation. 
-    - The system should recognize out-of-scope queries and redirect the user to out-of-scope sources and notify the user that the query is out-of-scope.
 - **How does the system handle simultaneously accessed sessions from multiple devices?** The system should ensure data consistency and prevent conflicts through appropriate session locking or conflict resolution.
 - **What if a student submits an answer to a quiz question that matches none of the expected responses?** The system should provide a generic error response guiding the student to reformulate their answer or seek clarification.
 - **How does the system perform under high concurrent load?** The system should maintain responsiveness and data integrity even when multiple students are actively using ESBot simultaneously.

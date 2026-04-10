@@ -17,16 +17,17 @@ public class QuizAnswer{
 
     @Id 
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column (nullable = false)
     private UUID quizAnswerID;
 
-    @OneToOne
-    @JoinColumn(name ="quizItemID")
+    @ManyToOne
+    @JoinColumn(name ="quizItemID", nullable = false)
     private QuizItem quizItem;
 
     @Column
     private String answer;
 
-    @Column
+    @Column (nullable = false)
     private Timestamp timeStamp;
 
 }

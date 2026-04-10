@@ -22,6 +22,7 @@ import lombok.Setter;
 public class User {
     @Id 
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(nullable = false)
     private UUID userID; 
 
     @Column (nullable = false)

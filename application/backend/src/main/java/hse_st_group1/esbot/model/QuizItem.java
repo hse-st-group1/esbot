@@ -1,7 +1,10 @@
 package hse_st_group1.esbot.model;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -9,9 +12,9 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
@@ -21,12 +24,19 @@ import lombok.Setter;
 public class QuizItem {
     @Id 
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(nullable = false)
     private UUID quizItemID;
 
     @ManyToOne (optional = false) //cannot be null
-    @JoinColumn(name = "quizID", updatable = false) //cannot be overwritten
-    private QuizRequest QuizRequest;
+    @JoinColumn(updatable = false) //cannot be overwritten
+    private QuizRequest quizRequest;
 
     @Column (nullable = false)
     private String question;
+
+    @OneToMany (mappedBy = "quizItem", cascade = CascadeType.REMOVE)
+    private Set<QuizAnswer> quizAnswers = new HashSet<>();
+
+    @OneToMany (mappedBy = "quizItem", cascade = CascadeType.REMOVE)
+    private Set<QuizEvaluation> quizEvaluations = new HashSet<>();
 }

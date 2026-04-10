@@ -26,7 +26,7 @@ public class Message {
 
     @ManyToOne
     @JoinColumn(nullable = false)
-    private Session sessionID;
+    private Session session;
 
     @Column(nullable = false)
     private String messageContent;

@@ -7,6 +7,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -25,9 +26,9 @@ public class QuizRequest {
     private UUID quizID;
 
     @ManyToOne 
-    @Column(updatable = false, nullable = false)
-    private UUID sessionID;
+    @JoinColumn(updatable = false, nullable = false)
+    private Session session;
     
     @Column (nullable = false)
-    private String quizRequest;
+    private String quizRequestContent;
 }

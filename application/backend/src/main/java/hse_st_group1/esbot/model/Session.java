@@ -14,9 +14,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
@@ -26,10 +24,11 @@ import lombok.Setter;
 public class Session {
     @Id 
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(nullable = false)
     private UUID sessionID;
 
     @ManyToOne (optional = false) //cannot be null
-    @JoinColumn(name = "userID", updatable = false) //cannot be overwritten
+    @JoinColumn(updatable = false) //cannot be overwritten
     private User user;
 
     @Column(updatable = false, nullable = false)
@@ -38,9 +37,9 @@ public class Session {
     @Column(nullable = false)
     private Timestamp lastAccessed;
 
-    @OneToMany (cascade = CascadeType.REMOVE) //if the session is deleted, all corresponding messages are deleted too
+    @OneToMany (mappedBy = "session", cascade = CascadeType.REMOVE) //if the session is deleted, all corresponding messages are deleted too
     private Set<Message> messages = new HashSet<>();
 
-    @OneToMany (cascade = CascadeType.REMOVE)
+    @OneToMany (mappedBy = "session", cascade = CascadeType.REMOVE)
     private Set<QuizRequest> quizRequests = new HashSet<>();
 }

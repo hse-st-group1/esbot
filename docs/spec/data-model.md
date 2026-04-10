@@ -96,9 +96,9 @@ erDiagram
 	Message }o--|| Sessions : references
 	QuizItem }o--|| QuizRequest : references
 	QuizRequest }o--|| Sessions : references
-	QuizAnswer ||--|| QuizItem : references
+	QuizAnswer }o--|| QuizItem : references
 	QuizEvaluation }o--|| QuizItem : references
-	QuizAnswer ||--o{ QuizEvaluation : references
+	QuizAnswer ||--|| QuizEvaluation : references
 
 	Sessions {
 		UUID SessionID

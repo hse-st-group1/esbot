@@ -65,3 +65,8 @@ $RECYCLE.BIN/
 
 # NFS files
 .nfs*
+
+########################
+# VSCode
+########################
+.vscode 

@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import org.junit.jupiter.api.Test;
+import hse_st_group1.esbot.controller.TestController;
 
 @SpringBootTest
 class EsbotApplicationTests {

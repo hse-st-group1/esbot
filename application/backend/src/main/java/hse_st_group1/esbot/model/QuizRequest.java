@@ -10,10 +10,14 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @Table(name = "QuizRequest")
 @AllArgsConstructor
+@Getter
+@Setter
 public class QuizRequest {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)

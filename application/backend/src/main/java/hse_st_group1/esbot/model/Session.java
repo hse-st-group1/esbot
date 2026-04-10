@@ -1,14 +1,19 @@
 package hse_st_group1.esbot.model;
 
 import java.sql.Timestamp;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,21 +23,24 @@ import lombok.Setter;
 // Getter & Setter Methods do not need to be defined -> provided by Spring Lombok
 @Getter
 @Setter
-// Constructors do not need to be defined -> provided by Spring Lombok
-@NoArgsConstructor
-@AllArgsConstructor
 public class Session {
     @Id 
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID sessionID;
 
-    @ManyToOne
-    @Column(updatable = false, nullable = false) //cannot be null or overwritten
-    private UUID userID;
+    @ManyToOne (optional = false) //cannot be null
+    @JoinColumn(name = "userID", updatable = false) //cannot be overwritten
+    private User user;
 
     @Column(updatable = false, nullable = false)
     private Timestamp startedAt;
 
-    @Column(nullable = true)
+    @Column(nullable = false)
     private Timestamp lastAccessed;
+
+    @OneToMany (cascade = CascadeType.REMOVE) //if the session is deleted, all corresponding messages are deleted too
+    private Set<Message> messages = new HashSet<>();
+
+    @OneToMany (cascade = CascadeType.REMOVE)
+    private Set<QuizRequest> quizRequests = new HashSet<>();
 }

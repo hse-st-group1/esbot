@@ -70,3 +70,9 @@ $RECYCLE.BIN/
 # VSCode
 ########################
 .vscode 
+
+#github configs/copilot prompts
+.github/
+
+#specify
+.specify/

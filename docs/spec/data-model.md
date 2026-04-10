@@ -85,9 +85,9 @@
 - **Message to Sessions**: many_to_one
 - **QuizItem to QuizRequest**: many_to_one
 - **QuizRequest to Sessions**: many_to_one
-- **QuizAnswer to QuizItem**: one_to_one
+- **QuizAnswer to QuizItem**: many_to_one
 - **QuizEvaluation to QuizItem**: many_to_one
-- **QuizAnswer to QuizEvaluation**: one_to_many
+- **QuizAnswer to QuizEvaluation**: one_to_one
 
 ## Database Diagram
 

@@ -1,0 +1,16 @@
+services:
+  db:
+    image: postgres:17.9
+    container_name: esbot-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: esbot
+      POSTGRES_USER: esbot_user
+      POSTGRES_PASSWORD: esbot_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+volumes:
+  postgres-data:

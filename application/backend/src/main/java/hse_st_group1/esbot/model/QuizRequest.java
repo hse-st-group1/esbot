@@ -10,6 +10,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -23,12 +25,15 @@ public class QuizRequest {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column (nullable = false)
+    @NotNull
     private UUID quizID;
 
     @ManyToOne 
+    @NotNull
     @JoinColumn(updatable = false, nullable = false)
     private Session session;
     
     @Column (nullable = false)
+    @NotBlank
     private String quizRequestContent;
 }

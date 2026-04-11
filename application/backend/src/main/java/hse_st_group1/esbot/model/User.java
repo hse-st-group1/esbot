@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
+import jakarta.validation.constraints.*;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -23,11 +24,15 @@ public class User {
     @Id 
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(nullable = false)
+    @NotNull
     private UUID userID; 
 
+    @NotEmpty
+    @Size(min = 2, max = 16, message = "{validation.name.size}")
     @Column (nullable = false)
     private String userName;
 
+    @NotNull
     @OneToMany (mappedBy = "user", cascade = CascadeType.REMOVE)
     private Set<Session> sessions = new HashSet<>();
 

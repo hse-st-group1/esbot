@@ -87,7 +87,7 @@ class EsbotUserEntityTest{
 
         User user = new User(dummyId, dummyName, null);
         Set<ConstraintViolation<User>> sessionviolation = validator.validate(user);
-        assertFalse(sessionviolation.isEmpty());
+        assertTrue(sessionviolation.isEmpty());
     }
 }
 

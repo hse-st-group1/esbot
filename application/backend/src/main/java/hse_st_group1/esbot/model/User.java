@@ -32,8 +32,6 @@ public class User {
     @Column (nullable = false)
     private String userName;
 
-    @NotNull
     @OneToMany (mappedBy = "user", cascade = CascadeType.REMOVE)
     private Set<Session> sessions = new HashSet<>();
-
 }

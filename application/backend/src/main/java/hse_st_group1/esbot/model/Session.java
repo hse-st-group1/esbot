@@ -14,6 +14,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -21,6 +22,8 @@ import lombok.Setter;
 // Getter & Setter Methods do not need to be defined -> provided by Spring Lombok
 @Getter
 @Setter
+// Added AllArgsConstructor -> Testing
+@AllArgsConstructor
 public class Session {
     @Id 
     @GeneratedValue(strategy = GenerationType.AUTO)

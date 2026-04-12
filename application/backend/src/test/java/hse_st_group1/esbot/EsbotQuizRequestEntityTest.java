@@ -19,66 +19,55 @@ class EsbotQuizRequestEntityTest{
 
     Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
 
+    private UUID id = UUID.randomUUID();
+    private String content = "Question";
+    private Session session = UnitTestHelper.sessionCreator();
+
     @Test
     void testAllArgsConstructorQuizRequest(){
-        UUID id = UUID.randomUUID();
-        String question = "Question 1";
-        Session session = UnitTestHelper.sessionCreator();
-
-        QuizRequest quiz = new QuizRequest(id, session, question, null);
+        QuizRequest quiz = new QuizRequest(id, session, content, null);
 
         assertEquals(id, quiz.getQuizID());
-        assertEquals(question, quiz.getQuizRequestContent());
+        assertEquals(content, quiz.getQuizRequestContent());
         assertEquals(session, quiz.getSession());
     }
 
     @Test
     void testSettersQuizRequest(){
-        UUID dummyId = UUID.randomUUID();
-        Session dummySession = UnitTestHelper.sessionCreator();
-        String dummyContent = "Dummy";
 
-        QuizRequest quiz = new QuizRequest(dummyId, dummySession, dummyContent, null);
+        QuizRequest quiz = new QuizRequest(id, session, content, null);
 
-        UUID id = UUID.randomUUID();
-        Session session = UnitTestHelper.sessionCreator();
-        String question = "Question 1:";
+        UUID newId = UUID.randomUUID();
+        Session newSession = UnitTestHelper.sessionCreator();
+        String newContent = "Question 1:";
 
-        quiz.setQuizID(id);
-        quiz.setQuizRequestContent(question);
-        quiz.setSession(session);
+        quiz.setQuizID(newId);
+        quiz.setQuizRequestContent(newContent);
+        quiz.setSession(newSession);
 
-        assertEquals(id, quiz.getQuizID());
-        assertEquals(question, quiz.getQuizRequestContent());
-        assertEquals(session, quiz.getSession());
+        assertEquals(newId, quiz.getQuizID());
+        assertEquals(newContent, quiz.getQuizRequestContent());
+        assertEquals(newSession, quiz.getSession());
     }
 
     @Test
     void testIdConstraintQuizRequest(){
-        Session dummySession = UnitTestHelper.sessionCreator();
-        String dummyContent = "Dummy";
-
-        QuizRequest quiz = new QuizRequest(null, dummySession, dummyContent, null);
+        QuizRequest quiz = new QuizRequest(null, session, content, null);
         Set<ConstraintViolation<QuizRequest>> quizIdIsNullViolation = validator.validate(quiz);
         assertFalse(quizIdIsNullViolation.isEmpty());
     }
 
     @Test
     void testSessionConstraintQuizRequest(){
-        UUID dummyId = UUID.randomUUID();
-        String dummyContent = "Dummy";
-
-        QuizRequest quiz = new QuizRequest(dummyId, null, dummyContent, null);
+        QuizRequest quiz = new QuizRequest(id, null, content, null);
         Set<ConstraintViolation<QuizRequest>> quizSessionIsNullViolation = validator.validate(quiz);
         assertFalse(quizSessionIsNullViolation.isEmpty());
     }
 
     @Test
     void testContentConstraintQuizRequest(){
-        UUID dummyId = UUID.randomUUID();
-        Session dummySession = UnitTestHelper.sessionCreator();
 
-        QuizRequest quiz = new QuizRequest(dummyId, dummySession, null, null);
+        QuizRequest quiz = new QuizRequest(id, session, null, null);
         Set<ConstraintViolation<QuizRequest>> quizContentIsNullViolation = validator.validate(quiz);
         assertFalse(quizContentIsNullViolation.isEmpty());
 

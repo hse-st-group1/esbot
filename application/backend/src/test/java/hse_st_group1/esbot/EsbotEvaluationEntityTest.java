@@ -19,12 +19,13 @@ class EsbotEvaluationEntityTest {
 
     Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
 
+    private UUID evaluationID = UUID.randomUUID();
+    private QuizItem quizItem = UnitTestHelper.quizItemCreator();
+    private QuizAnswer quizAnswer = UnitTestHelper.quizAnswerCreator(quizItem);
+    private String evaluation = "Correct!";
+
     @Test
     void testAllArgsConstructorQuizEvaluation(){
-        UUID evaluationID = UUID.randomUUID();
-        QuizItem quizItem = UnitTestHelper.quizItemCreator();
-        QuizAnswer quizAnswer = UnitTestHelper.quizAnswerCreator(quizItem);
-        String evaluation = "Correct!";
 
         QuizEvaluation quizEvaluation = new QuizEvaluation(evaluationID, quizItem, quizAnswer, evaluation);
 
@@ -38,63 +39,46 @@ class EsbotEvaluationEntityTest {
     void testSettersQuizEvaluation(){
         QuizEvaluation quizEvaluation = UnitTestHelper.quizEvaluationCreator();
 
-        UUID evaluationID = UUID.randomUUID();
-        QuizItem quizItem = UnitTestHelper.quizItemCreator();
-        QuizAnswer quizAnswer = UnitTestHelper.quizAnswerCreator(quizItem);
-        String evaluation = "Not Correct!";
+        UUID newEvaluationID = UUID.randomUUID();
+        QuizItem newQuizItem = UnitTestHelper.quizItemCreator();
+        QuizAnswer newQuizAnswer = UnitTestHelper.quizAnswerCreator(quizItem);
+        String newEvaluation = "Not Correct!";
 
-        quizEvaluation.setEvaluationID(evaluationID);
-        quizEvaluation.setQuizItem(quizItem);
-        quizEvaluation.setQuizAnswer(quizAnswer);
-        quizEvaluation.setEvaluation(evaluation);
+        quizEvaluation.setEvaluationID(newEvaluationID);
+        quizEvaluation.setQuizItem(newQuizItem);
+        quizEvaluation.setQuizAnswer(newQuizAnswer);
+        quizEvaluation.setEvaluation(newEvaluation);
 
-        assertEquals(evaluation, quizEvaluation.getEvaluation());
-        assertEquals(evaluationID, quizEvaluation.getEvaluationID());
-        assertEquals(quizItem, quizEvaluation.getQuizItem());
-        assertEquals(quizAnswer, quizEvaluation.getQuizAnswer());
+        assertEquals(newEvaluation, quizEvaluation.getEvaluation());
+        assertEquals(newEvaluationID, quizEvaluation.getEvaluationID());
+        assertEquals(newQuizItem, quizEvaluation.getQuizItem());
+        assertEquals(newQuizAnswer, quizEvaluation.getQuizAnswer());
     }
 
     @Test
     void testIdConstraintQuizEvaluation(){
-        UUID dummyQuizItemId = UUID.randomUUID();
-        QuizItem dummyItem = new QuizItem(dummyQuizItemId, null, null, null, null);
-        QuizAnswer dummyAnswer = new QuizAnswer();
-        String dummyEvaluation = "Dummy";
-
-        QuizEvaluation quizEvaluation = new QuizEvaluation(null, dummyItem, dummyAnswer, dummyEvaluation);
+        QuizEvaluation quizEvaluation = new QuizEvaluation(null, quizItem, quizAnswer, evaluation);
         Set<ConstraintViolation<QuizEvaluation>> quizIdIsNullConstraintViolation = validator.validate(quizEvaluation);
         assertFalse(quizIdIsNullConstraintViolation.isEmpty());
     }
 
     @Test
     void testQuizItemConstraintQuizEvaluation(){
-        UUID dummyId = UUID.randomUUID();
-        QuizAnswer dummyAnswer = new QuizAnswer();
-        String dummyEvaluation = "Dummy";
-
-        QuizEvaluation quizEvaluation = new QuizEvaluation(dummyId, null, dummyAnswer, dummyEvaluation);
+        QuizEvaluation quizEvaluation = new QuizEvaluation(evaluationID, null, quizAnswer, evaluation);
         Set<ConstraintViolation<QuizEvaluation>> quizItemIsNullConstraintViolation = validator.validate(quizEvaluation);
         assertFalse(quizItemIsNullConstraintViolation.isEmpty());
     }
 
     @Test
     void testQuizAnswerConstraintQuizEvaluation(){
-        UUID dummyQuizItemId = UUID.randomUUID();
-        QuizItem dummyItem = UnitTestHelper.quizItemCreator();
-        String dummyEvaluation = "Dummy";
-
-        QuizEvaluation quizEvaluation = new QuizEvaluation(dummyQuizItemId, dummyItem, null, dummyEvaluation);
+        QuizEvaluation quizEvaluation = new QuizEvaluation(evaluationID, quizItem, null, evaluation);
         Set<ConstraintViolation<QuizEvaluation>> quizAnswerIsNullConstraintViolation = validator.validate(quizEvaluation);
         assertFalse(quizAnswerIsNullConstraintViolation.isEmpty());
     }
 
     @Test
     void testEvaluationConstraintQuizEvaluation(){
-        UUID dummyQuizItemId = UUID.randomUUID();
-        QuizItem dummyItem = UnitTestHelper.quizItemCreator();
-        QuizAnswer dummyAnswer = UnitTestHelper.quizAnswerCreator(dummyItem);
-        
-        QuizEvaluation quizEvaluation = new QuizEvaluation(dummyQuizItemId, dummyItem, dummyAnswer, null);
+        QuizEvaluation quizEvaluation = new QuizEvaluation(evaluationID, quizItem, quizAnswer, null);
         Set<ConstraintViolation<QuizEvaluation>> quizEvaluationIsNullConstraintViolation = validator.validate(quizEvaluation);
         assertFalse(quizEvaluationIsNullConstraintViolation.isEmpty());
 
@@ -105,11 +89,6 @@ class EsbotEvaluationEntityTest {
 
     @Test
     void testRelationshipsQuizEvaluation(){
-        UUID evaluationID = UUID.randomUUID();
-        QuizItem quizItem = UnitTestHelper.quizItemCreator();
-        QuizAnswer quizAnswer = quizItem.getQuizAnswers().iterator().next();
-        String evaluation = "OK";
-        
         QuizEvaluation quizEvaluation = new QuizEvaluation(evaluationID, quizItem, quizAnswer, evaluation);
         quizItem.setQuizEvaluations(Set.of(quizEvaluation));
         quizItem.setQuizAnswers(Set.of(quizAnswer));

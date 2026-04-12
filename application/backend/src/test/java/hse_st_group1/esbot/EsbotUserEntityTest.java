@@ -20,13 +20,14 @@ class EsbotUserEntityTest{
 
     Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
 
+    private UUID id = UUID.randomUUID();
+    private String name = "Max";
+    private Session session = UnitTestHelper.sessionCreator();
+
     @Test
     void testAllArgsConstructorUser(){
-        UUID id = UUID.randomUUID();
-        String name = "Max";
-        Session session = UnitTestHelper.sessionCreator();
-
         User user = new User(id,name,Set.of(session));
+
         assertEquals(id, user.getUserID());
         assertEquals(name, user.getUserName());
         assertEquals(session, user.getSessions().iterator().next());
@@ -34,30 +35,25 @@ class EsbotUserEntityTest{
 
     @Test
     void testSettersUser(){
-        UUID dummyId = UUID.randomUUID();
-        String dummyName = "Dummy";
-        Session dummySession = UnitTestHelper.sessionCreator();
-        User user = new User(dummyId, dummyName, Set.of(dummySession));
-
-        UUID id = UUID.randomUUID();
-        String name = "Max";
-        Session session = UnitTestHelper.sessionCreator();
+        User user = new User(id, name, Set.of(session));
         session.setLastAccessed(new Timestamp(System.currentTimeMillis()));
 
-        user.setUserID(id);
-        user.setUserName(name);
-        user.setSessions(Set.of(session));
+        UUID newId = UUID.randomUUID();
+        String newName = "Dummy";
+        Session newSession = UnitTestHelper.sessionCreator();
 
-        assertEquals(id, user.getUserID());
-        assertEquals(name, user.getUserName());
-        assertEquals(session, user.getSessions().iterator().next());
+        user.setUserID(newId);
+        user.setUserName(newName);
+        user.setSessions(Set.of(newSession));
+
+        assertEquals(newId, user.getUserID());
+        assertEquals(newName, user.getUserName());
+        assertEquals(newSession, user.getSessions().iterator().next());
     }
 
     @Test
     void testIdConstraintUser(){
-        String dummyName = "Dummy";
-        Set<Session> dummySession = Set.of(UnitTestHelper.sessionCreator());
-        User user = new User(null, dummyName, dummySession);
+        User user = new User(null, name, Set.of(session));
 
         Set<ConstraintViolation<User>> uidIsNullViolation = validator.validate(user);
         assertFalse(uidIsNullViolation.isEmpty());
@@ -65,10 +61,7 @@ class EsbotUserEntityTest{
 
     @Test
     void testNameConstraintUser(){
-        UUID dummyId = UUID.randomUUID();
-        Set<Session> dummySession = Set.of(UnitTestHelper.sessionCreator());
-
-        User user = new User(dummyId, null, dummySession);
+        User user = new User(id, null, Set.of(session));
         Set<ConstraintViolation<User>> nameIsNullViolation = validator.validate(user);
         assertFalse(nameIsNullViolation.isEmpty());
 
@@ -84,10 +77,7 @@ class EsbotUserEntityTest{
 
     @Test
     void testSessionConstraintUser(){
-        UUID dummyId = UUID.randomUUID();
-        String dummyName = "Dummy";
-
-        User user = new User(dummyId, dummyName, null);
+        User user = new User(id, name, null);
         Set<ConstraintViolation<User>> sessionviolation = validator.validate(user);
         assertTrue(sessionviolation.isEmpty());
     }
@@ -96,10 +86,10 @@ class EsbotUserEntityTest{
     void testRelationshipsUser(){
         User user = UnitTestHelper.userCreator();
         UnitTestHelper.sessionCreatorWithUser(user);
-        Session session = user.getSessions().iterator().next();
-        assertEquals(user.getUserName(), session.getUser().getUserName());
-        assertEquals(user.getUserID(), session.getUser().getUserID());
-        assertEquals(user.getSessions().iterator().next(), session);
+        Session userSession = user.getSessions().iterator().next();
+        assertEquals(user.getUserName(), userSession.getUser().getUserName());
+        assertEquals(user.getUserID(), userSession.getUser().getUserID());
+        assertEquals(user.getSessions().iterator().next(), userSession);
     }
 }
 

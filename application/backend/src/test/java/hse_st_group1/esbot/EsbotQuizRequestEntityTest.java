@@ -3,13 +3,13 @@ package hse_st_group1.esbot;
 import org.junit.jupiter.api.Test;
 
 import hse_st_group1.esbot.model.Session;
-import hse_st_group1.esbot.model.User;
+import hse_st_group1.esbot.util.UnitTestHelper;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validator;
 import jakarta.validation.Validation;
+import hse_st_group1.esbot.model.QuizItem;
 import hse_st_group1.esbot.model.QuizRequest;
 
-import java.sql.Timestamp;
 import java.util.Set;
 import java.util.UUID;
 
@@ -19,31 +19,13 @@ class EsbotQuizRequestEntityTest{
 
     Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
 
-    //Helper Methods
-    Session sessionCreator(){
-        UUID sessionId = UUID.randomUUID();
-        User user = userCreator();
-        Timestamp startedAt = new Timestamp(System.currentTimeMillis());
-        Timestamp lastAccessed = new Timestamp(System.currentTimeMillis());
-        Session session = new Session(sessionId, user, startedAt, lastAccessed, null, null);
-        user.setSessions(Set.of(session));
-        return session;
-    }
-    User userCreator(){
-        UUID userId = UUID.randomUUID();
-        String userName = "Max";
-        return new User(userId, userName, null);
-    }
-
     @Test
     void testAllArgsConstructorQuizRequest(){
         UUID id = UUID.randomUUID();
         String question = "Question 1";
+        Session session = UnitTestHelper.sessionCreator();
 
-        
-        Session session = sessionCreator();
-
-        QuizRequest quiz = new QuizRequest(id, session, question);
+        QuizRequest quiz = new QuizRequest(id, session, question, null);
 
         assertEquals(id, quiz.getQuizID());
         assertEquals(question, quiz.getQuizRequestContent());
@@ -53,13 +35,13 @@ class EsbotQuizRequestEntityTest{
     @Test
     void testSettersQuizRequest(){
         UUID dummyId = UUID.randomUUID();
-        Session dummySession = sessionCreator();
+        Session dummySession = UnitTestHelper.sessionCreator();
         String dummyContent = "Dummy";
 
-        QuizRequest quiz = new QuizRequest(dummyId, dummySession, dummyContent);
+        QuizRequest quiz = new QuizRequest(dummyId, dummySession, dummyContent, null);
 
         UUID id = UUID.randomUUID();
-        Session session = sessionCreator();
+        Session session = UnitTestHelper.sessionCreator();
         String question = "Question 1:";
 
         quiz.setQuizID(id);
@@ -73,10 +55,10 @@ class EsbotQuizRequestEntityTest{
 
     @Test
     void testIdConstraintQuizRequest(){
-        Session dummySession = sessionCreator();
+        Session dummySession = UnitTestHelper.sessionCreator();
         String dummyContent = "Dummy";
 
-        QuizRequest quiz = new QuizRequest(null, dummySession, dummyContent);
+        QuizRequest quiz = new QuizRequest(null, dummySession, dummyContent, null);
         Set<ConstraintViolation<QuizRequest>> quizIdIsNullViolation = validator.validate(quiz);
         assertFalse(quizIdIsNullViolation.isEmpty());
     }
@@ -86,7 +68,7 @@ class EsbotQuizRequestEntityTest{
         UUID dummyId = UUID.randomUUID();
         String dummyContent = "Dummy";
 
-        QuizRequest quiz = new QuizRequest(dummyId, null, dummyContent);
+        QuizRequest quiz = new QuizRequest(dummyId, null, dummyContent, null);
         Set<ConstraintViolation<QuizRequest>> quizSessionIsNullViolation = validator.validate(quiz);
         assertFalse(quizSessionIsNullViolation.isEmpty());
     }
@@ -94,9 +76,9 @@ class EsbotQuizRequestEntityTest{
     @Test
     void testContentConstraintQuizRequest(){
         UUID dummyId = UUID.randomUUID();
-        Session dummySession = sessionCreator();
+        Session dummySession = UnitTestHelper.sessionCreator();
 
-        QuizRequest quiz = new QuizRequest(dummyId, dummySession, null);
+        QuizRequest quiz = new QuizRequest(dummyId, dummySession, null, null);
         Set<ConstraintViolation<QuizRequest>> quizContentIsNullViolation = validator.validate(quiz);
         assertFalse(quizContentIsNullViolation.isEmpty());
 
@@ -106,11 +88,12 @@ class EsbotQuizRequestEntityTest{
     }
 
     @Test
-    void testSessionIdQuizRequest(){
-        UUID id = UUID.randomUUID();
-        String question = "Question 1";
-        Session session = sessionCreator();
-        QuizRequest quiz = new QuizRequest(id, session, question);
-        assertEquals(session.getSessionID(), quiz.getSession().getSessionID());
+    void testRelationshipsQuizRequest(){
+        QuizRequest quizRequest = UnitTestHelper.quizRequestCreator();
+        QuizItem quizItem = UnitTestHelper.quizItemCreatorWithQuizRequest(quizRequest);
+        assertEquals(quizRequest.getQuizID(), quizItem.getQuizRequest().getQuizID());
+        assertEquals(quizRequest.getSession(), quizItem.getQuizRequest().getSession());
+        assertEquals(quizRequest.getQuizRequestContent(), quizItem.getQuizRequest().getQuizRequestContent());
+        assertEquals(quizRequest.getQuizItems().iterator().next(), quizItem);
     }
 }

@@ -5,14 +5,11 @@ import org.junit.jupiter.api.Test;
 import hse_st_group1.esbot.model.QuizAnswer;
 import hse_st_group1.esbot.model.QuizEvaluation;
 import hse_st_group1.esbot.model.QuizItem;
-import hse_st_group1.esbot.model.QuizRequest;
-import hse_st_group1.esbot.model.Session;
-import hse_st_group1.esbot.model.User;
+import hse_st_group1.esbot.util.UnitTestHelper;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
 
-import java.sql.Timestamp;
 import java.util.Set;
 import java.util.UUID;
 
@@ -22,47 +19,11 @@ class EsbotEvaluationEntityTest {
 
     Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
 
-    //Helper Methods
-    QuizItem quizItemCreator(){
-        UUID quizItemId = UUID.randomUUID();
-        QuizRequest quizRequest = quizRequestCreator();
-        String question = "Question";
-        QuizItem quizItem = new QuizItem(quizItemId, quizRequest, question, null, null);
-        quizItem.setQuizAnswers(Set.of(quizAnswerCreator(quizItem)));
-        return quizItem;
-    }
-    Session sessionCreator(){
-        UUID sessionId = UUID.randomUUID();
-        User user = userCreator();
-        Timestamp startedAt = new Timestamp(System.currentTimeMillis());
-        Timestamp lastAccessed = new Timestamp(System.currentTimeMillis());
-        Session session = new Session(sessionId, user, startedAt, lastAccessed, null, null);
-        user.setSessions(Set.of(session));
-        return session;
-    }
-    User userCreator(){
-        UUID userId = UUID.randomUUID();
-        String userName = "Max";
-        return new User(userId, userName, null);
-    }
-    QuizRequest quizRequestCreator(){
-        UUID quizRequestId = UUID.randomUUID();
-        Session session = sessionCreator();
-        String content = "Test";
-        return new QuizRequest(quizRequestId, session, content);
-    }
-    QuizAnswer quizAnswerCreator(QuizItem item){
-        UUID quizAnswerId = UUID.randomUUID();
-        QuizItem quizItem = item;
-        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-        return new QuizAnswer(quizAnswerId, quizItem, "", timestamp);
-    }
-
     @Test
     void testAllArgsConstructorQuizEvaluation(){
         UUID evaluationID = UUID.randomUUID();
-        QuizItem quizItem = new QuizItem(null,null,null,null,null);
-        QuizAnswer quizAnswer = new QuizAnswer();
+        QuizItem quizItem = UnitTestHelper.quizItemCreator();
+        QuizAnswer quizAnswer = UnitTestHelper.quizAnswerCreator(quizItem);
         String evaluation = "Correct!";
 
         QuizEvaluation quizEvaluation = new QuizEvaluation(evaluationID, quizItem, quizAnswer, evaluation);
@@ -75,17 +36,12 @@ class EsbotEvaluationEntityTest {
 
     @Test
     void testSettersQuizEvaluation(){
-        UUID dummyId = UUID.randomUUID();
-        QuizItem dummyItem = new QuizItem(dummyId, null, null, null, null);
-        QuizAnswer dummyAnswer = new QuizAnswer();
-        String dummyEvaluation = "Dummy";
-
-        QuizEvaluation quizEvaluation = new QuizEvaluation(dummyId, dummyItem, dummyAnswer, dummyEvaluation);
+        QuizEvaluation quizEvaluation = UnitTestHelper.quizEvaluationCreator();
 
         UUID evaluationID = UUID.randomUUID();
-        QuizItem quizItem = new QuizItem(null,null,null,null,null);
-        QuizAnswer quizAnswer = new QuizAnswer();
-        String evaluation = "Correct!";
+        QuizItem quizItem = UnitTestHelper.quizItemCreator();
+        QuizAnswer quizAnswer = UnitTestHelper.quizAnswerCreator(quizItem);
+        String evaluation = "Not Correct!";
 
         quizEvaluation.setEvaluationID(evaluationID);
         quizEvaluation.setQuizItem(quizItem);
@@ -124,7 +80,7 @@ class EsbotEvaluationEntityTest {
     @Test
     void testQuizAnswerConstraintQuizEvaluation(){
         UUID dummyQuizItemId = UUID.randomUUID();
-        QuizItem dummyItem = new QuizItem(dummyQuizItemId, null, null, null, null);
+        QuizItem dummyItem = UnitTestHelper.quizItemCreator();
         String dummyEvaluation = "Dummy";
 
         QuizEvaluation quizEvaluation = new QuizEvaluation(dummyQuizItemId, dummyItem, null, dummyEvaluation);
@@ -135,8 +91,8 @@ class EsbotEvaluationEntityTest {
     @Test
     void testEvaluationConstraintQuizEvaluation(){
         UUID dummyQuizItemId = UUID.randomUUID();
-        QuizItem dummyItem = new QuizItem(dummyQuizItemId, null, null, null, null);
-        QuizAnswer dummyAnswer = new QuizAnswer();
+        QuizItem dummyItem = UnitTestHelper.quizItemCreator();
+        QuizAnswer dummyAnswer = UnitTestHelper.quizAnswerCreator(dummyItem);
         
         QuizEvaluation quizEvaluation = new QuizEvaluation(dummyQuizItemId, dummyItem, dummyAnswer, null);
         Set<ConstraintViolation<QuizEvaluation>> quizEvaluationIsNullConstraintViolation = validator.validate(quizEvaluation);
@@ -146,24 +102,21 @@ class EsbotEvaluationEntityTest {
         Set<ConstraintViolation<QuizEvaluation>> quizEvaluationIsBlankConstraintViolation = validator.validate(quizEvaluation);
         assertFalse(quizEvaluationIsBlankConstraintViolation.isEmpty());
     }
-    
-    @Test
-    void testQuizItemIdQuizEvaluation(){
-        UUID evaluationID = UUID.randomUUID();
-        QuizItem quizItem = quizItemCreator();
-        QuizAnswer quizAnswer = quizItem.getQuizAnswers().iterator().next();
-        String evaluation = "OK";
-        QuizEvaluation quizEvaluation = new QuizEvaluation(evaluationID, quizItem, quizAnswer, evaluation);
-        assertEquals(quizItem.getQuizItemID(), quizEvaluation.getQuizItem().getQuizItemID());
-    }
 
     @Test
-    void testQuizAnswerQuizEvaluation(){
+    void testRelationshipsQuizEvaluation(){
         UUID evaluationID = UUID.randomUUID();
-        QuizItem quizItem = quizItemCreator();
+        QuizItem quizItem = UnitTestHelper.quizItemCreator();
         QuizAnswer quizAnswer = quizItem.getQuizAnswers().iterator().next();
         String evaluation = "OK";
+        
         QuizEvaluation quizEvaluation = new QuizEvaluation(evaluationID, quizItem, quizAnswer, evaluation);
+        quizItem.setQuizEvaluations(Set.of(quizEvaluation));
+        quizItem.setQuizAnswers(Set.of(quizAnswer));
+
         assertEquals(quizAnswer.getAnswer(), quizEvaluation.getQuizAnswer().getAnswer());
+        assertEquals(quizItem.getQuizItemID(), quizEvaluation.getQuizItem().getQuizItemID());
+        assertEquals(quizEvaluation, quizItem.getQuizEvaluations().iterator().next());
+        assertEquals(quizEvaluation.getQuizAnswer(), quizItem.getQuizAnswers().iterator().next());
     }
 }

@@ -101,7 +101,6 @@ cd ./esbot
 ```bash
 sudo docker compose up -d
 ```
-**- Detach from Container: Press d**
 
 ## Perform a clean install
 

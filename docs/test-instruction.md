@@ -3,7 +3,7 @@
 1. Navigate to the backend folder:
     - e.g.
     ```bash
-    cd repository/application/backend/
+    cd esbot/application/backend/
     ```
 2. Run the tests using Maven
     - Run tests using Maven locally:

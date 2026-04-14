@@ -3,16 +3,21 @@
 This setup manual only covers Linux Mint for other distributions or operating systems please visit the website or manual of the maintainer.
 
 ## Prerequisites
+- Git
 - node.js v24
 - npm v11.12.0
 - Angular CLI
 - Docker
 - Postgres v17.9 Docker Image
-- (Git)
 
 For a installation guide for Linux Mint please see **Install Dependencies** below.
 
 ## Install Dependencies
+**1. Install git**
+```bash
+sudo apt install -y git
+```
+
 **1. Install node.js v24 and npm**
 ```bash 
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.4/install.sh | bash
@@ -74,10 +79,49 @@ sudo apt install -y openjdk-21-jdk
 
 **5. Install Maven**
 ```bash
-sudo apt install maven
+sudo apt install -y maven
 ```
 
-## Setup Springboot from scratch
+## Clone the repository
+
+**- Using ssh:**
+```bash
+git clone ssh://git@github.com:/hse-st-group1/esbot
+```
+
+**- Using https:**
+```bash
+git clone https://github.com/hse-st-group1/esbot
+```
+
+### Start the Postgres container
+**- Navigate into esbot**
+**- Start the container**
+```bash
+sudo docker compose up
+```
+**- Detach from Container: Press d**
+
+## Perform a clean install
+
+**- Navigate into esbot**
+**- Navigate to ./application/backend/**
+**- Perform a clean install**
+```bash
+mvn clean install
+```
+
+### Start Spring-Boot using Maven
+```bash
+mvn spring-boot:run
+```
+
+### Test the backend using Maven
+```bash
+mvn test
+```
+
+## Create a fresh Springboot Setup from scratch
 
 ### Get the Springboot Framework
 **1. Visit Spring Initializr and download the package.**
@@ -159,40 +203,4 @@ mvn spring-boot:run
 **- If starting spring-boot fails try to clean install using maven**
 ```bash
 mvn clean install
-```
-
-## When installing using the GitHub repository
-
-### Clone the repository
-
-**- Using ssh:**
-```bash
-git clone ssh://git@github.com:/hse-st-group1/esbot
-```
-
-**- Using http:**
-```bash
-git clone http://github.com/hse-st-group1/esbot
-```
-
-### Perform a clean install
-
-**- Navigate into esbot**
-**- Navigate to ./application/backend/**
-**- Perform a clean install**
-```bash
-mvn clean install
-```
-
-### Start the Postgres container
-**- Navigate into esbot**
-**- Start the container**
-```bash
-sudo docker compose up
-```
-**- Detach from Container: Press d**
-
-### Start Spring-Boot using Maven
-```bash
-mvn spring-boot:run
 ```

@@ -7,7 +7,6 @@ import hse_st_group1.esbot.util.UnitTestHelper;
 import hse_st_group1.esbot.model.QuizItem;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validator;
-import jakarta.validation.constraints.Null;
 import jakarta.validation.Validation;
 
 import java.util.Set;

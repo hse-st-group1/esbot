@@ -3,10 +3,7 @@ package hse_st_group1.esbot.model;
 import java.sql.Timestamp;
 import java.util.UUID;
 
-import org.hibernate.annotations.NotFound;
-
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;

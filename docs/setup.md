@@ -18,7 +18,7 @@ For a installation guide for Linux Mint please see **Install Dependencies** belo
 sudo apt install -y git
 ```
 
-**1. Install node.js v24 and npm**
+**2. Install node.js v24 and npm**
 ```bash 
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.4/install.sh | bash
 export NVM_DIR="$HOME/.nvm"
@@ -29,18 +29,18 @@ nvm install 24
 node -v
 npm -v
 ```
-**2. Install Angular CLI**
+**3. Install Angular CLI**
 ```bash
 npm install -g npm@11.12.0
 npm install -g @angular/cli
 ```
 
-**3. Install JDK 21**
+**4. Install JDK 21**
 ```bash
 sudo apt install -y openjdk-21-jdk
 ```
 
-**4. Install Docker and get the Postgres Image**
+**5. Install Docker and get the Postgres Image**
 - **Add the Docker repository and update APT**
     ```bash
     echo -e "\nAdding Repositories\n"
@@ -75,7 +75,7 @@ sudo apt install -y openjdk-21-jdk
     sudo docker pull postgres:17.9
     ```
 
-**5. Install Maven**
+**6. Install Maven**
 ```bash
 sudo apt install -y maven
 ```

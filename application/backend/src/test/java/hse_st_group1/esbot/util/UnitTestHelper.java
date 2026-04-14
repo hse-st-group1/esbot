@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 import java.util.Set;
 import java.util.UUID;
 
+import hse_st_group1.esbot.model.Message;
 import hse_st_group1.esbot.model.QuizAnswer;
 import hse_st_group1.esbot.model.QuizEvaluation;
 import hse_st_group1.esbot.model.QuizItem;
@@ -93,5 +94,17 @@ public class UnitTestHelper {
         QuizEvaluation quizEvaluation = new QuizEvaluation(evaluationId, quizItem, quizAnswer, evaluation);
         quizItem.setQuizEvaluations(Set.of(quizEvaluation));
         return quizEvaluation;
+    }
+
+    //Message functions
+    public static Message createTestMessage() {
+        return new Message(
+            UUID.randomUUID(),
+            UnitTestHelper.sessionCreator(),
+            "Valid Message!",
+            Timestamp.valueOf("2026-04-14 14:21:00"),
+            false,
+            "TEST"
+        );
     }
 }

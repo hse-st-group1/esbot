@@ -32,17 +32,6 @@ class MessageTest {
     private UUID id = UUID.randomUUID();
     private Session s = UnitTestHelper.sessionCreator();
 
-    public static Message createTestMessage() {
-        return new Message(
-            UUID.randomUUID(),
-            UnitTestHelper.sessionCreator(),
-            "Valid Message!",
-            Timestamp.valueOf("2026-04-14 14:21:00"),
-            false,
-            "TEST"
-        );
-    }
-
     @Test
     void testCreateMessage() {
 
@@ -59,7 +48,7 @@ class MessageTest {
 
     @Test
     void testMessageSetter() {
-        Message message = createTestMessage();
+        Message message = UnitTestHelper.createTestMessage();
         UUID testID = UUID.randomUUID();
         Session testSession = UnitTestHelper.sessionCreatorWithUser(message.getSession().getUser());
         Timestamp testTimestamp = new Timestamp(System.currentTimeMillis());
@@ -81,7 +70,7 @@ class MessageTest {
 
     @Test 
     void testSessionNotNullConstraint () {
-        Message message = createTestMessage();
+        Message message = UnitTestHelper.createTestMessage();
         message.setSession(null);
 
         testSingleConstraint(message, "must not be null", "session");
@@ -89,7 +78,7 @@ class MessageTest {
 
     @Test 
     void testMessageContentNotBlankConstraint () {
-        Message message = createTestMessage();
+        Message message = UnitTestHelper.createTestMessage();
         message.setMessageContent(" ");
 
         testSingleConstraint(message, "must not be blank", "messageContent");
@@ -97,7 +86,7 @@ class MessageTest {
 
     @Test 
     void testTimestampNotNullConstraint () {
-        Message message = createTestMessage();
+        Message message = UnitTestHelper.createTestMessage();
         message.setTimestamp(null);
 
         testSingleConstraint(message, "must not be null", "timestamp");
@@ -105,7 +94,7 @@ class MessageTest {
 
     @Test 
     void testSenderNotNullConstraint () {
-        Message message = createTestMessage();
+        Message message = UnitTestHelper.createTestMessage();
         message.setSender(null);
 
         testSingleConstraint(message, "must not be null", "sender");
@@ -113,7 +102,7 @@ class MessageTest {
 
     @Test 
     void testMessageTypeSizeConstraints () {
-        Message message = createTestMessage();
+        Message message = UnitTestHelper.createTestMessage();
         message.setMessageType("x".repeat(33));
 
         testSingleConstraint(message, "size must be between 0 and 32", "messageType");
@@ -121,7 +110,7 @@ class MessageTest {
 
     @Test 
     void testMessageTypeNotBlankConstraints () {
-        Message message = createTestMessage();
+        Message message = UnitTestHelper.createTestMessage();
         message.setMessageType(" ");
 
         testSingleConstraint(message, "must not be blank", "messageType");
@@ -129,7 +118,7 @@ class MessageTest {
 
     @Test
     void testRelatinshipToSession() {
-        Message message = createTestMessage();
+        Message message = UnitTestHelper.createTestMessage();
         Session session = message.getSession();
         session.setMessages(Set.of(message));
 

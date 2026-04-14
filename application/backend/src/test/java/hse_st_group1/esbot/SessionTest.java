@@ -13,7 +13,7 @@ import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
 
-class SessionEntityTest {
+class SessionTest {
 
     // Validator checks NotNull Constraints that can otherwise not be tested without Database Connection
     Validator validator = Validation.buildDefaultValidatorFactory().getValidator();

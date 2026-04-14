@@ -16,7 +16,7 @@ import jakarta.validation.Validator;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class EsbotUserEntityTest{
+class UserTest{
 
     Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
 

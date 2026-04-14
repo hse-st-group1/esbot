@@ -15,7 +15,7 @@ import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class EsbotEvaluationEntityTest {
+class QuizEvaluationTest {
 
     Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
 

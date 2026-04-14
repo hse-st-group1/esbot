@@ -14,29 +14,35 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-// Getter & Setter Methods do not need to be defined -> provided by Spring Lombok
+// Getter & Setter Methods & Constructors do not need to be defined -> provided by Spring Lombok
 @Getter
 @Setter
-// Added AllArgsConstructor -> Testing
 @AllArgsConstructor
+@NoArgsConstructor
 public class Session {
     @Id 
+    @NotNull
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(nullable = false)
     private UUID sessionID;
 
+    @NotNull
     @ManyToOne (optional = false) //cannot be null
     @JoinColumn(updatable = false) //cannot be overwritten
     private User user;
 
+    @NotNull
     @Column(updatable = false, nullable = false)
     private Timestamp startedAt;
 
+    @NotNull
     @Column(nullable = false)
     private Timestamp lastAccessed;
 
@@ -45,4 +51,16 @@ public class Session {
 
     @OneToMany (mappedBy = "session", cascade = CascadeType.REMOVE)
     private Set<QuizRequest> quizRequests = new HashSet<>();
+    
+    // Lombok automatically generates Setters for all Entity Properties, even if they are configured as not updateable
+    // Issues are only caught when trying to save to the Database
+    public void setSessionID (UUID sessionID) {
+        throw new UnsupportedOperationException("Session: sessionID is not updateable");
+    }
+    public void setUser (User user) {
+        throw new UnsupportedOperationException("Session: sessionID is not updateable");
+    }
+    public void setStartedAt (Timestamp timestamp) {
+        throw new UnsupportedOperationException("Session: sessionID is not updateable");
+    }
 }

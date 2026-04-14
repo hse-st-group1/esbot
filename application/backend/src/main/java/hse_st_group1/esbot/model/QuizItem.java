@@ -13,24 +13,31 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Getter
 @Setter
 @AllArgsConstructor
+@NoArgsConstructor
 public class QuizItem {
     @Id 
+    @NotNull
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(nullable = false)
     private UUID quizItemID;
 
+    @NotNull
     @ManyToOne (optional = false) //cannot be null
     @JoinColumn(updatable = false) //cannot be overwritten
     private QuizRequest quizRequest;
 
+    @NotEmpty
     @Column (nullable = false)
     private String question;
 

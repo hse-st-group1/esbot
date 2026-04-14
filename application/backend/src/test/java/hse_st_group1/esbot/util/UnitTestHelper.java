@@ -30,6 +30,17 @@ public class UnitTestHelper {
         user.setSessions(Set.of(session));
         return session;
     }
+
+    public static Session sessionCreator(UUID sessionID){
+        UUID sessionId = sessionID;
+        User user = userCreator();
+        Timestamp startedAt = new Timestamp(System.currentTimeMillis());
+        Timestamp lastAccessed = new Timestamp(System.currentTimeMillis());
+        Session session = new Session(sessionId, user, startedAt, lastAccessed, null, null);
+        user.setSessions(Set.of(session));
+        return session;
+    }
+
     public static Session sessionCreatorWithUser(User user){
         UUID sessionId = UUID.randomUUID();
         Timestamp startedAt = new Timestamp(System.currentTimeMillis());
@@ -101,6 +112,28 @@ public class UnitTestHelper {
         return new Message(
             UUID.randomUUID(),
             UnitTestHelper.sessionCreator(),
+            "Valid Message!",
+            Timestamp.valueOf("2026-04-14 14:21:00"),
+            false,
+            "TEST"
+        );
+    }
+
+    public static Message createTestMessage(Session session) {
+        return new Message(
+            UUID.randomUUID(),
+            session,
+            "Valid Message!",
+            Timestamp.valueOf("2026-04-14 14:21:00"),
+            false,
+            "TEST"
+        );
+    }
+
+    public static Message createTestMessage(UUID sessionID) {
+        return new Message(
+            UUID.randomUUID(),
+            UnitTestHelper.sessionCreator(sessionID),
             "Valid Message!",
             Timestamp.valueOf("2026-04-14 14:21:00"),
             false,

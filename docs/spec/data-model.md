@@ -1,24 +1,26 @@
 # Entity Esbot documentation
 ## Summary
 
-- [Introduction](#introduction)
-- [Database Type](#database-type)
-- [Table Structure](#table-structure)
+- [Persistence mapping strategy](#persistence-mapping-strategy)
+- [List of Entities and Table structure](#list-of-entities-and-table-structure)
 	- [Sessions](#sessions)
 	- [Message](#message)
 	- [QuizRequest](#quizrequest)
 	- [QuizEvaluation](#quizevaluation)
 	- [QuizItem](#quizitem)
 	- [QuizAnswer](#quizanswer)
-- [Relationships](#relationships)
+- [Relationship-cardinalities](#relationship-cardinalities)
 - [Database Diagram](#database-diagram)
 
-## Introduction
-
-## Database type
+## Persistence mapping strategy
 
 - **Database system:** PostgreSQL
-## Table structure
+- **Reasoning:**
+	- Prior knowledge of relational databases.
+	- Easy implementation of structured relationships and queries.
+	- Data integrity ensures that no duplicates are stored and each relationship is consistent.
+
+## List of Entities and Table structure
 
 ### Sessions
 
@@ -80,7 +82,7 @@
 | **TimeStamp** | TIMESTAMP | not null |  | | 
 
 
-## Relationships
+## Relationship cardinalities
 
 - **Message to Sessions**: many_to_one
 - **QuizItem to QuizRequest**: many_to_one

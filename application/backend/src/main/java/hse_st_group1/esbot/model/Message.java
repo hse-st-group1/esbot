@@ -28,23 +28,23 @@ public class Message {
     private UUID messageID;
 
     @ManyToOne
-    @NotNull
+    @NotNull(message = "must not be null")
     @JoinColumn(nullable = false)
     private Session session;
 
     @Column(nullable = false)
-    @NotBlank
+    @NotBlank(message = "must not be blank")
     private String messageContent;
 
-    @NotNull
+    @NotNull(message = "must not be null") 
     @Column(nullable = false)
     private Timestamp timestamp;
 
-    @NotNull
+    @NotNull(message = "must not be null")
     @Column(nullable = false)
     private Boolean sender;
 
-    @NotBlank @Size(max = 32)
+    @NotBlank(message = "must not be blank") @Size(max = 32, message="size must be between 0 and 32")
     @Column(nullable=false, length = 32)
     private String messageType;
 }

@@ -13,7 +13,7 @@ import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
 
-class EsbotSessionEntityTest {
+class SessionEntityTest {
 
     // Validator checks NotNull Constraints that can otherwise not be tested without Database Connection
     Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
@@ -50,24 +50,24 @@ class EsbotSessionEntityTest {
         assertThat(session).isNotNull();
        
         //Assert that NotNull constrainst are implemented
-        Set<ConstraintViolation<Session>> sessionNoArgsConstructorSessionIDValidation = validator.validateProperty(session, "sessionID");
-        assertThat(sessionNoArgsConstructorSessionIDValidation).isNotEmpty();
+        Set<ConstraintViolation<Session>> sessionIDNotNullValidation = validator.validateProperty(session, "sessionID");
+        assertThat(sessionIDNotNullValidation).isNotNull();
 
-        Set<ConstraintViolation<Session>> sessionNoArgsConstructorUserValidation = validator.validateProperty(session, "user");
-        assertThat(sessionNoArgsConstructorUserValidation).isNotEmpty();
+        Set<ConstraintViolation<Session>> userNotNullValidation = validator.validateProperty(session, "user");
+        assertThat(userNotNullValidation).isNotNull();
 
-        Set<ConstraintViolation<Session>> sessionNoArgsConstructorStartedAtValidation = validator.validateProperty(session, "startedAt");
-        assertThat(sessionNoArgsConstructorStartedAtValidation).isNotEmpty();
+        Set<ConstraintViolation<Session>> startedAtNotNullValidation = validator.validateProperty(session, "startedAt");
+        assertThat(startedAtNotNullValidation).isNotNull();
 
-        Set<ConstraintViolation<Session>> sessionNoArgsConstructorLastAccessedValidation = validator.validateProperty(session, "lastAccessed");
-        assertThat(sessionNoArgsConstructorLastAccessedValidation).isNotEmpty();
+        Set<ConstraintViolation<Session>> lastAccessedNotNullValidation = validator.validateProperty(session, "lastAccessed");
+        assertThat(lastAccessedNotNullValidation).isNotNull();
 
         // Assert that nullable Properties do not throw Errors
-        Set<ConstraintViolation<Session>> sessionNoArgsConstructorMessagesValidation = validator.validateProperty(session, "messages");
-        assertThat(sessionNoArgsConstructorMessagesValidation).isEmpty();
+        Set<ConstraintViolation<Session>> messagesEmptyValidation = validator.validateProperty(session, "messages");
+        assertThat(messagesEmptyValidation).isEmpty();
 
-        Set<ConstraintViolation<Session>> sessionNoArgsConstructorQuizRequestValidation = validator.validateProperty(session, "messages");
-        assertThat(sessionNoArgsConstructorQuizRequestValidation).isEmpty();
+        Set<ConstraintViolation<Session>> quizRequestEmptyValidation = validator.validateProperty(session, "messages");
+        assertThat(quizRequestEmptyValidation).isEmpty();
         
     }
 
@@ -123,11 +123,13 @@ class EsbotSessionEntityTest {
         session.setMessages(Set.of(message));
         assertThat(message.getSession().getSessionID()).isEqualTo(sessionID);
         assertThat(session.getMessages()).isEqualTo(Set.of(message));
+        assertThat(session.getMessages()).contains(message);
 
         // Session can have many QuizRequests
         QuizRequest quizRequest= UnitTestHelper.quizRequestCreatorWithSession(UnitTestHelper.sessionCreator(sessionID));
         session.setQuizRequests(Set.of(quizRequest));
         assertThat(quizRequest.getSession().getSessionID()).isEqualTo(sessionID);
         assertThat(session.getQuizRequests()).isEqualTo(Set.of(quizRequest));
+        assertThat(session.getQuizRequests()).contains(quizRequest);
     }
 }

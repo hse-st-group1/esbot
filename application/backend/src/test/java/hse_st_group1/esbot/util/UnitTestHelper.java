@@ -76,6 +76,13 @@ public class UnitTestHelper {
         quizItem.setQuizAnswers(Set.of(quizAnswerCreator(quizItem)));
         return quizItem;
     }
+    public static QuizItem quizItemCreator(UUID quizItemId){
+        QuizRequest quizRequest = quizRequestCreator();
+        String question = "Question";
+        QuizItem quizItem = new QuizItem(quizItemId, quizRequest, question, null, null);
+        quizItem.setQuizAnswers(Set.of(quizAnswerCreator(quizItem)));
+        return quizItem;
+    }
     public static QuizItem quizItemCreatorWithQuizRequest(QuizRequest quizRequest){
         UUID quizItemId = UUID.randomUUID();
         String question = "Question";
@@ -106,6 +113,14 @@ public class UnitTestHelper {
         quizItem.setQuizEvaluations(Set.of(quizEvaluation));
         return quizEvaluation;
     }
+    public static QuizEvaluation quizEvaluationCreator(QuizItem quizItem){
+        UUID evaluationId = UUID.randomUUID();
+        QuizAnswer quizAnswer = quizAnswerCreator(quizItem);
+        String evaluation = "Correct";
+        QuizEvaluation quizEvaluation = new QuizEvaluation(evaluationId, quizItem, quizAnswer, evaluation);
+        quizItem.setQuizEvaluations(Set.of(quizEvaluation));
+        return quizEvaluation;
+    }    
 
     //Message functions
     public static Message createTestMessage() {

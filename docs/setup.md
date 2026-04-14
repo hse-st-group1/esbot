@@ -62,13 +62,11 @@ sudo apt install -y openjdk-21-jdk
     ```
 - **Install Docker with dependencies**
     ```bash
-    sudo apt install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+    sudo apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
     ```
 - **Start the Docker service and set permissions**
     ```bash
-    sudo systemctl status docker
     sudo systemctl start docker
-
     sudo groupadd docker
     sudo usermod -aG docker $USER
     ```
@@ -96,16 +94,21 @@ git clone https://github.com/hse-st-group1/esbot
 
 ### Start the Postgres container
 **- Navigate into esbot**
+```bash
+cd ./esbot
+```
 **- Start the container**
 ```bash
-sudo docker compose up
+sudo docker compose up -d
 ```
 **- Detach from Container: Press d**
 
 ## Perform a clean install
 
-**- Navigate into esbot**
-**- Navigate to ./application/backend/**
+**- Navigate into the backend folder**
+```bash
+cd ./application/backend/
+```
 **- Perform a clean install**
 ```bash
 mvn clean install
@@ -143,6 +146,7 @@ mvn test
         - Spring Data JPA
 - Preconfigured Package: [Spring-Boot-Esbot-Package](https://start.spring.io/#!type=maven-project&language=java&platformVersion=4.0.5&packaging=jar&configurationFileFormat=properties&jvmVersion=21&groupId=hse-st-group1&artifactId=esbot&packageName=hse-st-group1.esbot&dependencies=lombok,web,postgresql,data-jpa)
 - Press `Generate` to download the package
+
 **2. Unzip the archive in the directory you want**
 ```bash
 unzip esbot.zip

@@ -41,7 +41,7 @@ public class UnitTestHelper {
         return session;
     }
 
-    public static Session sessionCreatorWithUser(User user){
+    public static Session sessionCreator(User user){
         UUID sessionId = UUID.randomUUID();
         Timestamp startedAt = new Timestamp(System.currentTimeMillis());
         Timestamp lastAccessed = new Timestamp(System.currentTimeMillis());
@@ -59,7 +59,7 @@ public class UnitTestHelper {
         session.setQuizRequests(Set.of(quizRequest));
         return quizRequest;
     }
-    public static QuizRequest quizRequestCreatorWithSession(Session session){
+    public static QuizRequest quizRequestCreator(Session session){
         UUID quizRequestId = UUID.randomUUID();
         String content = "Test";
         QuizRequest quizRequest = new QuizRequest(quizRequestId, session, content, null);
@@ -83,7 +83,7 @@ public class UnitTestHelper {
         quizItem.setQuizAnswers(Set.of(quizAnswerCreator(quizItem)));
         return quizItem;
     }
-    public static QuizItem quizItemCreatorWithQuizRequest(QuizRequest quizRequest){
+    public static QuizItem quizItemCreator(QuizRequest quizRequest){
         UUID quizItemId = UUID.randomUUID();
         String question = "Question";
         QuizItem quizItem = new QuizItem(quizItemId, quizRequest, question, null, null);

@@ -23,7 +23,7 @@ class QuizItemTest {
     User user = UnitTestHelper.userCreator();
 
     UUID quizItemID = UUID.randomUUID();
-    QuizRequest quizRequestWithSessionID = UnitTestHelper.quizRequestCreatorWithSession(UnitTestHelper.sessionCreator(sessionID));
+    QuizRequest quizRequestWithSessionID = UnitTestHelper.quizRequestCreator(UnitTestHelper.sessionCreator(sessionID));
     QuizRequest quizRequestWithoutSessionID = UnitTestHelper. quizRequestCreator();
     String question = "Question Content";
     Set<QuizAnswer> quizAnswers = Set.of(UnitTestHelper.quizAnswerCreator(UnitTestHelper.quizItemCreator(quizItemID)));

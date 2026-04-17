@@ -24,7 +24,7 @@ class SessionTest {
     Timestamp startedAt = new Timestamp(System.currentTimeMillis());
     Timestamp lastAccessed = new Timestamp(System.currentTimeMillis());
     Set<Message> messages = Set.of(UnitTestHelper.createTestMessage(UnitTestHelper.sessionCreator(sessionID)));
-    Set<QuizRequest> quizRequests = Set.of(UnitTestHelper.quizRequestCreatorWithSession(UnitTestHelper.sessionCreator(sessionID)));
+    Set<QuizRequest> quizRequests = Set.of(UnitTestHelper.quizRequestCreator(UnitTestHelper.sessionCreator(sessionID)));
 
     @Test
     void testAllArgsConstructorSession () {
@@ -115,7 +115,7 @@ class SessionTest {
     @Test
     void testRelationshipsSession () {
         // Session is linked to a User
-        Session session = UnitTestHelper.sessionCreatorWithUser(user);
+        Session session = UnitTestHelper.sessionCreator(user);
         assertThat(session.getUser()).isEqualTo(user);
         
         // Session can have many Messages
@@ -126,7 +126,7 @@ class SessionTest {
         assertThat(session.getMessages()).contains(message);
 
         // Session can have many QuizRequests
-        QuizRequest quizRequest= UnitTestHelper.quizRequestCreatorWithSession(UnitTestHelper.sessionCreator(sessionID));
+        QuizRequest quizRequest= UnitTestHelper.quizRequestCreator(UnitTestHelper.sessionCreator(sessionID));
         session.setQuizRequests(Set.of(quizRequest));
         assertThat(quizRequest.getSession().getSessionID()).isEqualTo(sessionID);
         assertThat(session.getQuizRequests()).isEqualTo(Set.of(quizRequest));

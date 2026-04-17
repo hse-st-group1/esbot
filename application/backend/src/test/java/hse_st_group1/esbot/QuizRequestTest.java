@@ -79,7 +79,7 @@ class QuizRequestTest{
     @Test
     void testRelationshipsQuizRequest(){
         QuizRequest quizRequest = UnitTestHelper.quizRequestCreator();
-        QuizItem quizItem = UnitTestHelper.quizItemCreatorWithQuizRequest(quizRequest);
+        QuizItem quizItem = UnitTestHelper.quizItemCreator(quizRequest);
         assertEquals(quizRequest.getQuizID(), quizItem.getQuizRequest().getQuizID());
         assertEquals(quizRequest.getSession(), quizItem.getQuizRequest().getSession());
         assertEquals(quizRequest.getQuizRequestContent(), quizItem.getQuizRequest().getQuizRequestContent());

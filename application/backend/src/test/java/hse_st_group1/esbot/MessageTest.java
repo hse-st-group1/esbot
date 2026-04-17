@@ -50,7 +50,7 @@ class MessageTest {
     void testMessageSetter() {
         Message message = UnitTestHelper.createTestMessage();
         UUID testID = UUID.randomUUID();
-        Session testSession = UnitTestHelper.sessionCreatorWithUser(message.getSession().getUser());
+        Session testSession = UnitTestHelper.sessionCreator(message.getSession().getUser());
         Timestamp testTimestamp = new Timestamp(System.currentTimeMillis());
 
         message.setMessageID(testID);

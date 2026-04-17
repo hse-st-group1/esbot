@@ -85,7 +85,7 @@ class UserTest{
     @Test
     void testRelationshipsUser(){
         User user = UnitTestHelper.userCreator();
-        UnitTestHelper.sessionCreatorWithUser(user);
+        UnitTestHelper.sessionCreator(user);
         Session userSession = user.getSessions().iterator().next();
         assertEquals(user.getUserName(), userSession.getUser().getUserName());
         assertEquals(user.getUserID(), userSession.getUser().getUserID());

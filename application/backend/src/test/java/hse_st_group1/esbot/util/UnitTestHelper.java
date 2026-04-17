@@ -1,6 +1,7 @@
 package hse_st_group1.esbot.util;
 
 import java.sql.Timestamp;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
@@ -27,7 +28,7 @@ public class UnitTestHelper {
         Timestamp startedAt = new Timestamp(System.currentTimeMillis());
         Timestamp lastAccessed = new Timestamp(System.currentTimeMillis());
         Session session = new Session(sessionId, user, startedAt, lastAccessed, null, null);
-        user.setSessions(Set.of(session));
+        user.setSessions(new HashSet<Session>());
         return session;
     }
 

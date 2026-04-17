@@ -15,12 +15,12 @@ Scenario: Get a quiz
 
 Scenario: AI failure when message gets send
     Given I have a session
-    When I send a message
-    And AI is not available
+    When AI is not available
+    But I send a message
     Then a error message gets sent back stating the service is currently unavailable
 
 Scenario: AI failure when quizrequest gets send
     Given I have a session
-    When I send a quizrequest
-    And AI is not available
+    When AI is not available
+    But I send a message
     Then a error message gets sent back stating the service is currently unavailable

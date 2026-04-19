@@ -8,11 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
 import hse_st_group1.esbot.AIServiceUnavailableException;
 import hse_st_group1.esbot.model.*;
@@ -25,16 +21,9 @@ import hse_st_group1.esbot.services.MessageService;
 import hse_st_group1.esbot.services.QuizRequestService;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.When;
-import io.cucumber.spring.CucumberContextConfiguration;
-import jakarta.transaction.Transactional;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.After;
-import io.cucumber.java.Before;
 
-@CucumberContextConfiguration
-@SpringBootTest
-@ActiveProfiles("test")
-@Transactional
 public class AIFallbackSteps {
 
     private User user;
@@ -61,13 +50,8 @@ public class AIFallbackSteps {
     private QuizRequestRepository quizRequestRepository;
     @Autowired
     private QuizItemRepository quizItemRepository;
-    @MockitoBean
+    @Autowired
     private AIService aiService;
-
-    @Before
-    public void startSetup(){
-        MockitoAnnotations.openMocks(this.aiService);
-    }
 
     @Given("I have a session")
     public void i_have_a_session(){

@@ -7,6 +7,7 @@ import java.util.Set;
 
 import org.springframework.stereotype.Service;
 
+import hse_st_group1.esbot.AIServiceUnavailableException;
 import hse_st_group1.esbot.model.QuizItem;
 import hse_st_group1.esbot.model.QuizRequest;
 import hse_st_group1.esbot.repository.QuizItemRepository;
@@ -25,6 +26,7 @@ public class QuizRequestService {
         this.quizRequestRepository = quizRequestRepository;
         this.quizItemRepository = quizItemRepository;
     }
+
     @Transactional
     public QuizRequest createQuiz(QuizRequest quizRequest){
         List<String> questions;
@@ -33,20 +35,19 @@ public class QuizRequestService {
             questions = aiService.createQuestions(quizRequest.getQuizRequestContent());
         }
         else{
-            throw new RuntimeException("Error: Quiz service is currently unavailable");
+            throw new AIServiceUnavailableException("Error: Quiz service is currently unavailable");
         }
 
-        List<QuizItem> items = new ArrayList<>();
-
         quizRequestRepository.save(quizRequest);
-
+        List<QuizItem> items = new ArrayList<>();
+        
         for(String question: questions){
             QuizItem item = new QuizItem(null, quizRequest, question, null, null);
             items.add(item);
             quizItemRepository.save(item);
         }
+
         quizRequest.setQuizItems(items);
-        
         return quizRequestRepository.save(quizRequest);
     }
 }

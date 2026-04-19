@@ -1,14 +1,11 @@
 package hse_st_group1.esbot.steps;
 
-import static org.assertj.core.api.Assertions.catchException;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
@@ -17,6 +14,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
+import hse_st_group1.esbot.AIServiceUnavailableException;
 import hse_st_group1.esbot.model.*;
 import hse_st_group1.esbot.repository.QuizItemRepository;
 import hse_st_group1.esbot.repository.QuizRequestRepository;
@@ -25,7 +23,6 @@ import hse_st_group1.esbot.repository.UserRepository;
 import hse_st_group1.esbot.services.AIService;
 import hse_st_group1.esbot.services.MessageService;
 import hse_st_group1.esbot.services.QuizRequestService;
-import hse_st_group1.esbot.util.UnitTestHelper;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.When;
 import io.cucumber.spring.CucumberContextConfiguration;
@@ -43,9 +40,13 @@ public class AIFallbackSteps {
     private User user;
     private Session session;
     private Timestamp timestamp;
+
     private Message message;
-    private QuizRequest quizRequest;
     private Message aiMessage;
+
+    private QuizRequest quizRequest;
+    private QuizRequest quiz;
+
     private RuntimeException exception;
 
     @Autowired
@@ -65,14 +66,14 @@ public class AIFallbackSteps {
 
     @Before
     public void startSetup(){
-        MockitoAnnotations.openMocks(this);
-        
+        MockitoAnnotations.openMocks(this.aiService);
     }
 
     @Given("I have a session")
     public void i_have_a_session(){
-        this.user = new User(null, "user", null);
+        this.user = new User(null, "cucumber_test", null);
         this.user = userRepository.save(user);
+        
         timestamp = new Timestamp(System.currentTimeMillis());
         this.session = new Session(null, user, timestamp, timestamp, null, null);
         this.session = sessionRepository.save(session);
@@ -110,8 +111,8 @@ public class AIFallbackSteps {
         try{
             aiMessage = messageService.sendMessage(message);
         }
-        catch(RuntimeException e){
-            exception = e;
+        catch(AIServiceUnavailableException serviceUnavailableException){
+            exception = serviceUnavailableException;
         }
     }
 
@@ -127,16 +128,17 @@ public class AIFallbackSteps {
         quizRequest.setQuizRequestContent("Topic: Testquiz");
         quizRequest.setSession(session);
         try{
-            quizRequest = quizRequestService.createQuiz(quizRequest);
+            quiz = quizRequestService.createQuiz(quizRequest);
         }
-        catch(RuntimeException e){
-            exception = e;
+        catch(AIServiceUnavailableException serviceUnavailableException){
+            exception = serviceUnavailableException;
         }
     }
 
     @Then("a quiz gets send back")
     public void a_quiz_gets_send_back() {
-        List<QuizItem> list = new ArrayList<>(quizRequest.getQuizItems());
+        assertNotNull(quiz);
+        List<QuizItem> list = new ArrayList<>(quiz.getQuizItems());
         assertEquals("Question 1: How Many Test Questions?", list.get(0).getQuestion());
         assertEquals("Question 2: How Hard Are The Test Questions?", list.get(1).getQuestion());
         assertEquals("Question 3: What Is A Rabbyte?", list.get(2).getQuestion());

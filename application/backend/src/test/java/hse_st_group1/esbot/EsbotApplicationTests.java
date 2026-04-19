@@ -3,7 +3,7 @@ package hse_st_group1.esbot;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.Test;
-
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
@@ -16,6 +16,9 @@ import hse_st_group1.esbot.services.AIService;
 @SpringBootTest
 @ActiveProfiles("test")
 class EsbotApplicationTests {
+
+	@MockitoBean
+	private AIService aiService;
 
 	@Test
 	void contextLoads() {

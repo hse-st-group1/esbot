@@ -1,7 +1,7 @@
 package hse_st_group1.esbot.feature;
 
-import static org.junit.Assert.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;

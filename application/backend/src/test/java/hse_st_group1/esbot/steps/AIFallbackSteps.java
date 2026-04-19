@@ -1,4 +1,4 @@
-package hse_st_group1.esbot.feature;
+package hse_st_group1.esbot.steps;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -31,10 +31,10 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
 
+@CucumberContextConfiguration
 @SpringBootTest
 @ActiveProfiles("test")
 @Transactional
-@CucumberContextConfiguration
 public class AIFallbackSteps {
 
     private User user;

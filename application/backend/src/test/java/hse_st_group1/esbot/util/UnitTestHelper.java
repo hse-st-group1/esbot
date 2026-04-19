@@ -2,6 +2,7 @@ package hse_st_group1.esbot.util;
 
 import java.sql.Timestamp;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -89,7 +90,7 @@ public class UnitTestHelper {
         String question = "Question";
         QuizItem quizItem = new QuizItem(quizItemId, quizRequest, question, null, null);
         quizItem.setQuizAnswers(Set.of(quizAnswerCreator(quizItem)));
-        quizRequest.setQuizItems(Set.of(quizItem));
+        quizRequest.setQuizItems(List.of(quizItem));
         return quizItem;
     }
 

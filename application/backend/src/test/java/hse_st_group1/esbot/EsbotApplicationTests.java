@@ -7,8 +7,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
 import hse_st_group1.esbot.controller.TestController;
+import hse_st_group1.esbot.services.AIService;
 
 
 @SpringBootTest
@@ -25,6 +27,9 @@ class EsbotApplicationTests {
 @SpringBootTest
 @ActiveProfiles("test")
 class SmokeTest {
+
+	@MockitoBean
+	private AIService aiService;
 
 	@Autowired
 	private TestController controller;

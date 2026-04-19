@@ -1,7 +1,7 @@
 package hse_st_group1.esbot.model;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import jakarta.persistence.CascadeType;
@@ -18,11 +18,13 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Table(name = "QuizRequest")
 @AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
 public class QuizRequest {
@@ -42,5 +44,5 @@ public class QuizRequest {
     private String quizRequestContent;
 
     @OneToMany (mappedBy = "quizRequest", cascade = CascadeType.REMOVE)
-    private Set<QuizItem> quizItems = new HashSet<>();
+    private List<QuizItem> quizItems = new ArrayList<>();
 }

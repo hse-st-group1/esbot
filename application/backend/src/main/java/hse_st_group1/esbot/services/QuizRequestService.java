@@ -1,9 +1,7 @@
 package hse_st_group1.esbot.services;
 
 import java.util.ArrayList;
-import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.springframework.stereotype.Service;
 
@@ -40,7 +38,7 @@ public class QuizRequestService {
 
         quizRequestRepository.save(quizRequest);
         List<QuizItem> items = new ArrayList<>();
-        
+
         for(String question: questions){
             QuizItem item = new QuizItem(null, quizRequest, question, null, null);
             items.add(item);

@@ -5,13 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.sql.Timestamp;
 
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.stereotype.Component;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.bean.override.mockito.MockitoBean;
-
 import hse_st_group1.esbot.AIServiceUnavailableException;
 import hse_st_group1.esbot.model.*;
 import hse_st_group1.esbot.repository.SessionRepository;
@@ -20,10 +14,7 @@ import hse_st_group1.esbot.services.AIService;
 import hse_st_group1.esbot.services.MessageService;
 
 import io.cucumber.java.en.*;
-import io.cucumber.java.Before;
 import io.cucumber.java.After;
-import io.cucumber.spring.CucumberContextConfiguration;
-import jakarta.transaction.Transactional;
 
 
 public class AskQuestionStep{

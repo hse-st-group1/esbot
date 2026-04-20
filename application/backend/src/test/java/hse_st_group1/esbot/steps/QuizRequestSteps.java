@@ -3,7 +3,6 @@ package hse_st_group1.esbot.steps;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.ArrayList;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -79,17 +78,17 @@ public class QuizRequestSteps {
             question2.setQuestion("Content of Question 2");
             question3.setQuestion("Content of Question 3");
 
-            quizRequest.setQuizItems(new LinkedHashSet<QuizItem>());
+            quizRequest.setQuizItems(new ArrayList<QuizItem>());
             quizRequest.getQuizItems().add(question1);
             quizRequest.getQuizItems().add(question2);
             quizRequest.getQuizItems().add(question3);
         } else{
             QuizItem cannotProcessRequest = new QuizItem(null, quizRequest, null, null, null);
             cannotProcessRequest.setQuestion("Service cannot generate a quiz about this topic. Please choose a different one.");
-            quizRequest.setQuizItems(new LinkedHashSet<QuizItem>(Set.of(cannotProcessRequest)));
+            quizRequest.setQuizItems(new ArrayList<QuizItem>(Set.of(cannotProcessRequest)));
         }
 
-        Mockito.when(quizRequestService.sendQuizRequest(Mockito.any())).thenReturn(quizRequest);
+        Mockito.when(quizRequestService.createQuiz(Mockito.any())).thenReturn(quizRequest);
     }
 
     @Then("a list of questions should be shown to me")
@@ -119,7 +118,7 @@ public class QuizRequestSteps {
     }
     @But("do not provide the topic of the quiz or exercise")
     public void i_request_a_quiz_or_an_exercise_without_providing_a_topic(){
-        Mockito.when(quizRequestService.sendQuizRequest(Mockito.any())).thenAnswer(invocation->{ //AI USAGE: Used AI to fix sytax errors so function can be executed instead of returning object
+        Mockito.when(quizRequestService.createQuiz(Mockito.any())).thenAnswer(invocation->{ //AI USAGE: Used AI to fix sytax errors so function can be executed instead of returning object
             
             String content = quizRequest.getQuizRequestContent();
             
@@ -127,7 +126,7 @@ public class QuizRequestSteps {
             if (!content.contains("about")) { //AI USAGE: Asked AI how to check whether request contains topic, given that it is part of a string and not an attribute
                 QuizItem topicMissing = new QuizItem(null, quizRequest, null, null, null);
                 topicMissing.setQuestion("What should the Quiz be about?");
-                quizRequest.setQuizItems(new LinkedHashSet<QuizItem>(Set.of(topicMissing)));
+                quizRequest.setQuizItems(new ArrayList<QuizItem>(Set.of(topicMissing)));
             
             } else { // If topic was provided, proceed as normal
                 QuizItem question1 = new QuizItem(null, quizRequest, null, null, null);
@@ -137,7 +136,7 @@ public class QuizRequestSteps {
                 question2.setQuestion("Content of Question 2");
                 question3.setQuestion("Content of Question 3");
 
-                quizRequest.setQuizItems(new LinkedHashSet<QuizItem>());
+                quizRequest.setQuizItems(new ArrayList<QuizItem>());
                 quizRequest.getQuizItems().add(question1);
                 quizRequest.getQuizItems().add(question2);
                 quizRequest.getQuizItems().add(question3);
@@ -146,7 +145,7 @@ public class QuizRequestSteps {
             return quizRequest;
         });
 
-        Mockito.when(quizRequestService.sendQuizRequest(Mockito.any())).thenReturn(quizRequest);
+        Mockito.when(quizRequestService.createQuiz(Mockito.any())).thenReturn(quizRequest);
  
     }
     

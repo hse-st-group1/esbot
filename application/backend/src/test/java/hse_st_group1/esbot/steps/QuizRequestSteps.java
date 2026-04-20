@@ -1,5 +1,5 @@
 package hse_st_group1.esbot.steps;
-
+// GPT 5.4 was used for debbugging and improving understanding of error messages
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.ArrayList;

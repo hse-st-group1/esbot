@@ -8,12 +8,10 @@ import java.util.Set;
 
 import org.mockito.Mockito;
 
-import hse_st_group1.esbot.model.Message;
 import hse_st_group1.esbot.model.QuizItem;
 import hse_st_group1.esbot.model.QuizRequest;
 import hse_st_group1.esbot.model.Session;
 import hse_st_group1.esbot.model.User;
-import hse_st_group1.esbot.services.MessageService;
 import hse_st_group1.esbot.services.QuizRequestService;
 import hse_st_group1.esbot.util.UnitTestHelper;
 import io.cucumber.java.Before;
@@ -27,23 +25,16 @@ public class QuizRequestSteps {
 
     private User user;
     private Session session;
-    private MessageService messageService;
     private QuizRequestService quizRequestService;
     private QuizRequest quizRequest;
     private Boolean aiCanProcessRequest;
 
-    private String exampleConcept;
     private int numberOfQuestions;
     private String exampleQuizTopic;
 
     @Before
     public void setAvailabilityToProcessRequest(){
         aiCanProcessRequest = true;
-    }
-
-    @Before
-    public void serviceMessage() {
-        messageService = Mockito.mock(MessageService.class);
     }
 
     @Before

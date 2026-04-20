@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import hse_st_group1.esbot.AIServiceUnavailableException;
 import hse_st_group1.esbot.model.*;
+import hse_st_group1.esbot.repository.QuizAnswerRepository;
+import hse_st_group1.esbot.repository.QuizEvaluationRepository;
 import hse_st_group1.esbot.repository.QuizItemRepository;
 import hse_st_group1.esbot.repository.QuizRequestRepository;
 import hse_st_group1.esbot.repository.SessionRepository;
@@ -21,6 +23,7 @@ import hse_st_group1.esbot.services.MessageService;
 import hse_st_group1.esbot.services.QuizRequestService;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.When;
+import jakarta.transaction.Transactional;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.After;
 
@@ -51,7 +54,14 @@ public class AIFallbackSteps {
     @Autowired
     private QuizItemRepository quizItemRepository;
     @Autowired
+    private QuizEvaluationRepository quizEvaluationRepository;
+    @Autowired 
+    private QuizAnswerRepository quizAnswerRepository;
+    @Autowired
     private AIService aiService;
+
+    @Autowired 
+    SharedSession sharedSession;
 
     @Given("I have a session")
     public void i_have_a_session(){
@@ -60,6 +70,7 @@ public class AIFallbackSteps {
         
         timestamp = new Timestamp(System.currentTimeMillis());
         this.session = new Session(null, user, timestamp, timestamp, null, null);
+        sharedSession.setSession(this.session);
         this.session = sessionRepository.save(session);
     }
 
@@ -139,7 +150,10 @@ public class AIFallbackSteps {
     }
 
     @After
+    @Transactional
     public void cleanDB() {
+        quizEvaluationRepository.deleteAll();
+        quizAnswerRepository.deleteAll();
         quizItemRepository.deleteAll();
         quizRequestRepository.deleteAll();
         sessionRepository.deleteAll();

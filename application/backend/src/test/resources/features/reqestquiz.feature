@@ -6,8 +6,9 @@ Feature:
 Scenario: Request a Quiz
     Given I have a session 
         AND a topic I want to be quizzed on 
-    When I send a message asking for a quiz 
+    When I send a message requesting a quiz 
         AND provide the topic I want to be quizzed about 
+        AND the number of questions
     Then a list of questions should be shown to me 
 
 Scenario: Request an Exercise
@@ -29,4 +30,3 @@ Scenario: AI cannot generate quiz about this topic
     When the AI is unable to generate a quiz about the requested topic
     Then an error message should be shown stating that the LLM cannot generate a quiz about this topic 
         AND it should suggest a related topic I can request a quiz about instead
-

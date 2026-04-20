@@ -89,10 +89,4 @@ public class AskQuestionStep{
         assertNotNull(exception);
         assertEquals(expectedError, exception.getMessage());
     }
-
-    @After
-    public void cleanDB(){
-        sessionRepository.deleteAll();
-        userRepository.deleteAll();
-    }    
 }

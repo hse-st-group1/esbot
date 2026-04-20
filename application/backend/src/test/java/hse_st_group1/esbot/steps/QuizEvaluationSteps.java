@@ -15,6 +15,7 @@ import hse_st_group1.esbot.model.QuizEvaluation;
 import hse_st_group1.esbot.model.QuizItem;
 import hse_st_group1.esbot.model.QuizRequest;
 import hse_st_group1.esbot.repository.QuizAnswerRepository;
+import hse_st_group1.esbot.repository.QuizEvaluationRepository;
 import hse_st_group1.esbot.repository.QuizItemRepository;
 import hse_st_group1.esbot.repository.QuizRequestRepository;
 import hse_st_group1.esbot.repository.SessionRepository;
@@ -22,10 +23,12 @@ import hse_st_group1.esbot.repository.UserRepository;
 import hse_st_group1.esbot.services.AIService;
 import hse_st_group1.esbot.services.QuizEvaluationService;
 import hse_st_group1.esbot.services.QuizRequestService;
+import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import jakarta.transaction.Transactional;
 
 public class QuizEvaluationSteps {
 
@@ -49,6 +52,9 @@ public class QuizEvaluationSteps {
 
     @Autowired
     QuizAnswerRepository quizAnswerRepository;
+
+    @Autowired
+    QuizEvaluationRepository quizEvaluationRepository;
 
     @Autowired
     SharedSession sharedSession;
@@ -132,6 +138,17 @@ public class QuizEvaluationSteps {
     @Then("the system asks me to make a valid input.")
     public void the_system_asks_me_to_make_a_valid_input() {
         assertEquals("Please make a valid and interpretable input", evaluation.getEvaluation());
+    }
+
+    @After
+    @Transactional
+    public void cleanDB() {
+        quizEvaluationRepository.deleteAll();
+        quizAnswerRepository.deleteAll();
+        quizItemRepository.deleteAll();
+        quizRequestRepository.deleteAll();
+        sessionRepository.deleteAll();
+        userRepository.deleteAll();
     }
 
 }

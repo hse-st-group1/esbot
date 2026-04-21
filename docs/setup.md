@@ -118,9 +118,19 @@ mvn clean install
 mvn spring-boot:run
 ```
 
-### Test the backend using Maven
+### Test the backend using Maven - Full Test Suite
 ```bash
 mvn test
+```
+
+### Test the backend using Maven - Unit Tests
+```bash
+mvn surefire:test -Dtest=*Test.java
+```
+
+### Test the backend using Maven - BDD Tests
+```bash
+mvn surefire:test -Dtest=*IT.java
 ```
 
 ## Create a fresh Springboot Setup from scratch

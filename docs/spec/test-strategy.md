@@ -13,7 +13,7 @@ Therefore the scope is very limited in comparison to the acceptance tests. Accep
 requirements on a functional level. Therefore the scope of BDD/Acceptance Test is much broader. The broader approach of the acceptance tests is resulting in a slower execution time for the individual 
 tests. The reason behind is that more systems and functions have to be executed compared to a simple unit tests. In simple applications without much interaction between different components, subsystems 
 and interfaces the acceptance tests can be executed fast, without much interruptions. In more complex systems the acceptance test execution can be much slower. Therefore acceptance tests, shouldn't be 
-xecuted in every test cycle. In contrast, unit tests are executed very fast because the focus is on individual components rather then systems. Because of the fast execution time the tests are not causing 
+executed in every test cycle. In contrast, unit tests are executed very fast because the focus is on individual components rather then systems. Because of the fast execution time the tests are not causing 
 disturbance in the development process and should be executed frequently to verify the functional implementation.
 
 ### Test Strategy for ESBot

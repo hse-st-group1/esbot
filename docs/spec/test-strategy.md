@@ -23,4 +23,4 @@ the funcional implementation is correct. Defects and Bugs can be spotted quickly
 implementation, but also functional requirements and interactions between components. Therefore it is recommended to execute BDD/Acceptance Tests whenever new features get added. This can be done for pull
 requests. For ESBot there is the possibility to verify acceptance via mocking of AI components. The reason why this is done in our tests is because the LLM delivers non-deterministic output which cant be verified in
 acceptance tests. That's why it is enough to mock the LLM with a deterministic output to simulate the LLM-API. In addition the process of testing AI Behaviour via mocks speeds up the testing process significantly.
-Besides the speed and deterministic output, the LLM is not required to process requests and insted can handle actual requests.
+Besides the speed and deterministic output, the LLM is not required to process requests and instead can handle actual requests.

@@ -125,12 +125,12 @@ mvn test
 
 ### Test the backend using Maven - Unit Tests
 ```bash
-mvn surefire:test -Dtest=*Test.java
+mvn surefire:test -Dtest=*Test*
 ```
 
 ### Test the backend using Maven - BDD Tests
 ```bash
-mvn surefire:test -Dtest=*Cucumber.java
+mvn surefire:test -Dtest=*Cucumber*
 ```
 
 ## Create a fresh Springboot Setup from scratch

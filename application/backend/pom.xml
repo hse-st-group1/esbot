@@ -148,7 +148,8 @@
 						</goals>
 						<configuration>
 							<includes>
-								<include>**/*Cucumber*.java</include>
+								<include>**/*Test*</include>
+								<include>**/EsbotCucumber*</include>
 							</includes>
 						</configuration>
 					</execution>

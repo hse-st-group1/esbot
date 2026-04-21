@@ -8,12 +8,16 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import hse_st_group1.esbot.AIServiceUnavailableException;
 import hse_st_group1.esbot.model.*;
+import hse_st_group1.esbot.repository.QuizAnswerRepository;
+import hse_st_group1.esbot.repository.QuizEvaluationRepository;
+import hse_st_group1.esbot.repository.QuizItemRepository;
+import hse_st_group1.esbot.repository.QuizRequestRepository;
 import hse_st_group1.esbot.repository.SessionRepository;
 import hse_st_group1.esbot.repository.UserRepository;
 import hse_st_group1.esbot.services.AIService;
 import hse_st_group1.esbot.services.MessageService;
-
 import io.cucumber.java.en.*;
+import jakarta.transaction.Transactional;
 import io.cucumber.java.After;
 
 
@@ -29,12 +33,18 @@ public class AskQuestionStep{
 
     @Autowired
     private MessageService messageService;
-
     @Autowired
     private UserRepository userRepository;
-
     @Autowired
     private SessionRepository sessionRepository;
+    @Autowired
+    private QuizRequestRepository quizRequestRepository;
+    @Autowired
+    private QuizItemRepository quizItemRepository;
+    @Autowired
+    private QuizEvaluationRepository quizEvaluationRepository;
+    @Autowired 
+    private QuizAnswerRepository quizAnswerRepository;
 
     @Autowired
     private AIService aiService;
@@ -88,5 +98,16 @@ public class AskQuestionStep{
     public void check_error(String expectedError){
         assertNotNull(exception);
         assertEquals(expectedError, exception.getMessage());
+    }
+
+    @After
+    @Transactional
+    public void cleanDB() {
+        quizEvaluationRepository.deleteAll();
+        quizAnswerRepository.deleteAll();
+        quizItemRepository.deleteAll();
+        quizRequestRepository.deleteAll();
+        sessionRepository.deleteAll();
+        userRepository.deleteAll();
     }
 }

@@ -27,25 +27,33 @@ public class QuizRequestService {
 
     @Transactional
     public QuizRequest createQuiz(QuizRequest quizRequest){
-        List<String> questions;
 
-        if(aiService.isAvailable()){
-            questions = aiService.createQuestions(quizRequest.getQuizRequestContent());
+        String content = quizRequest.getQuizRequestContent();
+            
+        // If no topic was provided (-> no "about ...") then LLM should request topic
+        if (content.contains("about") || content.contains("Topic")) {
+            List<String> questions;
+
+            if(aiService.isAvailable()){
+                questions = aiService.createQuestions(quizRequest.getQuizRequestContent());
+            }
+            else{
+                throw new AIServiceUnavailableException("Error: Quiz service is currently unavailable");
+            }
+
+            quizRequestRepository.save(quizRequest);
+            List<QuizItem> items = new ArrayList<>();
+
+            for(String question: questions){
+                QuizItem item = new QuizItem(null, quizRequest, question, null, null);
+                items.add(item);
+                quizItemRepository.save(item);
+            }
+        
+            quizRequest.setQuizItems(items);
+            return quizRequestRepository.save(quizRequest);
+        } else {
+            throw new AIServiceUnavailableException("Error: No quiz topic provided.");
         }
-        else{
-            throw new AIServiceUnavailableException("Error: Quiz service is currently unavailable");
-        }
-
-        quizRequestRepository.save(quizRequest);
-        List<QuizItem> items = new ArrayList<>();
-
-        for(String question: questions){
-            QuizItem item = new QuizItem(null, quizRequest, question, null, null);
-            items.add(item);
-            quizItemRepository.save(item);
-        }
-
-        quizRequest.setQuizItems(items);
-        return quizRequestRepository.save(quizRequest);
     }
 }

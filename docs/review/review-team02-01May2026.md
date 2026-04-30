@@ -1,12 +1,17 @@
-# Review template (inspection / technical review)
+# Review of Team 02's ESBot Project by Team 01
 
 **Project / product:** ESBot 
+
 **Review object(s):** System Description, Requirements, Specification, Implementation of Feature AskCourseQuestions 
+
 **Review type:** Walkthrough (Feature Implementation) and Peer Review (System Description, Requirements, Specification) 
+
 **Date (planned / actual):** 
 Walkthrough: 01 May 2026, 
 Peer Review: 27 April - 03 May 2026 
+
 **Author(s):** Team 02 
+
 **Reviewers:** Team 01
 
 ---
@@ -23,7 +28,7 @@ Peer Review: 27 April - 03 May 2026
 | Project | ESBot |
 | Project manager | - |
 | Quality expert / manager | - |
-| Moderator | - |
+| Moderator | Team 01 |
 | Author(s) | Team 02 |
 
 ### 2.2 Review objects
@@ -65,7 +70,7 @@ Peer Review: 27 April - 03 May 2026
 
 | Reviewer | Names (and chapters / checklists or scenarios assigned to the review) | Abbr. |
 |:--------:|---------------------------------------------------------------------------|-------|
-| 1 | complete Team 01 | DES, REQ, SPEC, DataModel, EntityMessage, EntitySession, UnitTestsMessage, UnitTestsSessions, FeatureAnswerQuestion, StepsAnswerQuestion , FeatureTestHelper |
+| 1 | Team 01 | DES, REQ, SPEC, DataModel, EntityMessage, EntitySession, UnitTestsMessage, UnitTestsSessions, FeatureAnswerQuestion, StepsAnswerQuestion , FeatureTestHelper |
 
 ### 2.6 Kick-off
 
@@ -107,38 +112,35 @@ Peer Review: 27 April - 03 May 2026
 
 ## 3. List of findings (LoF)
 
-Use one row per finding. Extend the table if your course requires extra columns.
-
 Suggested values: **Type** — defect, question, suggestion; **Severity** — blocking, major, minor, editorial (define team scale); **Status** — open, accepted, rejected, deferred, fixed (update through meeting and rework).
 
-| ID | Location (file / section / module) | Summary | Type | Found by Reviewer | Status | Severity | Notes / meeting decision |
-|----|-------------------------------------|---------|------|----------|--------|-------|--------------------------|
-| F-001 | DataModel | Why are submitted answers sorted? | Logic | H | <!-- --> | <!-- --> | <!-- --> |
-| F-002 | DataModel | Why is the answer to QuizItems expected immediately? | Logic | H | <!-- --> | <!-- --> | <!-- --> |
-| F-003 | DataModel | Why are QuizItems stored as a List and not a Set? | Code Logic | H | <!-- --> | <!-- --> | <!-- --> |
-| F-004 | EntityMessage | Why is Message a Subtype of ImmutableProperties? | Code Logic | J | <!-- --> | <!-- --> | <!-- --> |
-| F-005 | EntityMessage | Why is both the Foreign Key as well as the whole Entity of Session listed as properties of Message? | Redundancy | L | <!-- --> | <!-- --> | <!-- --> |
-| F-006 | EntityMessage | What is the purpose of the method IEnumerable <string> GetImmutableProperties()? Why is the method defined in the same file as the entity properties?| Code Logic | L, J | <!-- --> | <!-- --> | <!-- --> |
-| F-007 | EntitySession | Why is both the Foreign Key as well as the whole Entity of User listed as properties of Session? | Redundancy | L | <!-- --> | <!-- --> | <!-- --> |
-| F-008 | EntitySession | Regarding the EndedAt property: What is the use of keeping a session saved in the system after it has been ended? | Logic | L | <!-- --> | <!-- --> | <!-- --> |
-| F-009 | EntitySession | Why are methods and enity properties defined in the same file? | Architecture | J | <!-- --> | <!-- --> | <!-- --> |
-| F-010 | EntitySession | Why is there no method to add QuizRequests similar to the AddMessage(Message message)? | Completeness | J | <!-- --> | <!-- --> | <!-- --> |
-| F-011 | EntitySession | Why is an exception thrown within the entity but not handled im service? | Error Handling | H | <!-- --> | <!-- --> | <!-- --> |
-| F-012 | UnitTestsMessage | Can the _context constant be given a more specific name? | Clean Code | J | <!-- --> | <!-- --> | <!-- --> |
-| F-013 | UnitTestsMessage -  Message_Creation_WithValidData_ShouldSucceed() | Method name is a mix of pascal and snail case | Clean Code | L, J | <!-- --> | <!-- --> | <!-- --> |
-| F-014 | UnitTestsMessage -  Message_Creation_WithValidData_ShouldSucceed() | createdAt <= UtcNow (line 47): Is this test actually useful? | Code Logic | L, J | <!-- --> | <!-- --> | <!-- --> |
-| F-015 | UnitTestsMessage | Consider renaming retrieved(line 130) to retrievedSession for better readability? | Clean Code | L | <!-- --> | <!-- --> |
-| F-016 | FeatureAnswerCourseQuestion | Is it correct to mention in the feature file that a mock is used, given that feature files are supposed to be readable for people with not technological background knowledge? | Correctness | L | <!-- --> | <!-- --> | <!-- --> |
-| F-017 | FeatureAnswerCourseQuestion | Is it useful to test if the mock returns content as expected? | Logic | L | <!-- --> | <!-- --> | <!-- --> |
-| F-018 | StepsAnswerCourseQuestion - Given “I open a session …” | Why are states set as null instead of actually creating a session entity? | Code Logic | L | <!-- --> | <!-- --> | <!-- --> |
-| F-019 | StepsAnswerCourseQuestion | Unclear naming: What is string p0? | Clean Code | L | <!-- --> | <!-- --> | <!-- --> |
-| F-020 | StepsAnswerCourseQuestion | Is actually the application logic being tested ot the test logic? | Logic | L | <!-- --> | <!-- --> | <!-- --> |
-| F-021 | StepsAnswerCourseQuestion and FeatureTestHelper| Should not several parts of the FeatureTestHelper be moved to a service? Are the tests not actually testing the FeatureTestHelper's logic instad of the application logic? | Logic | Team 01 | <!-- --> | <!-- --> | <!-- --> |
-| F-022 | DES - High-Level Expectations| "AI-generated responses should be embedded in a controlled interaction flow, ensuring clarity and usability." - What is meant with "controlled interaction flow" in this context?| Clarity | J | <!-- --> | <!-- --> | <!-- --> |
-| F-023 | DES - Summary | Is the summary fitting for the project? I think it may be too focused on the context of the Software Testing lab.| Logic | J | <!-- --> | <!-- --> | <!-- --> |
-| F-024 | REQ - Non-Functional Requirements | "Response times of 2-5 seconds ..." -> Is this not a bit too ambitious? | Feasibility | L, J | <!-- --> | <!-- --> | <!-- --> |
-| F-024 | REQ - Non-Functional Requirements | "Response times of 2-5 seconds ..." -> Is this not a bit too ambitious? | Feasibility | L, J | <!-- --> | <!-- --> | <!-- --> |
-| F-025 | SPEC - Success Criteria | SC-001: -> Is this realistic? | Feasibility | L | <!-- --> | <!-- --> | <!-- --> |
+| ID | Location (file / section / module) | Summary | Category | Type | Found by Reviewer | Status | Severity | Notes / meeting decision |
+|----|-------------------------------------|---------|------|------|----------|--------|-------|--------------------------|
+| F-001 | DataModel | Why are submitted answers sorted? | Logic | Question | H | <!-- --> | <!-- --> | <!-- --> |
+| F-002 | DataModel | Why is the answer to QuizItems expected immediately? | Logic | Question | H | <!-- --> | <!-- --> | <!-- --> |
+| F-003 | DataModel | Why are QuizItems stored as a List and not a Set? | Code Logic | Question | H | <!-- --> | <!-- --> | <!-- --> |
+| F-004 | EntityMessage | Why is Message a Subtype of ImmutableProperties? | Code Logic | Question | J | <!-- --> | <!-- --> | <!-- --> |
+| F-005 | EntityMessage | Why is both the Foreign Key as well as the whole Entity of Session listed as properties of Message? | Redundancy | Question | L | <!-- --> | <!-- --> | <!-- --> |
+| F-006 | EntityMessage | What is the purpose of the method IEnumerable <string> GetImmutableProperties()? Why is the method defined in the same file as the entity properties?| Code Logic | Question | L, J | <!-- --> | <!-- --> | <!-- --> |
+| F-007 | EntitySession | Why is both the Foreign Key as well as the whole Entity of User listed as properties of Session? | Redundancy | Question | L | <!-- --> | <!-- --> | <!-- --> |
+| F-008 | EntitySession | Regarding the EndedAt property: What is the use of keeping a session saved in the system after it has been ended? | Logic | Question | L | <!-- --> | <!-- --> | <!-- --> |
+| F-009 | EntitySession | Why are methods and enity properties defined in the same file? | Architecture | Question | J | <!-- --> | <!-- --> | <!-- --> |
+| F-010 | EntitySession | Why is there no method to add QuizRequests similar to the AddMessage(Message message)? | Completeness | Question | J | <!-- --> | <!-- --> | <!-- --> |
+| F-011 | EntitySession | Why is an exception thrown within the entity but not handled im service? | Error Handling | Question | H | <!-- --> | <!-- --> | <!-- --> |
+| F-012 | UnitTestsMessage | Can the _context constant be given a more specific name? | Clean Code | Suggestion | J | <!-- --> | <!-- --> | <!-- --> |
+| F-013 | UnitTestsMessage -  Message_Creation_WithValidData_ShouldSucceed() | Method name is a mix of pascal and snail case | Clean Code | Defect | L, J | <!-- --> | <!-- --> | <!-- --> |
+| F-014 | UnitTestsMessage -  Message_Creation_WithValidData_ShouldSucceed() | createdAt <= UtcNow (line 47): Is this test actually useful? | Code Logic | Question | L, J | <!-- --> | <!-- --> | <!-- --> |
+| F-015 | UnitTestsMessage | Consider renaming retrieved(line 130) to retrievedSession for better readability? | Clean Code | Suggestion | L | <!-- --> | <!-- --> |
+| F-016 | FeatureAnswerCourseQuestion | Is it correct to mention in the feature file that a mock is used, given that feature files are supposed to be readable for people with not technological background knowledge? | Correctness | Question | L | <!-- --> | <!-- --> | <!-- --> |
+| F-017 | FeatureAnswerCourseQuestion | Is it useful to test if the mock returns content as expected? | Logic | Question | L | <!-- --> | <!-- --> | <!-- --> |
+| F-018 | StepsAnswerCourseQuestion - Given “I open a session …” | Why are states set as null instead of actually creating a session entity? | Code Logic | Question | L | <!-- --> | <!-- --> | <!-- --> |
+| F-019 | StepsAnswerCourseQuestion | Unclear naming: What is string p0? | Clean Code | Defect | L | <!-- --> | <!-- --> | <!-- --> |
+| F-020 | StepsAnswerCourseQuestion | Is actually the application logic being tested ot the test logic? | Logic | Question | L | <!-- --> | <!-- --> | <!-- --> |
+| F-021 | StepsAnswerCourseQuestion and FeatureTestHelper| Should not several parts of the FeatureTestHelper be moved to a service? Are the tests not actually testing the FeatureTestHelper's logic instad of the application logic? | Logic | Question | Team 01 | <!-- --> | <!-- --> | <!-- --> |
+| F-022 | DES - High-Level Expectations| "AI-generated responses should be embedded in a controlled interaction flow, ensuring clarity and usability." - What is meant with "controlled interaction flow" in this context?| Clarity | Question | J | <!-- --> | <!-- --> | <!-- --> |
+| F-023 | DES - Summary | Is the summary fitting for the project? I think it may be too focused on the context of the Software Testing lab.| Logic | Question | J | <!-- --> | <!-- --> | <!-- --> |
+| F-024 | REQ - Non-Functional Requirements | "Response times of 2-5 seconds ..." -> Is this not a bit too ambitious? | Feasibility | Question | L, J | <!-- --> | <!-- --> | <!-- --> |
+| F-025 | SPEC - Success Criteria | SC-001: -> Is this realistic? | Feasibility | Question | L | <!-- --> | <!-- --> | <!-- --> |
 
 ---
 
@@ -148,7 +150,7 @@ Suggested values: **Type** — defect, question, suggestion; **Severity** — bl
 
 | Metric | Value | Notes |
 |--------|-------|-------|
-| Size of review object | <!-- e.g. pages, LOC, #requirements --> | <!-- --> |
+| Size of review object | 11 files (4 docs, 2 code files, 5 test files) <!-- e.g. pages, LOC, #requirements --> | <!-- --> |
 | Preparation effort (hours, optional) | 2-4 | <!-- --> |
 | Number of findings (initial) | 25 | <!-- --> |
 | Number of findings after meeting | <!-- --> | <!-- --> |

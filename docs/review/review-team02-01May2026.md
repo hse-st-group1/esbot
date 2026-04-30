@@ -1,0 +1,170 @@
+# Review template (inspection / technical review)
+
+**Project / product:** ESBot 
+**Review object(s):** System Description, Requirements, Specification, Implementation of Feature AskCourseQuestions 
+**Review type:** Walkthrough (Feature Implementation) and Peer Review (System Description, Requirements, Specification) 
+**Date (planned / actual):** 
+Walkthrough: 01 May 2026, 
+Peer Review: 27 April - 03 May 2026 
+**Author(s):** Team 02 
+**Reviewers:** Team 01
+
+---
+
+## 2. Master Plan (MP)
+
+### 2.1 Masterplan — header
+
+<!-- Fill the table below during planning. Redundant with the document header above is OK if you copy values here for a self-contained MP export. -->
+
+| Field | Value |
+|-------|-------|
+| Review No. | REV-2026-001 |
+| Project | ESBot |
+| Project manager | - |
+| Quality expert / manager | - |
+| Moderator | - |
+| Author(s) | Team 02 |
+
+### 2.2 Review objects
+
+| # | Review objects | Abbr. |
+|---|----------------|-------|
+| 1 | [docs/esbot.md](https://github.com/StudyBoat/esbot/blob/main/docs/esbot.md) | DES |
+| 2 | [docs/spec/requirements.md](https://github.com/StudyBoat/esbot/blob/main/docs/spec/requirements.md) | REQ |
+| 3 | [docs/spec/spec.md](https://github.com/StudyBoat/esbot/blob/main/docs/spec/spec.md)| SPEC |
+| 4 | [docs/spec/data-model.md](https://github.com/StudyBoat/esbot/blob/main/docs/spec/data-model.md) | DataModel |
+| 5 | [ESBot.Domain/Entities.Message.cs](https://github.com/SSJGodGogeta/ESBot/blob/master/ESBot.Domain/Entities/Message.cs) | EntityMessage |
+| 6 | [ESBot.Domain/Entities.UserSession.cs](https://github.com/SSJGodGogeta/ESBot/blob/master/ESBot.Domain/Entities/UserSession.cs) | EntitySession |
+| 7 | [ESBot.Tests/MessageTest.cs](https://github.com/SSJGodGogeta/ESBot/blob/master/ESBot.Tests/MessageTest.cs) | UnitTestsMessage|
+| 8 | [ESBot.Tests/UserSessionTest.cs](https://github.com/SSJGodGogeta/ESBot/blob/master/ESBot.Tests/UserSessionTest.cs) | UnitTestsSession|
+| 9 | [ESBot.Tests/features/AnswerCourseQuestions.feature](https://github.com/SSJGodGogeta/ESBot/blob/master/ESBot.Tests/features/AnswerCourseQuestions.feature) | FeatureAnswerQuestion |
+| 10 | [ESBot.Tests/steps/AnswerCourseQuestionsSteps.cs](https://github.com/SSJGodGogeta/ESBot/blob/master/ESBot.Tests/steps/AnswerCourseQuestionsSteps.cs) | StepsAnswerQuestion |
+| 11 | [ESBot.Tests/steps/StepSupport.cs](https://github.com/SSJGodGogeta/ESBot/blob/master/ESBot.Tests/steps/StepSupport.cs) | FeatureTestHelper |
+
+### 2.3 Reference documents
+
+<!-- List materials reviewers need for context (requirements baseline, architecture, API spec, course brief). Use Abbr. for cross-references. -->
+
+| # | Reference documents | Abbr. |
+|---|---------------------|-------|
+| 1 | [docs/TechStack.md](https://github.com/StudyBoat/esbot/blob/main/docs/TechStack.md) | TeamInfo |
+
+### 2.4 Checklists / scenarios 
+
+<!-- Specify which checklists, reading guides, or test scenarios reviewers should follow (course checklist, OWASP skim, API contract checks). -->
+
+| # | Checklists / scenarios | Checklist content |
+|---|-------------------------|------------------|
+| 1 | Documentation Review | Is Documentation complete? Is code in accordance with documentation? |
+| 2 | Code Review Checklist | Is code correct? Is code readable? Are errors handled? Are tests useful and reasonable? |
+
+### 2.5 Reviewer assignment
+
+<!-- Up to 10 reviewers: assign names and which chapters, objects, or checklists each person covers. Use Abbr. for initials or short IDs. -->
+
+| Reviewer | Names (and chapters / checklists or scenarios assigned to the review) | Abbr. |
+|:--------:|---------------------------------------------------------------------------|-------|
+| 1 | complete Team 01 | DES, REQ, SPEC, DataModel, EntityMessage, EntitySession, UnitTestsMessage, UnitTestsSessions, FeatureAnswerQuestion, StepsAnswerQuestion , FeatureTestHelper |
+
+### 2.6 Kick-off
+
+<!-- Optional but recommended: align on scope, Master Plan, and context before individual preparation. -->
+
+| Date / time / location |
+|------------------------|
+| 28 April 2026, 19:30, online Team Meeting |
+
+### 2.7 Individual preparation
+
+<!-- Planning figures for the preparation phase. “Optimal” rows support effort estimation (rate × time ≈ size). For documents without NLOC, substitute pages or words and state that in the Size unit cell. -->
+
+| Individual preparation | Value | Unit |
+|------------------------|-------|------|
+| Submission of findings by | <!-- Enter the deadline by which each reviewer submits findings to the moderator (date/time or rule such as “72h after kick-off”). --> | — |
+| Size of review objects | <!-- Enter the total Non-Comment Lines of Code (NLOC) for code; for specification-only reviews, use pages or words and note the unit here. --> | NLOC |
+| Optimal inspection rate | <!-- Target or measured inspection speed (e.g. NLOC per hour per reviewer). --> | NLOC/h |
+| Optimal inspection time | <!-- Planned total inspection time in hours (placeholder 0.00 until estimated or measured). --> | h |
+
+
+### 2.8 Review meeting
+
+| Date / time / location |
+|------------------------|
+| 01 May 2026, 10:00, Webex Meeting |
+
+### 2.9 Additional milestones (optional)
+
+<!-- Not in the classic Masterplan sheet; useful for ESBot course tracking (rework, closure). -->
+
+| Milestone | Planned date / time | Actual date / time |
+|-----------|---------------------|---------------------|
+| End of individual preparation | 30 April 2026 | 30 April 2026 |
+| Rework deadline | - | - |
+| Follow-up / closure | - | - |
+
+---
+
+## 3. List of findings (LoF)
+
+Use one row per finding. Extend the table if your course requires extra columns.
+
+Suggested values: **Type** — defect, question, suggestion; **Severity** — blocking, major, minor, editorial (define team scale); **Status** — open, accepted, rejected, deferred, fixed (update through meeting and rework).
+
+| ID | Location (file / section / module) | Summary | Type | Severity | Status | Owner | Notes / meeting decision |
+|----|-------------------------------------|---------|------|----------|--------|-------|--------------------------|
+| F-001 | <!-- --> | <!-- --> | <!-- --> | <!-- --> | <!-- --> | <!-- --> | <!-- --> |
+| F-002 | <!-- --> | <!-- --> | <!-- --> | <!-- --> | <!-- --> | <!-- --> | <!-- --> |
+
+---
+
+## 4. Data Summary (DS)
+
+<!-- Key metrics for this review. Fill after preparation and/or after rework. -->
+
+| Metric | Value | Notes |
+|--------|-------|-------|
+| Size of review object | <!-- e.g. pages, LOC, #requirements --> | <!-- --> |
+| Preparation effort (hours, optional) | <!-- per role --> | <!-- --> |
+| Number of findings (initial) | <!-- --> | <!-- --> |
+| Number of findings after meeting | <!-- --> | <!-- --> |
+| Rework effort (hours, author) | <!-- --> | <!-- --> |
+| Re-inspection required? | <!-- yes / no --> | <!-- --> |
+
+---
+
+## 5. Review Report (RR)
+
+### 5.1 Summary
+
+<!-- Short executive summary: object reviewed, outcome, overall quality impression. -->
+
+### 5.2 Review outcome
+
+- **Review object state after review:** <!-- e.g. accepted with changes, requires re-inspection, not accepted -->
+- **Major risks or themes:** <!-- bullet list -->
+
+### 5.3 Decisions and follow-up
+
+| Topic | Decision | Responsible | Due date |
+|-------|----------|-------------|----------|
+| <!-- --> | <!-- --> | <!-- --> | <!-- --> |
+
+### 5.4 Positive observations (optional)
+
+<!-- What was done well; good practices worth keeping. -->
+
+### 5.5 Lessons learned (optional)
+
+<!-- Process improvements for the next review. -->
+
+### 5.6 Sign-off
+
+| Role | Name | Signature / date |
+|------|------|------------------|
+| Moderator | <!-- --> | <!-- --> |
+| Author | <!-- --> | <!-- --> |
+
+---
+
+<!-- End of template -->

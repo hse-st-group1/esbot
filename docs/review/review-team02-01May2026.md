@@ -130,7 +130,7 @@ Suggested values: **Type** — defect, question, suggestion; **Severity** — bl
 | F-017 | FeatureAnswerCourseQuestion | Is it correct to mention in the feature file that a mock is used, given that feature files are supposed to be readable for people with no technological background knowledge? | Correctness | Question | From IT-Perspective: It would otherwise suggest incorrect scenario. From Non-Technical-Perspective: Too technical. --> Conflict: No optimal solution possible. | closed | - | - |
 | F-018 | FeatureAnswerCourseQuestion | Is it correct to mention the expected answer before stating the question? | Logic | Question | Answer need to be determined so that behaviour is deterministic and can be tested. | open | editorial | Consideration to move the content within AND to a THEN statement |
 | F-019 | StepsAnswerCourseQuestion - Given “I open a session …” | Why are states set as null instead of actually creating a session entity? | Code Logic | Question | Helper class was used, so that new objects don't have to be created every time. This way, only the relevant states need to be set. | closed | - | - |
-| F-020 | StepsAnswerCourseQuestion | Unclear naming: What is string p0? | Clean Code | Defect | p0 is first passed parameter for this step an is only used localy. | closed | - | - |
+| F-020 | StepsAnswerCourseQuestion | Unclear naming: What is string p0? | Clean Code | Defect | p0 is first passed parameter for this step and is only used localy. | closed | - | - |
 | F-021 | StepsAnswerCourseQuestion and StepSupport| Should not several parts of the StepSupport be moved to a service? Are the tests not actually testing the StepSupport's logic instead of the application logic? | Logic | Question | Every team member implemented tests differently. Some preffered to use less abstraction. As a consequence, some methods in StepSupport contain a lot of logic. | open | medium | Consideration to outsource logic to different services. |
 | F-022 | DES - High-Level Expectations| "AI-generated responses should be embedded in a controlled interaction flow, ensuring clarity and usability." - What is meant with "controlled interaction flow" in this context?| Clarity | Question | esbot.md is the same for all forked repositories. | closed | - | *[1] |
 | F-023 | DES - Summary | Is the summary fitting for the project? I think it may be too focused on the context of the Software Testing lab.| Logic | Question | --> F-022 | closed | - | *[1] |
@@ -160,7 +160,7 @@ Suggested values: **Type** — defect, question, suggestion; **Severity** — bl
 ### 5.1 Summary
 
 <!-- Short executive summary: object reviewed, outcome, overall quality impression. -->
-The overall quality of the reviewed objects was good. Four mostly minor issues were found (see List of Findings, Status: open) that may be resolved at a later date, independently from our team. 
+The overall quality of the reviewed objects are good. Four mostly minor issues were found (see List of Findings, Status: open) that may be resolved at a later date, independently from our team. 
 
 ### 5.2 Review outcome
 

@@ -194,12 +194,12 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-pmd-plugin</artifactId>
-				<version>3.23.0</version> <!-- or use version from pluginManagement -->
+				<version>3.23.0</version>
 				<configuration>
 					<!-- failOnViolation is disabled, because we only want to generate a report -->
 					<!-- build should still succeed even if violations were found -->
 					<failOnViolation>false</failOnViolation>
-					<!-- printFailingErrors is pretty useful -->
+					<!-- printFailingErrors outputs number of found violations during build -->
 					<printFailingErrors>true</printFailingErrors>
 					<rulesets>
 						<ruleset>category/java/bestpractices.xml</ruleset>

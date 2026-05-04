@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>4.0.5</version>
+		<version>4.0.6</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>hse-st-group1</groupId>
@@ -82,6 +82,7 @@
 		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
+			<version>42.7.11</version>
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>
@@ -193,7 +194,7 @@
 			<plugin>
 				<groupId>org.owasp</groupId>
 				<artifactId>dependency-check-maven</artifactId>
-				<version>11.1.1</version>
+				<version>12.2.1</version>
 				<configuration>
 					<failBuildOnCVSS>7</failBuildOnCVSS>
 				</configuration>
@@ -205,24 +206,32 @@
 					</execution>
 				</executions>
 			</plugin>
-		</plugins>
-	</build>
-	<reporting>
-        <plugins>
-            <plugin>
+			<plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-pmd-plugin</artifactId>
                 <version>3.23.0</version>
                 <configuration>
+                    <!-- failOnViolation is disabled, because we only want to generate a report -->
+                    <!-- build should still succeed even if violations were found -->
+                    <failOnViolation>false</failOnViolation>
+                    <!-- printFailingErrors outputs number of found violations during build -->
+                    <printFailingErrors>true</printFailingErrors>
                     <rulesets>
-                        <ruleset>/rulesets/java/braces.xml</ruleset>
-                        <ruleset>/rulesets/java/naming.xml</ruleset>
-						<ruleset>/rulesets/java/imports.xml</ruleset>
-						<ruleset>/rulesets/java/unnecessary.xml</ruleset>
-						<ruleset>/rulesets/java/unusedcode.xml</ruleset>
+                        <ruleset>category/java/bestpractices.xml</ruleset>
+                        <ruleset>category/java/codestyle.xml</ruleset>
+                        <ruleset>category/java/design.xml</ruleset>
+                        <ruleset>category/java/errorprone.xml</ruleset>
+                        <ruleset>category/java/performance.xml</ruleset>
                     </rulesets>
                 </configuration>
+                <executions>
+                <execution>
+                    <goals>
+                    <goal>check</goal>
+                    </goals>
+                </execution>
+                </executions>
             </plugin>
-        </plugins>
-    </reporting>
+		</plugins>
+	</build>
 </project>

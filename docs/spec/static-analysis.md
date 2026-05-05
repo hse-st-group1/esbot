@@ -91,7 +91,7 @@ The PMD code analyzer found flaws in our application. Some rules were deemed unn
 - Rule:MissingSerialVersionUID
     - Our AIServiceException extends a RuntimeException and is missing a SerialVersionUID which needs to be addressed.
 - Rule:UseUtilityClass
-    - EsbotApplication is springboots entry point and can be ignored safely suppressed because it makes to sense to implement constructors here. The file is in the custom ruleset ignored but should feature a @SupressWaring Bean in the application file.
+    - EsbotApplication is springboots entry point and can be ignored safely suppressed because it doesn't make to sense to implement constructors here. The file is in the custom ruleset ignored but should feature a @SupressWaring Bean in the application file in the future.
 - Rule:AvoidInstantiatingObjectsInLoops
     - The QuizRequestService is using a mock for the aiservice which is not implemented yet. A Loop is used to save all quiz items out of a list. This issue needs addressing in further development.
 

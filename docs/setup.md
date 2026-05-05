@@ -137,6 +137,20 @@ mvn surefire:test -Dtest=*Cucumber*
 mvn surefire:test -Dtest=*
 ```
 
+### Static Code Analysis for PMD and OWASP Dependency Checker Plugin for Maven
+```bash
+mvn clean install
+```
+or
+```bash
+mvn verify
+```
+
+To view pmd report:
+```bash
+xdg-open target/site/pmd.html
+```
+
 ## Create a fresh Springboot Setup from scratch
 
 ### Get the Springboot Framework

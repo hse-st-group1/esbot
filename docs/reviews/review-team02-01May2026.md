@@ -115,7 +115,7 @@ Suggested values: **Type** — defect, question, suggestion; **Severity** — bl
 | F-002 | DataModel | Why is the answer to QuizItems expected immediately? | Logic | Question | - | <!-- --> | <!-- --> | <!-- --> |
 | F-003 | DataModel | Why are QuizItems stored as a List and not a Set? | Code Logic | Question | - | <!-- --> | <!-- --> | <!-- --> |
 | F-004 | EntityMessage | Why is Message a Subtype of ImmutableProperties? | Code Logic | Question | The Interface ImmutableProperties was used to gather all entity properties of which the values are supposed to be not updateable (see BaseMethod.cs). This is supposed to make database requests easier.  | closed | - | - |
-| F-005 | EntityMessage | Why is both the foreign key as well as the whole entity of Session listed as properties of Message? | Redundancy | Question | C# Specific Programming/Style dependent on Framework | closed | - | - |
+| F-005 | EntityMessage | Why is both the foreign key as well as the whole entity of Session listed as properties of Message? | Redundancy | Question | C# Specific Entity Mapping/Style dependent on Framework | closed | - | - |
 | F-006 | EntityMessage | Why is the maximum length of a message 4000 char? | Contraint | Question | Team Choice | closed | - | - |
 | F-007 | EntitySession | Why is both the Foreign Key as well as the whole Entity of User listed as properties of Session? | Redundancy | Question | --> F-005 | closed | - | - |
 | F-008 | EntitySession | Regarding the EndedAt property: What is the use of keeping a session saved in the system after it has been ended? | Logic | Question | Session is used to keep track of a conversation (list of messages) as well as to mock Keycloak (EndedAt). EndedAt is extended if user sends a new message. Ended Sessions are kept in the system, in case the user wants to access the conversation again later.| open - Suggestion: Rename EndedAt to LastAccessedAt | minor | Consideration to rename property |
@@ -188,8 +188,8 @@ The overall quality of the reviewed objects are good. Four mostly minor issues w
 
 | Role | Name | Signature / date |
 |------|------|------------------|
-| Moderator | Team 01 | <!-- --> |
-| Author | Team 02 | <!-- --> |
+| Moderator | Team 01 | 05.05.2026 |
+| Author | Team 02 | 05.05.2026 |
 
 ---
 

@@ -160,34 +160,7 @@
 						</configuration>
 					</execution>
 				</executions>
-			</plugin>	
-
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-pmd-plugin</artifactId>
-				<version>3.23.0</version>
-				<configuration>
-					<!-- failOnViolation is disabled, because we only want to generate a report -->
-					<!-- build should still succeed even if violations were found -->
-					<failOnViolation>false</failOnViolation>
-					<!-- printFailingErrors outputs number of found violations during build -->
-					<printFailingErrors>true</printFailingErrors>
-					<rulesets>
-						<ruleset>category/java/bestpractices.xml</ruleset>
-						<ruleset>category/java/codestyle.xml</ruleset>
-						<ruleset>category/java/design.xml</ruleset>
-						<ruleset>category/java/errorprone.xml</ruleset>
-						<ruleset>category/java/performance.xml</ruleset>
-                    </rulesets>
-				</configuration>
-				<executions>
-				<execution>
-					<goals>
-					<goal>check</goal>
-					</goals>
-				</execution>
-				</executions>
-			</plugin>
+			</plugin>		
 			<plugin>
 				<groupId>org.owasp</groupId>
 				<artifactId>dependency-check-maven</artifactId>

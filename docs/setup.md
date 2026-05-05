@@ -118,9 +118,37 @@ mvn clean install
 mvn spring-boot:run
 ```
 
-### Test the backend using Maven
+### Test the backend using Maven - Unit Tests
 ```bash
 mvn test
+```
+or
+```bash
+mvn surefire:test -Dtest=*Test*
+```
+
+### Test the backend using Maven - BDD Tests
+```bash
+mvn surefire:test -Dtest=*Cucumber*
+```
+
+### Test the backend using Maven - Full Test Suite
+```bash
+mvn surefire:test -Dtest=*
+```
+
+### Static Code Analysis for PMD and OWASP Dependency Checker Plugin for Maven
+```bash
+mvn clean install
+```
+or
+```bash
+mvn verify
+```
+
+To view pmd report:
+```bash
+xdg-open target/site/pmd.html
 ```
 
 ## Create a fresh Springboot Setup from scratch

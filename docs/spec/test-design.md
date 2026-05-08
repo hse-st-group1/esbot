@@ -3,8 +3,8 @@
 ## Topic
 | Parameter | Class ID  | Class Type    | Description                                       | Representative Value                                                                                                                           |
 |-----------|-----------|---------------|---------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------|
-| topic     | EC-T-1    | Valid         | topic length 2-100 (inclusive) are valid inputs   | <ul><li>length=2: "IT"</li><li>length=99: "..."</li><li>boundary values:<ul><li>length=3: "car"</li><li>length=100: "..."</li></ul></li></ul>|
-| topic     | EC-T-2    | Invalid       | topic length <2 is too short                      | <ul><li>length=1: "x" (outside boundary value)</li></ul>                                                                                      |
+| topic     | EC-T-1    | Valid         | topic length 2-100 (inclusive) are valid inputs   | <ul><li>length=2: "IT"</li><li>length=99: "..."</li><li>boundary values:<ul><li>length=3: "car"</li><li>length=100: "..."</li></ul></li></ul>  |
+| topic     | EC-T-2    | Invalid       | topic length <2 is too short                      | <ul><li>length=1: "x" (outside boundary value)</li></ul>                                                                                       |
 | topic     | EC-T-3    | Invalid       | topic length >100 is too long                     | <ul><li>length=101: "..." (outside boundary value)</li></ul>                                                                                   |
 | topic     | EC-T-4    | Invalid       | empty string                                      | <ul><li>""</li></ul>                                                                                                                           |
 | topic     | EC-T-5    | Invalid       | not a string                                      | <ul><li>0</li><li>1</li></ul>                                                                                                                  |

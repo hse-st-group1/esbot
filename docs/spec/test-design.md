@@ -45,6 +45,10 @@ The question difficulty is relevant for QuizRequest because without a difficulty
 | -                   | yes                 | yes                    | no            | Error: "You can't submit an empty answer"            | Datamodel: QuizAnswer is not null                                     |
 | -                   | -                   | no                     | no            | Error: "QuizItem(=Question) not found"               | Datamodel: QuizEvaluation and QuizAnswer can't exist without QuizItem |
 
+# State Transition Testing
+## State Diagram
+<img src="./diagrams/black-box-testing/esbot_states.svg" width=500px/>
+
 ## State Transition Table
 | Current State | Event | Next State | Output/Action |
 | :---- | :---- | :---- | :---- |
@@ -102,6 +106,3 @@ The question difficulty is relevant for QuizRequest because without a difficulty
 - **State Transitioning Testing:** Caused us to evaluate how the system works, and which states are possible. However, this resulted in adapting the data model and implementation, given that this functionality was not clear from the initial requirements. Previous to this, the system would have been working without this addition as well. Therefore no actual defects were found.   
 - **Decision Table:** The given context of the decision table did not allow for a lot of possible scenarios/decisions. Therefore it was not effective in finding defects.   
 - **Equivalence Class Partitioning & Boundary Value Analysis:** This proved to be most effective and took relatively little time. Our data model and implementation were adjusted accordingly. 
-# State Transition Testing
-## State Diagram
-<img src="./diagrams/black-box-testing/esbot_states.svg" width=500px/>

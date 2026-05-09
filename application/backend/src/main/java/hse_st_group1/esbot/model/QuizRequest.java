@@ -7,6 +7,8 @@ import java.util.UUID;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -28,6 +30,10 @@ import lombok.Setter;
 @Getter
 @Setter
 public class QuizRequest {
+    public enum Difficulty{
+        EASY, MEDIUM, HARD
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column (nullable = false)
@@ -45,4 +51,11 @@ public class QuizRequest {
 
     @OneToMany (mappedBy = "quizRequest", cascade = CascadeType.REMOVE)
     private List<QuizItem> quizItems = new ArrayList<>();
+
+    @Column
+    @Enumerated(EnumType.STRING)
+    private Difficulty quizItemDifficulty;
+
+    @Column
+    private Integer quizItemCount;
 }

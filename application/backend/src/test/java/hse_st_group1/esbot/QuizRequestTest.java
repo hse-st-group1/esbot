@@ -25,7 +25,7 @@ class QuizRequestTest{
 
     @Test
     void testAllArgsConstructorQuizRequest(){
-        QuizRequest quiz = new QuizRequest(id, session, content, null);
+        QuizRequest quiz = new QuizRequest(id, session, content, null, QuizRequest.Difficulty.MEDIUM, 3);
 
         assertEquals(id, quiz.getQuizID());
         assertEquals(content, quiz.getQuizRequestContent());
@@ -35,7 +35,7 @@ class QuizRequestTest{
     @Test
     void testSettersQuizRequest(){
 
-        QuizRequest quiz = new QuizRequest(id, session, content, null);
+        QuizRequest quiz = new QuizRequest(id, session, content, null, QuizRequest.Difficulty.MEDIUM, 3);
 
         UUID newId = UUID.randomUUID();
         Session newSession = UnitTestHelper.sessionCreator();
@@ -52,14 +52,14 @@ class QuizRequestTest{
 
     @Test
     void testIdConstraintQuizRequest(){
-        QuizRequest quiz = new QuizRequest(null, session, content, null);
+        QuizRequest quiz = new QuizRequest(null, session, content, null, QuizRequest.Difficulty.MEDIUM, 3);
         Set<ConstraintViolation<QuizRequest>> quizIdIsNullViolation = validator.validate(quiz);
         assertFalse(quizIdIsNullViolation.isEmpty());
     }
 
     @Test
     void testSessionConstraintQuizRequest(){
-        QuizRequest quiz = new QuizRequest(id, null, content, null);
+        QuizRequest quiz = new QuizRequest(id, null, content, null, QuizRequest.Difficulty.MEDIUM, 3);
         Set<ConstraintViolation<QuizRequest>> quizSessionIsNullViolation = validator.validate(quiz);
         assertFalse(quizSessionIsNullViolation.isEmpty());
     }
@@ -67,7 +67,7 @@ class QuizRequestTest{
     @Test
     void testContentConstraintQuizRequest(){
 
-        QuizRequest quiz = new QuizRequest(id, session, null, null);
+        QuizRequest quiz = new QuizRequest(id, session, null, null, QuizRequest.Difficulty.MEDIUM, 3);
         Set<ConstraintViolation<QuizRequest>> quizContentIsNullViolation = validator.validate(quiz);
         assertFalse(quizContentIsNullViolation.isEmpty());
 

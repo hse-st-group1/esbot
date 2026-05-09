@@ -57,14 +57,14 @@ public class UnitTestHelper {
         UUID quizRequestId = UUID.randomUUID();
         Session session = sessionCreator();
         String content = "Test";
-        QuizRequest quizRequest = new QuizRequest(quizRequestId, session, content, null);
+        QuizRequest quizRequest = new QuizRequest(quizRequestId, session, content, null, QuizRequest.Difficulty.MEDIUM, 3);
         session.setQuizRequests(Set.of(quizRequest));
         return quizRequest;
     }
     public static QuizRequest quizRequestCreator(Session session){
         UUID quizRequestId = UUID.randomUUID();
         String content = "Test";
-        QuizRequest quizRequest = new QuizRequest(quizRequestId, session, content, null);
+        QuizRequest quizRequest = new QuizRequest(quizRequestId, session, content, null, QuizRequest.Difficulty.MEDIUM, 3);
         session.setQuizRequests(Set.of(quizRequest));
         return quizRequest;
     }

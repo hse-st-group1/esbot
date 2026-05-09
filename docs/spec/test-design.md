@@ -44,3 +44,33 @@ The question difficulty is relevant for QuizRequest because without a difficulty
 | "incorrect"         | no                  | yes                    | yes           | Feedback: "Answer is incorrect: +CORRECTION"         | REQ-4                                                                |
 | -                   | yes                 | yes                    | no            | Error: "You can't submit an empty answer"            | Datamodel: QuizAnswer is not null                                     |
 | -                   | -                   | no                     | no            | Error: "QuizItem(=Question) not found"               | Datamodel: QuizEvaluation and QuizAnswer can't exist without QuizItem |
+
+# State Transition Testing
+## State Diagram
+<img src="./diagrams/black-box-testing/esbot_states.svg" width=500px/>
+
+## State Transition Table
+| Current State | Event | Next State | Output/Action |
+| :---- | :---- | :---- | :---- |
+| NEW | submit\_message | ACTIVE | store message generate response |
+| ACTIVE | 5min\_inactivity | IDLE | create summary for AI interaction update last accessed |
+| IDLE | submit\_new\_message | ACTIVE | reactivate Session load summary for AI prompts load old Messages update message context |
+| ACTIVE | delete\_session | (termination) | delete session and date |
+| IDLE | delete\_session | (termination) | delete session data  |
+| NEW | 5min\_inactivity | (termination) | session is not persisted  |
+
+## Test Case Derivation
+| Start State | Events Applied | Expected State Afterwards | Expected System Output | Requirement |
+| :---- | :---- | :---- | :---- | :---- |
+| START | create session | NEW | None | None |
+| NEW | submit message | ACTIVE | LLM answers users first message | REQ-1 |
+| ACTIVE | inactivity \> 5min | IDLE | The system notifies the user that no interaction took place for more than 5 minutes (?) | REQ-5 |
+| IDLE | submit new message | ACTIVE | LLM answers users message | REQ-5 |
+| ACTIVE | User deletes session | DELETED | Session deletion is confirmed to user | None |
+| Start State | Events Applied | Expected State Afterwards | Expected System Output | Requirement |
+
+
+| Start State | Events Applied | Expected State Afterwards | Expected System Output | Requirement |
+| :---- | :---- | :---- | :---- | :---- |
+| START | create session | NEW | None | None |
+| NEW | inactivity \> 5min | (invalid) | **Invalid Transition  (NEW → IDLE)** (Given that the session contains no content, it is deleted in case of inactivity.) | None |

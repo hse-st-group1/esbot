@@ -29,7 +29,8 @@
 | **SessionID** | UUID | 🔑 PK, not null, unique |  | |
 | **UserID** | UUID | not null |  | |
 | **StartedAt** | TIMESTAMP | not null |  | |
-| **LastAccessed** | TIMESTAMP | not null |  | | 
+| **LastAccessed** | TIMESTAMP | not null |  | |
+| **State** | TEXT | | | 
 
 
 ### Message
@@ -50,7 +51,9 @@
 |-------------|---------------|-------------------------------|-------------------------------|--------------------------------|
 | **QuizID** | UUID | 🔑 PK, not null, unique |  | |
 | **SessionID** | UUID | not null | fk_Quiz_SessionID_Sessions | |
-| **QuizRequest** | TEXT | not null |  | | 
+| **QuizRequestContent** | TEXT | not null |  | |
+| **QuizItemDifficulty** | TEXT | | |
+| **QuizItemCount** | INTEGER | | | 
 
 
 ### QuizEvaluation

@@ -6,7 +6,7 @@ The system shall provide a chat interface for students to input topics and quest
 - **REQ 2: Explanation generation**  
 Given a topic or question, the system shall generate explanations with examples and clarifications where needed.
 - **REQ 3: Exercise generation**  
-Given a topic, the system shall generate questions and quizzes.
+Given a topic, the number of questions and difficulty, the system shall generate questions and quizzes.
 - **REQ 4: Evaluate solutions**   
 Given an solution for an excercise, the system shall generate feedback. 
 - **REQ 5: Continuity of conversation**  

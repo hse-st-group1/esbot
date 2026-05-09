@@ -3,7 +3,7 @@
 ## Topic
 | Parameter | Class ID  | Class Type    | Description                                       | Representative Value                                                                                                                           |
 |-----------|-----------|---------------|---------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------|
-| topic     | EC-T-1    | Valid         | topic length 2-100 (inclusive) are valid inputs   | <ul><li>length=2: "IT"</li><li>length=99: "..."</li><li>boundary values:<ul><li>length=3: "car"</li><li>length=100: "..."</li></ul></li></ul>  |
+| topic     | EC-T-1    | Valid         | topic length 2-100 (inclusive) are valid inputs   | <ul><li>length=4: "test"</li><li>length=99: "..."</li><li>boundary values:<ul><li>length=2: "IT"</li><li>length=100: "..."</li></ul></li></ul>  |
 | topic     | EC-T-2    | Invalid       | topic length <2 is too short                      | <ul><li>length=1: "x" (outside boundary value)</li></ul>                                                                                       |
 | topic     | EC-T-3    | Invalid       | topic length >100 is too long                     | <ul><li>length=101: "..." (outside boundary value)</li></ul>                                                                                   |
 | topic     | EC-T-4    | Invalid       | empty string                                      | <ul><li>""</li></ul>                                                                                                                           |
@@ -39,8 +39,8 @@ The question difficulty is relevant for QuizRequest because without a difficulty
 # Decision Table
 | Answer correct?     | Answer empty/blank? | QuizItem still exists? | Valid action? | Expected System Action                               | Requirement reference                                                 |
 |---------------------|:-------------------:|:----------------------:|:-------------:|------------------------------------------------------|:----------------------------------------------------------------------|
-| "correct"           | no                  | yes                    | yes           | Feedback: "Answer is correct"                        | REQ-04                                                                |
-| "partially correct" | no                  | yes                    | yes           | Feedback: "Answer is partially correct: +CORRECTION" | REQ-04                                                                |
-| "incorrect"         | no                  | yes                    | yes           | Feedback: "Answer is incorrect: +CORRECTION"         | REQ-04                                                                |
+| "correct"           | no                  | yes                    | yes           | Feedback: "Answer is correct"                        | REQ-4                                                                |
+| "partially correct" | no                  | yes                    | yes           | Feedback: "Answer is partially correct: +CORRECTION" | REQ-4                                                                |
+| "incorrect"         | no                  | yes                    | yes           | Feedback: "Answer is incorrect: +CORRECTION"         | REQ-4                                                                |
 | -                   | yes                 | yes                    | no            | Error: "You can't submit an empty answer"            | Datamodel: QuizAnswer is not null                                     |
 | -                   | -                   | no                     | no            | Error: "QuizItem(=Question) not found"               | Datamodel: QuizEvaluation and QuizAnswer can't exist without QuizItem |

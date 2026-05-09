@@ -25,15 +25,15 @@
 | difficulty    | EC-D-3    | Invalid    | not a string                              | <ul><li>null</li><li>123</li></ul>                |
 | difficulty    | EC-D-4    | Invalid    | diffrent string                           | <ul><li>abc</li></ul>                             |
 
-# Justification
+## Justification
 
-## Topic
+### Topic
 The question topic is relevant for QuizRequest because without a topic the LLM would be unable to generate QuizItems(Questions) for the requested topic. To limit the complexity a upper boundary value of 100 characters is selected, which must not be exceeded. The lower value was selected that general topics can be selected, and abreviations can be used. Single letters can mean anything, therefore they are excluded. This is mapped to the Requirement REQ-3.
 
-## Count
+### Count
 The question count is relevant for QuizRequest because without a count the LLM would be unable to generate a fixed number of questions. This could happen non-deterministic so a diffrent number of questions is generated each time. To counteract that QuizRequest needs a fixed number of questions that can be generated. The lower boundary of 1 was selected, because you can't generate 0 questions for any given topic, so that case should be ignored. A upper boundary of 10 was selected to reduce the probability of duplicate questions. This is mapped to the Requirement REQ-3.
 
-## Difficulty
+### Difficulty
 The question difficulty is relevant for QuizRequest because without a difficulty the questions could be too easy or too difficult for the user. This enables the user to select the difficulty accordingly to his knowledge. No boundaries can be selected here because there is no value that is lower than easy and no value thats higher than hard. This is mapped to Requirement REQ-3.
 
 # Decision Table
@@ -44,3 +44,35 @@ The question difficulty is relevant for QuizRequest because without a difficulty
 | "incorrect"         | no                  | yes                    | yes           | Feedback: "Answer is incorrect: +CORRECTION"         | REQ-4                                                                |
 | -                   | yes                 | yes                    | no            | Error: "You can't submit an empty answer"            | Datamodel: QuizAnswer is not null                                     |
 | -                   | -                   | no                     | no            | Error: "QuizItem(=Question) not found"               | Datamodel: QuizEvaluation and QuizAnswer can't exist without QuizItem |
+
+
+# Reflection — Test Design Technique Comparison
+
+## Complementarity
+**Which scenarios are best covered by ECP/BVA, which by decision tables, and which by state transition testing? Give a concrete ESBot example for each.**
+
+- Equivalence Class Partitioning & Boundary Value Analysis:  
+  - Best for testing numeric parameters  
+  - e.g. QuizRequest: count, length of topic  
+- Decision Tables:  
+  - Best for testing logic behind input and expected action, especially in case of several input parameters  
+  - e.g. Transition between active and idle  
+- State Transition Testing:  
+  - Best for testing how events impact system state  
+  - e.g. session state
+
+## Gaps
+**Are there ESBot behaviours that none of the three techniques cover well? What alternative technique would you apply and why?**
+
+- Testing of entire scenarios/workflows from users point of view (Black-Box testing)  
+  - Use Case Testing  
+  - Usability testing  
+- Tests all possible/valid paths through the code (White-Box testing)  
+  - Path Coverage Testing
+
+## Effort vs. value
+**For the ESBot project specifically, which technique produced the highest defect-detection value relative to the design effort? Justify your answer with reference to at least one requirement from the specification.**
+
+- State Transitioning Testing: Caused us to evaluate how the system works, and which states are possible. However, this resulted in adapting the data model and implementation, given that this functionality was not clear from the initial requirements. Previous to this, the system would have been working without this addition as well. Therefore no actual defects were found.   
+- Decision Table: The given context of the decision table did not allow for a lot of possible scenarios/decisions. Therefore it was not effective in finding defects.   
+- Equivalence Class Partitioning & Boundary Value Analysis: This proved to be most effective and took relatively little time. Our data model and implementation were adjusted accordingly. 

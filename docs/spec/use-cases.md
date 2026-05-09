@@ -1,6 +1,6 @@
 # Use Case Diagram
 
-<img src="./diagrams/use_case.drawio.svg" width=1000px/>
+<img src="./diagrams/requirements/use_case.drawio.svg" width=1000px/>
 
 # Use Case Descriptions
 ## UseCase-001

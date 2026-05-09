@@ -51,13 +51,13 @@ The question difficulty is relevant for QuizRequest because without a difficulty
 ## Complementarity
 **Which scenarios are best covered by ECP/BVA, which by decision tables, and which by state transition testing? Give a concrete ESBot example for each.**
 
-- Equivalence Class Partitioning & Boundary Value Analysis:  
+- **Equivalence Class Partitioning & Boundary Value Analysis:**  
   - Best for testing numeric parameters  
   - e.g. QuizRequest: count, length of topic  
-- Decision Tables:  
+- **Decision Tables:**  
   - Best for testing logic behind input and expected action, especially in case of several input parameters  
   - e.g. Transition between active and idle  
-- State Transition Testing:  
+- **State Transition Testing:**  
   - Best for testing how events impact system state  
   - e.g. session state
 
@@ -73,6 +73,6 @@ The question difficulty is relevant for QuizRequest because without a difficulty
 ## Effort vs. value
 **For the ESBot project specifically, which technique produced the highest defect-detection value relative to the design effort? Justify your answer with reference to at least one requirement from the specification.**
 
-- State Transitioning Testing: Caused us to evaluate how the system works, and which states are possible. However, this resulted in adapting the data model and implementation, given that this functionality was not clear from the initial requirements. Previous to this, the system would have been working without this addition as well. Therefore no actual defects were found.   
-- Decision Table: The given context of the decision table did not allow for a lot of possible scenarios/decisions. Therefore it was not effective in finding defects.   
-- Equivalence Class Partitioning & Boundary Value Analysis: This proved to be most effective and took relatively little time. Our data model and implementation were adjusted accordingly. 
+- **State Transitioning Testing:** Caused us to evaluate how the system works, and which states are possible. However, this resulted in adapting the data model and implementation, given that this functionality was not clear from the initial requirements. Previous to this, the system would have been working without this addition as well. Therefore no actual defects were found.   
+- **Decision Table:** The given context of the decision table did not allow for a lot of possible scenarios/decisions. Therefore it was not effective in finding defects.   
+- **Equivalence Class Partitioning & Boundary Value Analysis:** This proved to be most effective and took relatively little time. Our data model and implementation were adjusted accordingly. 

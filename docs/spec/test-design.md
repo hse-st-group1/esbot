@@ -100,7 +100,7 @@ The question difficulty is relevant for QuizRequest because without a difficulty
 - Tests all possible/valid paths through the code (White-Box testing)  
   - Path Coverage Testing
 
-## Effort vs. value
+## Effort vs. Value
 **For the ESBot project specifically, which technique produced the highest defect-detection value relative to the design effort? Justify your answer with reference to at least one requirement from the specification.**
 
 - **State Transitioning Testing:** Caused us to evaluate how the system works, and which states are possible. However, this resulted in adapting the data model and implementation, given that this functionality was not clear from the initial requirements. Previous to this, the system would have been working without this addition as well. Therefore no actual defects were found.   

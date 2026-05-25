@@ -7,7 +7,6 @@ import hse_st_group1.esbot.model.QuizAnswer;
 import hse_st_group1.esbot.model.QuizEvaluation;
 import hse_st_group1.esbot.repository.QuizAnswerRepository;
 import hse_st_group1.esbot.repository.QuizEvaluationRepository;
-import jakarta.transaction.Transactional;
 
 
 

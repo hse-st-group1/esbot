@@ -1,21 +1,14 @@
 package hse_st_group1.esbot;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatObject;
-import static org.assertj.core.api.Assertions.useRepresentation;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
-
-import java.util.HashSet;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest;
-import org.springframework.boot.resttestclient.autoconfigure.SpringBootRestTestClientBuilderCustomizer;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
 import hse_st_group1.esbot.model.Message;
@@ -30,7 +23,6 @@ import hse_st_group1.esbot.repository.SessionRepository;
 import hse_st_group1.esbot.repository.UserRepository;
 import hse_st_group1.esbot.services.AIService;
 import hse_st_group1.esbot.services.ChatService;
-import io.cucumber.java.Before;
 
 @DataJpaTest
 class ChatServiceTest {

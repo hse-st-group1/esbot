@@ -1,7 +1,6 @@
 package hse_st_group1.esbot.services;
 
 import java.sql.Timestamp;
-import java.util.Set;
 
 import org.springframework.stereotype.Service;
 
@@ -68,32 +67,32 @@ public class ChatService {
         }
     }
 
-    // public void sendQuizRequest(String quizRequestContent, Integer count, Difficulty difficulty){
-    //     QuizRequestService quizRequestService = new QuizRequestService(quizRequestRepository, aiService, quizItemRepository);
-    //     QuizRequest quizRequest = new QuizRequest();
-    //     quizRequest.setQuizRequestContent(quizRequestContent);
-    //     quizRequest.setQuizItemCount(count);
-    //     quizRequest.setQuizItemDifficulty(difficulty);
-    //     try{
-    //         quizRequestService.createQuiz(quizRequest);
-    //     }
-    //     catch(AIServiceUnavailableException quizRequestserviceUnavailableException){
-    //         this.exception = quizRequestserviceUnavailableException;
-    //     }
-    // }
+    public void sendQuizRequest(String quizRequestContent, Integer count, Difficulty difficulty){
+        QuizRequestService quizRequestService = new QuizRequestService(quizRequestRepository, aiService, quizItemRepository);
+        QuizRequest quizRequest = new QuizRequest();
+        quizRequest.setQuizRequestContent(quizRequestContent);
+        quizRequest.setQuizItemCount(count);
+        quizRequest.setQuizItemDifficulty(difficulty);
+        try{
+            quizRequestService.createQuiz(quizRequest);
+        }
+        catch(AIServiceUnavailableException quizRequestserviceUnavailableException){
+            this.exception = quizRequestserviceUnavailableException;
+        }
+    }
 
-    // public void receiveEvaluation(String answer, QuizItem quizItem){
-    //     QuizEvaluationService quizEvaluationService = new QuizEvaluationService(quizAnswerRepository, aiService, quizEvaluationRepository);
-    //     QuizAnswer quizAnswer = new QuizAnswer();
-    //     quizAnswer.setAnswer(answer);
-    //     quizAnswer.setQuizItem(quizItem);
-    //     quizAnswer.setTimeStamp(new Timestamp(System.currentTimeMillis()));
-    //     quizAnswerRepository.save(quizAnswer);
-    //     try{
-    //        quizEvaluationService.evaluate(quizAnswer);
-    //     }
-    //     catch(AIServiceUnavailableException quizEvaluationServiceUnavailableException){
-    //         this.exception = quizEvaluationServiceUnavailableException;
-    //     }
-    // }
+    public void receiveEvaluation(String answer, QuizItem quizItem){
+        QuizEvaluationService quizEvaluationService = new QuizEvaluationService(quizAnswerRepository, aiService, quizEvaluationRepository);
+        QuizAnswer quizAnswer = new QuizAnswer();
+        quizAnswer.setAnswer(answer);
+        quizAnswer.setQuizItem(quizItem);
+        quizAnswer.setTimeStamp(new Timestamp(System.currentTimeMillis()));
+        quizAnswerRepository.save(quizAnswer);
+        try{
+           quizEvaluationService.evaluate(quizAnswer);
+        }
+        catch(AIServiceUnavailableException quizEvaluationServiceUnavailableException){
+            this.exception = quizEvaluationServiceUnavailableException;
+        }
+    }
 }

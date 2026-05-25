@@ -1,6 +1,5 @@
 package hse_st_group1.esbot;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.sql.Timestamp;
 import java.util.Set;

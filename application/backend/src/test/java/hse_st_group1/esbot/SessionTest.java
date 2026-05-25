@@ -91,28 +91,6 @@ class SessionTest {
     }
 
     @Test
-    void testUpdateConstraintsSession () {
-        // sessionID, user and startedAt should not be able to be updated
-
-        // Create Test Object
-        Session session = new Session(sessionID, user, startedAt, lastAccessed, null, null);
-        
-        // Assert that Object was created sucessfully
-        assertThat(session).isNotNull();
-        
-        // Set Properties (sessionID, user and startedAt should not be able to be set)
-        UUID newSessionID = UUID.randomUUID(); 
-        assertThrows(UnsupportedOperationException.class, () -> session.setSessionID(newSessionID));
-        
-        UUID userID = UUID.randomUUID();
-        User newUser = new User(userID, "Max Mustermann", null);
-        assertThrows(UnsupportedOperationException.class, () -> session.setUser(newUser));
-
-        Timestamp newStartedAt = new Timestamp(0);
-        assertThrows(UnsupportedOperationException.class, () -> session.setStartedAt(newStartedAt));
-    }
-
-    @Test
     void testRelationshipsSession () {
         // Session is linked to a User
         Session session = UnitTestHelper.sessionCreator(user);

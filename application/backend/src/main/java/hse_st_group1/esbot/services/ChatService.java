@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import hse_st_group1.esbot.AIServiceUnavailableException;
 import hse_st_group1.esbot.model.Message;
 import hse_st_group1.esbot.model.QuizAnswer;
+import hse_st_group1.esbot.model.QuizEvaluation;
 import hse_st_group1.esbot.model.QuizItem;
 import hse_st_group1.esbot.model.QuizRequest;
 import hse_st_group1.esbot.model.Session;
@@ -67,21 +68,22 @@ public class ChatService {
         }
     }
 
-    public void sendQuizRequest(String quizRequestContent, Integer count, Difficulty difficulty){
+    public QuizRequest sendQuizRequest(String quizRequestContent, Integer count, Difficulty difficulty){
         QuizRequestService quizRequestService = new QuizRequestService(quizRequestRepository, aiService, quizItemRepository);
         QuizRequest quizRequest = new QuizRequest();
         quizRequest.setQuizRequestContent(quizRequestContent);
         quizRequest.setQuizItemCount(count);
         quizRequest.setQuizItemDifficulty(difficulty);
         try{
-            quizRequestService.createQuiz(quizRequest);
+            return quizRequestService.createQuiz(quizRequest);
         }
         catch(AIServiceUnavailableException quizRequestserviceUnavailableException){
             this.exception = quizRequestserviceUnavailableException;
+            throw exception;
         }
     }
 
-    public void receiveEvaluation(String answer, QuizItem quizItem){
+    public QuizEvaluation receiveEvaluation(String answer, QuizItem quizItem){
         QuizEvaluationService quizEvaluationService = new QuizEvaluationService(quizAnswerRepository, aiService, quizEvaluationRepository);
         QuizAnswer quizAnswer = new QuizAnswer();
         quizAnswer.setAnswer(answer);
@@ -89,10 +91,11 @@ public class ChatService {
         quizAnswer.setTimeStamp(new Timestamp(System.currentTimeMillis()));
         quizAnswerRepository.save(quizAnswer);
         try{
-           quizEvaluationService.evaluate(quizAnswer);
+           return quizEvaluationService.evaluate(quizAnswer);
         }
         catch(AIServiceUnavailableException quizEvaluationServiceUnavailableException){
             this.exception = quizEvaluationServiceUnavailableException;
+            throw exception;
         }
     }
 }

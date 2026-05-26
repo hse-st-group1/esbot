@@ -35,7 +35,6 @@ class SessionRepoTest {
     private User user;
     private Timestamp timestamp = new Timestamp(System.currentTimeMillis());
     private UUID sessionID;
-    private UUID newSessionID;
     private Session session;
     private Session newSession;
 

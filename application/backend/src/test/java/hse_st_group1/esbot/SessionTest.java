@@ -2,6 +2,7 @@ package hse_st_group1.esbot;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -22,7 +23,7 @@ class SessionTest {
     User user = UnitTestHelper.userCreator();
     Timestamp startedAt = new Timestamp(System.currentTimeMillis());
     Timestamp lastAccessed = new Timestamp(System.currentTimeMillis());
-    Set<Message> messages = Set.of(UnitTestHelper.createTestMessage(UnitTestHelper.sessionCreator(sessionID)));
+    List<Message> messages = List.of(UnitTestHelper.createTestMessage(UnitTestHelper.sessionCreator(sessionID)));
     Set<QuizRequest> quizRequests = Set.of(UnitTestHelper.quizRequestCreator(UnitTestHelper.sessionCreator(sessionID)));
 
     @Test
@@ -97,9 +98,9 @@ class SessionTest {
         
         // Session can have many Messages
         Message message = UnitTestHelper.createTestMessage(sessionID);
-        session.setMessages(Set.of(message));
+        session.setMessages(List.of(message));
         assertThat(message.getSession().getSessionID()).isEqualTo(sessionID);
-        assertThat(session.getMessages()).isEqualTo(Set.of(message));
+        assertThat(session.getMessages()).isEqualTo(List.of(message));
         assertThat(session.getMessages()).contains(message);
 
         // Session can have many QuizRequests

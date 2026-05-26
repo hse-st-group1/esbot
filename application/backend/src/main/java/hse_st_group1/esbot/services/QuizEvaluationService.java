@@ -23,11 +23,11 @@ public class QuizEvaluationService {
         this.quizEvaluationRepository = quizEvaluationRepository;
     }
 
-    public void evaluate(QuizAnswer answer) {
+    public QuizEvaluation evaluate(QuizAnswer answer) {
         if(aiService.isAvailable()){
             String evaluation = aiService.evaluateAnswer(answer.getAnswer());
             QuizEvaluation quizEvaluation = new QuizEvaluation(null, answer.getQuizItem(), answer, evaluation);
-            quizEvaluationRepository.save(quizEvaluation);
+            return quizEvaluationRepository.save(quizEvaluation);
         }
         else{
             throw new AIServiceUnavailableException("Error: Evaluation service is currently unavailable");

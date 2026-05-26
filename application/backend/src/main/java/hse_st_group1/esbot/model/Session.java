@@ -53,16 +53,5 @@ public class Session {
 
     @OneToMany (mappedBy = "session", cascade = CascadeType.REMOVE)
     private Set<QuizRequest> quizRequests = new HashSet<>();
-    
-    // Lombok automatically generates Setters for all Entity Properties, even if they are configured as not updateable
-    // Issues are only caught when trying to save to the Database
-    // public void setSessionID (UUID sessionID) {
-    //     throw new UnsupportedOperationException("Session: sessionID is not updateable");
-    // }
-    // public void setUser (User user) {
-    //     throw new UnsupportedOperationException("Session: sessionID is not updateable");
-    // }
-    // public void setStartedAt (Timestamp timestamp) {
-    //     throw new UnsupportedOperationException("Session: sessionID is not updateable");
-    // }
+
 }

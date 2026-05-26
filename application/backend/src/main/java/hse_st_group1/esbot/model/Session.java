@@ -1,7 +1,9 @@
 package hse_st_group1.esbot.model;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -47,7 +49,7 @@ public class Session {
     private Timestamp lastAccessed;
 
     @OneToMany (mappedBy = "session", cascade = CascadeType.REMOVE) //if the session is deleted, all corresponding messages are deleted too
-    private Set<Message> messages = new HashSet<>();
+    private List<Message> messages = new ArrayList<>();
 
     @OneToMany (mappedBy = "session", cascade = CascadeType.REMOVE)
     private Set<QuizRequest> quizRequests = new HashSet<>();

@@ -5,6 +5,7 @@ import java.sql.Timestamp;
 import org.springframework.stereotype.Service;
 
 import hse_st_group1.esbot.AIServiceUnavailableException;
+import hse_st_group1.esbot.NoQuizTopicProvidedException;
 import hse_st_group1.esbot.model.Message;
 import hse_st_group1.esbot.model.QuizAnswer;
 import hse_st_group1.esbot.model.QuizEvaluation;
@@ -28,8 +29,8 @@ public class ChatService {
     private QuizEvaluationRepository quizEvaluationRepository;
     private QuizAnswerRepository quizAnswerRepository;
     private SessionRepository sessionRepository;
+    
     private AIService aiService;
-
     private AIServiceUnavailableException exception;
     
     public ChatService(SessionRepository sessionRepository, MessageRepository messageRepository, AIService aiService, QuizItemRepository quizItemRepository, QuizRequestRepository quizRequestRepository, QuizAnswerRepository quizAnswerRepository, QuizEvaluationRepository quizEvaluationRepository){
@@ -48,7 +49,8 @@ public class ChatService {
         session.setStartedAt(new Timestamp(System.currentTimeMillis()));
         session.setLastAccessed(new Timestamp(System.currentTimeMillis()));
         user.getSessions().add(session);
-        return sessionRepository.save(session);
+        sessionRepository.save(session);
+        return session;
     }
 
     public Message sendMessage(Session session, String messageContent){
@@ -71,15 +73,20 @@ public class ChatService {
     public QuizRequest sendQuizRequest(String quizRequestContent, Integer count, Difficulty difficulty){
         QuizRequestService quizRequestService = new QuizRequestService(quizRequestRepository, aiService, quizItemRepository);
         QuizRequest quizRequest = new QuizRequest();
-        quizRequest.setQuizRequestContent(quizRequestContent);
-        quizRequest.setQuizItemCount(count);
-        quizRequest.setQuizItemDifficulty(difficulty);
-        try{
-            return quizRequestService.createQuiz(quizRequest);
+        if(quizRequestContent.isBlank() || quizRequestContent.isEmpty()){
+            throw new NoQuizTopicProvidedException("Error: No quiz topic provided.");
         }
-        catch(AIServiceUnavailableException quizRequestserviceUnavailableException){
-            this.exception = quizRequestserviceUnavailableException;
-            throw exception;
+        else{
+            quizRequest.setQuizRequestContent("Topic: " + quizRequestContent);
+            quizRequest.setQuizItemCount(count);
+            quizRequest.setQuizItemDifficulty(difficulty);
+            try{
+                return quizRequestService.createQuiz(quizRequest);
+            }
+            catch(AIServiceUnavailableException quizRequestserviceUnavailableException){
+                this.exception = quizRequestserviceUnavailableException;
+                throw exception;
+            }
         }
     }
 

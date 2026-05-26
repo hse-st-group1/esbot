@@ -38,7 +38,7 @@ public class MessageService {
         } else {
             throw new AIServiceUnavailableException("Error: Message service is currently unavailable");
         }
-
-        return messageRepository.save(response);
+        messageRepository.save(response);
+        return response;
     }
 }

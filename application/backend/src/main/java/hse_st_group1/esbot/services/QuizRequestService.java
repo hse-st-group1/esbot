@@ -52,7 +52,8 @@ public class QuizRequestService {
             }
         
             quizRequest.setQuizItems(items);
-            return quizRequestRepository.save(quizRequest);
+            quizRequestRepository.save(quizRequest);
+            return quizRequest;
         } else {
             throw new NoQuizTopicProvidedException("Error: No quiz topic provided.");
         }

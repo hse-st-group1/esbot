@@ -37,8 +37,7 @@ missing boundary values and each implemented test have been listed below.
 - **Missing: Session State has not been accounted for and therefore invalid transitions and states have not been tested.**
 ### Message.java
 - **MessageID - Checks:**
-    - Ensure Message with MessageID is valid
-    - Ensure Message without MessageID is invalid (`null`)
+    - Ensure Message with MessageID is valid  
 - **Session - Checks:**
     - Ensure Message with Session is valid
     - Ensure Message without Session is invalid (`null`)
@@ -54,9 +53,10 @@ missing boundary values and each implemented test have been listed below.
     - Ensure Message without Sender is invalid (`null`)
 - **MessageType - Checks:**
     - Ensure Message with MessageType is valid
-    - Ensure Message without MessageType is invalid (`null`)
+    - Ensure Message without MessageType is invalid (`blank`)
     - Ensure Max Length of MessageType (32) is not exceeded
 - **Missing:** 
+    - Ensure Message without MessageID is invalid (`null`)
     - Boundary values for MessageContent are missing in the data-model. Therefore these constraints have not been tested.
 ### QuizRequest.java
 - **QuizID - Checks:**
@@ -67,13 +67,12 @@ missing boundary values and each implemented test have been listed below.
     - Ensure QuizRequest without Session is invalid (`null`)
 - **QuizRequestContent - Checks:**
     - Ensure QuizRequest with QuizRequestContent is valid
-    - Ensure QuizRequest without QuizRequestContent is invalid (`null`)
+    - Ensure QuizRequest without QuizRequestContent is invalid (`null` or `blank`)
 - **QuizItems - Checks:**
     - Ensure QuizRequest with QuizItems is valid
     - Ensure QuizRequest without QuizItems is valid (`null`)
 - **Missing:**
     - QuizRequestContent boundary values are missing in the data-model. Therefore these constraints have not been tested.
-    - QuizRequestContent blank values have not been implemented and tested.
     - QuizItemCount has been added at a later stage. No boundary values have been checked and implemented.
     - QuizItemDifficulty has been added at a later stage. No boundary values have been checked and implemented.
 ### QuizItem.java
@@ -85,7 +84,7 @@ missing boundary values and each implemented test have been listed below.
     - Ensure QuizItem without QuizRequest is invalid (`null`)
 - **Question - Checks:**
     - Ensure QuizItem with Question is valid
-    - Ensure QuizItem without Question is invalid (`null`)
+    - Ensure QuizItem without Question is invalid (`not empty`)
 - **QuizAnswers - Checks:**
     - Ensure QuizItem with QuizAnswers is valid
     - Ensure QuizItem without QuizAnswers is valid (`null`)
@@ -94,7 +93,7 @@ missing boundary values and each implemented test have been listed below.
     - Ensure QuizItem without QuizEvaluations is valid (`null`)
 - **Missing:**
     - Question (Topic) boundary values are missing in the data-model. Therefore these constraints have not been tested.
-    - Question blank values have not been implemented and tested.
+    - Tests to ensure QuizItem where Question is null or blank is invalid have not been implemented.
 ### QuizAnswer.java
 - **QuizAnswerID - Checks:**
     - Ensure QuizAnswer with QuizAnswerID is valid

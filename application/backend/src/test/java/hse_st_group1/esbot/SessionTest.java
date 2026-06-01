@@ -51,16 +51,16 @@ class SessionTest {
        
         //Assert that NotNull constrainst are implemented
         Set<ConstraintViolation<Session>> sessionIDNotNullValidation = validator.validateProperty(session, "sessionID");
-        assertThat(sessionIDNotNullValidation).isNotNull();
+        assertThat(sessionIDNotNullValidation).isNotEmpty();
 
         Set<ConstraintViolation<Session>> userNotNullValidation = validator.validateProperty(session, "user");
-        assertThat(userNotNullValidation).isNotNull();
+        assertThat(userNotNullValidation).isNotEmpty();
 
         Set<ConstraintViolation<Session>> startedAtNotNullValidation = validator.validateProperty(session, "startedAt");
-        assertThat(startedAtNotNullValidation).isNotNull();
+        assertThat(startedAtNotNullValidation).isNotEmpty();
 
         Set<ConstraintViolation<Session>> lastAccessedNotNullValidation = validator.validateProperty(session, "lastAccessed");
-        assertThat(lastAccessedNotNullValidation).isNotNull();
+        assertThat(lastAccessedNotNullValidation).isNotEmpty();
 
         // Assert that nullable Properties do not throw Errors
         Set<ConstraintViolation<Session>> messagesEmptyValidation = validator.validateProperty(session, "messages");

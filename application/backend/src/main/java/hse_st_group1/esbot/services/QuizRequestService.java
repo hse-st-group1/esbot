@@ -42,7 +42,7 @@ public class QuizRequestService {
                 throw new AIServiceUnavailableException("Error: Quiz service is currently unavailable");
             }
 
-            quizRequestRepository.save(quizRequest);
+            //quizRequestRepository.save(quizRequest); //Redundant?
             List<QuizItem> items = new ArrayList<>();
 
             for(String question: questions){

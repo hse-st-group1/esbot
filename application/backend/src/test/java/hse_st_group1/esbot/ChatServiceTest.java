@@ -1,8 +1,13 @@
 package hse_st_group1.esbot;
 
+// KI USAGE: GPT-5 mini was used to extend tests (as declared below)
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.mockito.ArgumentMatchers.argThat;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 import java.util.List;
 
@@ -70,11 +75,23 @@ class ChatServiceTest {
     void sendMessageTestAIServiceAvailable(){
         String messageContent = "Hello AI";
         this.session = chatService.createNewSession(user);
+
         Mockito.when(aiServiceMock.isAvailable()).thenReturn(true);
         Mockito.when(aiServiceMock.responseString(Mockito.anyString())).thenReturn("Hello from ESbot");
         try{
+            // Check that correct response was returned
             this.message = chatService.sendMessage(this.session, messageContent);
             assertEquals("Hello from ESbot", message.getMessageContent());
+
+            // Check that Message was saved to session Repository
+            verify(sessionRepository, times(1)).save(session);
+
+            // KI USAGE: How to check that Message was saved with correct parameters (-> Pattern was later adjusted by us and reused)
+            verify(messageRepository).save(
+                argThat(argMatcher ->
+                    "Hello AI".equals(argMatcher.getMessageContent())
+                )
+            );
         }
         catch(AIServiceUnavailableException aiServiceUnavailableException){
             assertNull(aiServiceUnavailableException);
@@ -89,6 +106,16 @@ class ChatServiceTest {
         try{
             this.message = chatService.sendMessage(this.session, messageContent);
             assertNull(this.message);
+
+            // Check that Message was saved to session Repository
+            verify(sessionRepository, times(1)).save(session);
+
+            // KI USAGE: Check that Message was saved with correct parameters
+            verify(messageRepository).save(
+                argThat(argMatcher ->
+                    "Hello AI".equals(argMatcher.getMessageContent())
+                )
+            );
         }
         catch(AIServiceUnavailableException aiServiceUnavailableException){
             assertNotNull(aiServiceUnavailableException);
@@ -105,6 +132,18 @@ class ChatServiceTest {
         QuizRequest request = null;
         try{
             request = chatService.sendQuizRequest(quizTopic, 3, Difficulty.EASY);
+        
+            // Check that QuizRequest was saved to QuizRequest Repository
+            verify(quizRequestRepository, times(1)).save(request);
+
+            // Check that QuizRequest was saved with correct parameters
+            verify(quizRequestRepository).save(
+                argThat(argMatcher ->
+                    "Topic: Software Testing".equals(argMatcher.getQuizRequestContent()) 
+                    // sendQuizRequest adds "Topic: " in front of quizRequestContent before save, 
+                    // expected parameter is therefore different than the passed value  
+                )
+            );
         }
         catch(AIServiceUnavailableException aiServiceUnavailableException){
             assertNull(aiServiceUnavailableException);
@@ -135,6 +174,18 @@ class ChatServiceTest {
         QuizRequest request = null;
         try{
             request = chatService.sendQuizRequest(quizTopic, 3, Difficulty.EASY);
+
+            // Check that QuizRequest was saved to QuizRequest Repository
+            verify(quizRequestRepository, times(1)).save(request);
+
+            // Check that QuizRequest was saved with correct parameters
+            verify(quizRequestRepository).save(
+                argThat(argMatcher ->
+                    "Topic: Software Testing".equals(argMatcher.getQuizRequestContent()) 
+                    // sendQuizRequest adds "Topic: " in front of quizRequestContent before save, 
+                    // expected parameter is therefore different than the passed value  
+                )
+            );
         }
         catch(AIServiceUnavailableException aiServiceUnavailableException){
             assertNotNull(aiServiceUnavailableException);
@@ -154,6 +205,16 @@ class ChatServiceTest {
         request = chatService.sendQuizRequest("Test", 3, Difficulty.EASY);
         try{
             evaluation = chatService.receiveEvaluation("Test", request.getQuizItems().get(0));
+
+            // Check that Evaluation was saved to Evaluation Repository
+            verify(quizEvaluationRepository, times(1)).save(evaluation);
+
+            // Check that Evaluation was saved with correct parameters
+            verify(quizEvaluationRepository).save(
+                argThat(argMatcher ->
+                    "correct".equals(argMatcher.getEvaluation())
+                )
+            );
         }
         catch(AIServiceUnavailableException aiServiceUnavailableException){
             assertNull(aiServiceUnavailableException);

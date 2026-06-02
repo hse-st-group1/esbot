@@ -109,7 +109,7 @@ missing boundary values and each implemented test have been listed below.
     - Ensure QuizAnswer with TimeStamp is valid
     - Ensure QuizAnswer without TimeStamp is invalid (`null`)
 - **Missing:**
-    - Answer boundary values have not been definied in the data-model. Therefore thes constraints gave not been tested.
+    - Answer boundary values have not been definied in the data-model. Therefore thes constraints have not been tested.
 ### QuizEvaluation.java
 - **QuizEvaluationID - Checks:**
     - Ensure QuizEvaluation with QuizEvaluationID is valid
@@ -125,4 +125,4 @@ missing boundary values and each implemented test have been listed below.
     - Ensure QuizEvaluation without Evaluation is invalid (`null`)
     - Ensure QuizEvaluation without Evaluation is invalid (`blank`)
 - **Missing:**
-    - Evaluation boundary values have not been definied in the data-model. Therefore thes constraints gave not been tested.
+    - Evaluation boundary values have not been definied in the data-model. Therefore thes constraints have not been tested.

@@ -1,5 +1,6 @@
 package hse_st_group1.esbot.controller;
 
+import hse_st_group1.esbot.repository.MessageRepository;
 import hse_st_group1.esbot.repository.QuizItemRepository;
 import hse_st_group1.esbot.repository.SessionRepository;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,11 +37,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class ChatServiceController {
 
     public record QuizItemIdAndQuestion(UUID quizItemId, String quizItemQuestion) {}
+    public record MessageIdAndContent(UUID messageid, String messageQuestion) {}
 
     private final SessionRepository sessionRepository;
     public final ChatService chatService;
     public final UserRepository userRepository;
     public final QuizItemRepository quizItemRepository;
+    public final MessageRepository messageRepository;
 
     @PostMapping()
     public ResponseEntity<UUID> createSession(@RequestBody UUID userID) {
@@ -61,6 +64,27 @@ public class ChatServiceController {
         return ResponseEntity.ok(responseLLM.getMessageContent());
         //To Do at a later date: Implement a DTO for Message response to be able to send the response entity
     }
+
+    @GetMapping("{sessionId}/messages")
+    public List<MessageIdAndContent> getAllMessagesForSession(@PathVariable UUID sessionId) {
+        List<MessageIdAndContent> listOfMessageidsAndContent = new ArrayList<>();
+
+        Session session = sessionRepository.findById(sessionId).orElseThrow(
+            () -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        List<Message> messages = messageRepository.findBySessionOrderByTimestamp(session);
+
+        if (messages.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        } else {
+            for (Message message : messages) {
+                MessageIdAndContent messageIdAndContent = new MessageIdAndContent(message.getMessageID(), message.getMessageContent());
+                listOfMessageidsAndContent.add(messageIdAndContent);
+            }
+        }
+        return listOfMessageidsAndContent;
+    }
+    
 
     @PostMapping("/{sessionId}/quiz")
     public String createQuiz(@PathVariable UUID sessionId, @RequestBody QuizRequestDTO quizRequestDTO) {

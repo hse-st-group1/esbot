@@ -16,6 +16,8 @@ import hse_st_group1.esbot.repository.UserRepository;
 import hse_st_group1.esbot.services.ChatService;
 import lombok.RequiredArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.http.HttpStatus;
@@ -29,6 +31,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 @RequestMapping("/sessions")
 @RequiredArgsConstructor
 public class ChatServiceController {
+
+    public record QuizItemIdAndQuestion(UUID quizItemId, String quizItemQuestion) {}
 
     private final SessionRepository sessionRepository;
     public final ChatService chatService;
@@ -54,6 +58,7 @@ public class ChatServiceController {
         return ResponseEntity.ok(responseLLM.getMessageContent());
         //To Do at a later date: Implement a DTO for Message response to be able to send the response entity
     }
+
     @PostMapping("/{sessionId}/quiz")
     public String postQuiz(@PathVariable UUID sessionId, @RequestBody QuizRequestDTO quizRequestDTO) {
         Session session = sessionRepository.findById(sessionId).orElseThrow(
@@ -61,16 +66,22 @@ public class ChatServiceController {
         
             QuizRequest quizRequest = chatService.sendQuizRequest(quizRequestDTO.getQuizRequestContent(), session, quizRequestDTO.getCount(), quizRequestDTO.getDifficulty());
 
-        return quizRequest.getQuizItems().toString();
+            List<QuizItem> quizItems = quizRequest.getQuizItems();
+            List<QuizItemIdAndQuestion> listOfQuizItemIdsAndQuestions = new ArrayList<>();
+            for (QuizItem item : quizItems) {
+                QuizItemIdAndQuestion quizItemIdAndQuestion = new QuizItemIdAndQuestion(item.getQuizItemID(), item.getQuestion());
+                listOfQuizItemIdsAndQuestions.add(quizItemIdAndQuestion);
+            } 
+        return listOfQuizItemIdsAndQuestions.toString();
     }
     
-    @PostMapping("/{sessionId}/quiz/{questionId}/answer")
+    @PostMapping("/{sessionId}/quiz/{quizItemId}/answer")
     public ResponseEntity<String> evaluateAnswer(
         @PathVariable UUID sessionId,
-        @PathVariable UUID questionId,
+        @PathVariable UUID quizItemId,
         @RequestBody String answer) {
 
-        QuizItem item = quizItemRepository.findById(questionId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        QuizItem item = quizItemRepository.findById(quizItemId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
         
         String feedback = chatService.receiveEvaluation(answer, item)
             .getEvaluation();

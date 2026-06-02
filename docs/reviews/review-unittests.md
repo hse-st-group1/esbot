@@ -34,7 +34,8 @@ missing boundary values and each implemented test have been listed below.
 - **LastAccessed - Checks:**
     - Ensure Session with LastAccessed TimeStamp is valid
     - Ensure Session without LastAccessed TimeStamp is invalid (`null`)
-- **Missing: Session State has not been accounted for and therefore invalid transitions and states have not been tested.**
+- **Missing:** 
+    - Session State has not been accounted for and therefore invalid transitions and states have not been tested.
 ### Message.java
 - **MessageID - Checks:**
     - Ensure Message with MessageID is valid  

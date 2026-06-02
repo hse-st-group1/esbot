@@ -56,6 +56,7 @@ public class ChatService {
     public Message sendMessage(Session session, String messageContent){
         MessageService messageService = new MessageService(messageRepository, aiService);
         Message message = new Message();
+        message.setMessageType("Message");
         message.setMessageContent(messageContent);
         message.setSession(session);
         message.setSender(false);

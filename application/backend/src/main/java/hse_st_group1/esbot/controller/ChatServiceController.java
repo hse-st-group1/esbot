@@ -25,6 +25,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 
 @RestController
@@ -40,7 +43,7 @@ public class ChatServiceController {
     public final QuizItemRepository quizItemRepository;
 
     @PostMapping()
-    public ResponseEntity<UUID> postSession(@RequestBody UUID userID) {
+    public ResponseEntity<UUID> createSession(@RequestBody UUID userID) {
 
         User user = userRepository.findById(userID).orElseThrow(
             () -> new ResponseStatusException(HttpStatus.NOT_FOUND));
@@ -60,7 +63,7 @@ public class ChatServiceController {
     }
 
     @PostMapping("/{sessionId}/quiz")
-    public String postQuiz(@PathVariable UUID sessionId, @RequestBody QuizRequestDTO quizRequestDTO) {
+    public String createQuiz(@PathVariable UUID sessionId, @RequestBody QuizRequestDTO quizRequestDTO) {
         Session session = sessionRepository.findById(sessionId).orElseThrow(
             () -> new ResponseStatusException(HttpStatus.NOT_FOUND));
         
@@ -76,7 +79,7 @@ public class ChatServiceController {
     }
     
     @PostMapping("/{sessionId}/quiz/{quizItemId}/answer")
-    public ResponseEntity<String> evaluateAnswer(
+    public ResponseEntity<String> evaluateAnswerOfQuizItem(
         @PathVariable UUID sessionId,
         @PathVariable UUID quizItemId,
         @RequestBody String answer) {
@@ -86,5 +89,24 @@ public class ChatServiceController {
         String feedback = chatService.receiveEvaluation(answer, item)
             .getEvaluation();
         return ResponseEntity.ok(feedback);
+    }
+
+    @GetMapping()
+    public List<UUID> getIdsOfAllSessionsForUser(@RequestBody UUID userID) {
+
+        User user = userRepository.findById(userID).orElseThrow(
+            () -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        
+        List<Session> sessions = sessionRepository.findByUser(user);
+
+        if (sessions.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        } else {
+            List<UUID> listOfSessionIds = new ArrayList<>();
+            for (Session session : sessions) {
+                listOfSessionIds.add(session.getSessionID());   
+            }
+            return listOfSessionIds;
+        }
     }
 }

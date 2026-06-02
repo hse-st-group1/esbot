@@ -131,7 +131,7 @@ class ChatServiceTest {
         Mockito.when(aiServiceMock.createQuestions(Mockito.anyString())).thenReturn(List.of("Question 1: How Many Test Questions?", "Question 2: How Hard Are The Test Questions?", "Question 3: What Is A Rabbyte?"));
         QuizRequest request = null;
         try{
-            request = chatService.sendQuizRequest(quizTopic, 3, Difficulty.EASY);
+            request = chatService.sendQuizRequest(quizTopic, session, 3, Difficulty.EASY);
         
             // Check that QuizRequest was saved to QuizRequest Repository
             verify(quizRequestRepository, times(1)).save(request);
@@ -158,7 +158,7 @@ class ChatServiceTest {
         Mockito.when(aiServiceMock.createQuestions(Mockito.anyString())).thenReturn(List.of("Question 1: How Many Test Questions?", "Question 2: How Hard Are The Test Questions?", "Question 3: What Is A Rabbyte?"));
         QuizRequest request = null;
         try{
-            request = chatService.sendQuizRequest(quizTopic, 3, Difficulty.EASY);
+            request = chatService.sendQuizRequest(quizTopic, session, 3, Difficulty.EASY);
         }
         catch(NoQuizTopicProvidedException noQuizTopicProvidedException){
             assertNotNull(noQuizTopicProvidedException);
@@ -173,7 +173,7 @@ class ChatServiceTest {
         Mockito.when(aiServiceMock.createQuestions(Mockito.anyString())).thenReturn(List.of("Question 1: How Many Test Questions?", "Question 2: How Hard Are The Test Questions?", "Question 3: What Is A Rabbyte?"));
         QuizRequest request = null;
         try{
-            request = chatService.sendQuizRequest(quizTopic, 3, Difficulty.EASY);
+            request = chatService.sendQuizRequest(quizTopic, session, 3, Difficulty.EASY);
 
             // Check that QuizRequest was saved to QuizRequest Repository
             verify(quizRequestRepository, times(1)).save(request);
@@ -202,7 +202,7 @@ class ChatServiceTest {
         Mockito.when(aiServiceMock.isAvailable()).thenReturn(true);
         Mockito.when(aiServiceMock.createQuestions(Mockito.anyString())).thenReturn(List.of("Question 1: How Many Test Questions?", "Question 2: How Hard Are The Test Questions?", "Question 3: What Is A Rabbyte?"));
         Mockito.when(aiServiceMock.evaluateAnswer(Mockito.anyString())).thenReturn("correct");
-        request = chatService.sendQuizRequest("Test", 3, Difficulty.EASY);
+        request = chatService.sendQuizRequest("Test", session, 3, Difficulty.EASY);
         try{
             evaluation = chatService.receiveEvaluation("Test", request.getQuizItems().get(0));
 
@@ -231,7 +231,7 @@ class ChatServiceTest {
         Mockito.when(aiServiceMock.isAvailable()).thenReturn(true);
         Mockito.when(aiServiceMock.createQuestions(Mockito.anyString())).thenReturn(List.of("Question 1: How Many Test Questions?", "Question 2: How Hard Are The Test Questions?", "Question 3: What Is A Rabbyte?"));
         Mockito.when(aiServiceMock.evaluateAnswer(Mockito.anyString())).thenReturn("correct");
-        request = chatService.sendQuizRequest("Test", 3, Difficulty.EASY);
+        request = chatService.sendQuizRequest("Test", session, 3, Difficulty.EASY);
         try{
             evaluation = chatService.receiveEvaluation("", request.getQuizItems().get(0));
         }
@@ -251,7 +251,7 @@ class ChatServiceTest {
         Mockito.when(aiServiceMock.isAvailable()).thenReturn(true, false);
         Mockito.when(aiServiceMock.createQuestions(Mockito.anyString())).thenReturn(List.of("Question 1: How Many Test Questions?", "Question 2: How Hard Are The Test Questions?", "Question 3: What Is A Rabbyte?"));
         Mockito.when(aiServiceMock.evaluateAnswer(Mockito.anyString())).thenReturn("correct");
-        request = chatService.sendQuizRequest("Topic: Test", 3, Difficulty.EASY);
+        request = chatService.sendQuizRequest("Topic: Test", session, 3, Difficulty.EASY);
         try{
             evaluation = chatService.receiveEvaluation("Test", request.getQuizItems().get(0));
         }

@@ -8,5 +8,5 @@ VALUES (
     'Test-User'
 );
 
-SELECT * FROM user; 
+SELECT * FROM users; 
 EOF

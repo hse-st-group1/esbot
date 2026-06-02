@@ -71,7 +71,7 @@ public class ChatService {
         }
     }
 
-    public QuizRequest sendQuizRequest(String quizRequestContent, Integer count, Difficulty difficulty){
+    public QuizRequest sendQuizRequest(String quizRequestContent, Session session, Integer count, Difficulty difficulty){
         QuizRequestService quizRequestService = new QuizRequestService(quizRequestRepository, aiService, quizItemRepository);
         QuizRequest quizRequest = new QuizRequest();
         if(quizRequestContent.isBlank() || quizRequestContent.isEmpty()){
@@ -79,6 +79,7 @@ public class ChatService {
         }
         else{
             quizRequest.setQuizRequestContent("Topic: " + quizRequestContent);
+            quizRequest.setSession(session);
             quizRequest.setQuizItemCount(count);
             quizRequest.setQuizItemDifficulty(difficulty);
             try{

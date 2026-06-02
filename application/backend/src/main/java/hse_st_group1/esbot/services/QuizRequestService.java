@@ -45,6 +45,7 @@ public class QuizRequestService {
             //quizRequestRepository.save(quizRequest); //Redundant?
             List<QuizItem> items = new ArrayList<>();
 
+            quizRequestRepository.save(quizRequest);
             for(String question: questions){
                 QuizItem item = new QuizItem(null, quizRequest, question, null, null);
                 items.add(item);
@@ -52,7 +53,6 @@ public class QuizRequestService {
             }
         
             quizRequest.setQuizItems(items);
-            quizRequestRepository.save(quizRequest);
             return quizRequest;
         } else {
             throw new NoQuizTopicProvidedException("Error: No quiz topic provided.");

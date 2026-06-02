@@ -1,11 +1,13 @@
 package hse_st_group1.esbot.controller;
 
+import hse_st_group1.esbot.repository.QuizItemRepository;
 import hse_st_group1.esbot.repository.SessionRepository;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import hse_st_group1.esbot.model.Message;
+import hse_st_group1.esbot.model.QuizItem;
 import hse_st_group1.esbot.dto.QuizRequestDTO;
 import hse_st_group1.esbot.model.QuizRequest;
 import hse_st_group1.esbot.model.Session;
@@ -31,7 +33,7 @@ public class ChatServiceController {
     private final SessionRepository sessionRepository;
     public final ChatService chatService;
     public final UserRepository userRepository;
-    
+    public final QuizItemRepository quizItemRepository;
 
     @PostMapping()
     public ResponseEntity<UUID> postSession(@RequestBody UUID userID) {
@@ -62,4 +64,16 @@ public class ChatServiceController {
         return quizRequest.getQuizItems().toString();
     }
     
+    @PostMapping("/{sessionId}/quiz/{questionId}/answer")
+    public ResponseEntity<String> evaluateAnswer(
+        @PathVariable UUID sessionId,
+        @PathVariable UUID questionId,
+        @RequestBody String answer) {
+
+        QuizItem item = quizItemRepository.findById(questionId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        
+        String feedback = chatService.receiveEvaluation(answer, item)
+            .getEvaluation();
+        return ResponseEntity.ok(feedback);
+    }
 }

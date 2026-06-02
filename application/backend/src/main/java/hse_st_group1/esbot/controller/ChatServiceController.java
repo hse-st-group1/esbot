@@ -27,8 +27,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-
 
 
 @RestController
@@ -45,6 +43,7 @@ public class ChatServiceController {
     public final QuizItemRepository quizItemRepository;
     public final MessageRepository messageRepository;
 
+
     @PostMapping()
     public ResponseEntity<UUID> createSession(@RequestBody UUID userID) {
 
@@ -53,6 +52,27 @@ public class ChatServiceController {
         Session session = chatService.createNewSession(user);
         return ResponseEntity.ok(session.getSessionID());
     }
+
+    
+    @GetMapping()
+    public List<UUID> getIdsOfAllSessionsForUser(@RequestBody UUID userID) {
+
+        User user = userRepository.findById(userID).orElseThrow(
+            () -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        
+        List<Session> sessions = sessionRepository.findByUser(user);
+
+        if (sessions.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        } else {
+            List<UUID> listOfSessionIds = new ArrayList<>();
+            for (Session session : sessions) {
+                listOfSessionIds.add(session.getSessionID());   
+            }
+            return listOfSessionIds;
+        }
+    }
+
 
     @PostMapping("/{sessionId}/messages")
     public ResponseEntity<String> sendMessage(@PathVariable UUID sessionId, @RequestBody String messageContenString) {        
@@ -64,6 +84,7 @@ public class ChatServiceController {
         return ResponseEntity.ok(responseLLM.getMessageContent());
         //To Do at a later date: Implement a DTO for Message response to be able to send the response entity
     }
+
 
     @GetMapping("{sessionId}/messages")
     public List<MessageIdAndContent> getAllMessagesForSession(@PathVariable UUID sessionId) {
@@ -102,6 +123,7 @@ public class ChatServiceController {
         return listOfQuizItemIdsAndQuestions.toString();
     }
     
+
     @PostMapping("/{sessionId}/quiz/{quizItemId}/answer")
     public ResponseEntity<String> evaluateAnswerOfQuizItem(
         @PathVariable UUID sessionId,
@@ -113,24 +135,5 @@ public class ChatServiceController {
         String feedback = chatService.receiveEvaluation(answer, item)
             .getEvaluation();
         return ResponseEntity.ok(feedback);
-    }
-
-    @GetMapping()
-    public List<UUID> getIdsOfAllSessionsForUser(@RequestBody UUID userID) {
-
-        User user = userRepository.findById(userID).orElseThrow(
-            () -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-        
-        List<Session> sessions = sessionRepository.findByUser(user);
-
-        if (sessions.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        } else {
-            List<UUID> listOfSessionIds = new ArrayList<>();
-            for (Session session : sessions) {
-                listOfSessionIds.add(session.getSessionID());   
-            }
-            return listOfSessionIds;
-        }
     }
 }

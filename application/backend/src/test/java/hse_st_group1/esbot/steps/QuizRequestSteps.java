@@ -9,6 +9,7 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import hse_st_group1.esbot.AIServiceUnavailableException;
+import hse_st_group1.esbot.NoQuizTopicProvidedException;
 import hse_st_group1.esbot.model.QuizItem;
 import hse_st_group1.esbot.model.QuizRequest;
 import hse_st_group1.esbot.repository.QuizAnswerRepository;
@@ -106,8 +107,8 @@ public class QuizRequestSteps {
         try{
             quizRequestService.createQuiz(quizRequest);
         }
-        catch(AIServiceUnavailableException serviceUnavailableException){
-            exception = serviceUnavailableException;
+        catch(NoQuizTopicProvidedException noQuizTopicProvidedException){
+            exception = noQuizTopicProvidedException;
         }
         
  

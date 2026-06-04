@@ -18,4 +18,6 @@ jobs:
           java-version: "21"
           cache: maven
       - name: Run tests
-        run: cd application/backend | mvn test      
+        run: |
+          cd application/backend 
+          mvn test      

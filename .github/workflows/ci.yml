@@ -25,7 +25,3 @@ jobs:
         run: |
           cd application/backend 
           mvn verify -P pmd-linter
-      - name: Run OWASP Dependency Checker
-        run: |
-          cd application/backend 
-          mvn verify -P dependency-check

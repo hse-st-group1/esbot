@@ -196,7 +196,7 @@
 						<configuration>
 							<!-- failOnViolation is disabled, because we only want to generate a report -->
 							<!-- build should still succeed even if violations were found -->
-							<failOnViolation>false</failOnViolation>
+							<failOnViolation>true</failOnViolation>
 							<!-- printFailingErrors outputs number of found violations during build -->
 							<printFailingErrors>true</printFailingErrors>
 							<rulesets>

@@ -21,10 +21,6 @@ jobs:
         run: |
           cd application/backend 
           mvn test      
-      - name: Run BDD Tests
-        run: |
-          cd application/backend 
-          mvn surefire:test -Dtest=*Cucumber*
       - name: Run PMD Linter
         run: |
           cd application/backend 

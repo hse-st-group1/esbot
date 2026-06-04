@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -120,7 +121,7 @@ class MessageTest {
     void testRelatinshipToSession() {
         Message message = UnitTestHelper.createTestMessage();
         Session session = message.getSession();
-        session.setMessages(Set.of(message));
+        session.setMessages(List.of(message));
 
         assertTrue(session.getMessages().contains(message));
     }

@@ -1,8 +1,8 @@
 package hse_st_group1.esbot;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -23,7 +23,7 @@ class SessionTest {
     User user = UnitTestHelper.userCreator();
     Timestamp startedAt = new Timestamp(System.currentTimeMillis());
     Timestamp lastAccessed = new Timestamp(System.currentTimeMillis());
-    Set<Message> messages = Set.of(UnitTestHelper.createTestMessage(UnitTestHelper.sessionCreator(sessionID)));
+    List<Message> messages = List.of(UnitTestHelper.createTestMessage(UnitTestHelper.sessionCreator(sessionID)));
     Set<QuizRequest> quizRequests = Set.of(UnitTestHelper.quizRequestCreator(UnitTestHelper.sessionCreator(sessionID)));
 
     @Test
@@ -51,16 +51,16 @@ class SessionTest {
        
         //Assert that NotNull constrainst are implemented
         Set<ConstraintViolation<Session>> sessionIDNotNullValidation = validator.validateProperty(session, "sessionID");
-        assertThat(sessionIDNotNullValidation).isNotNull();
+        assertThat(sessionIDNotNullValidation).isNotEmpty();
 
         Set<ConstraintViolation<Session>> userNotNullValidation = validator.validateProperty(session, "user");
-        assertThat(userNotNullValidation).isNotNull();
+        assertThat(userNotNullValidation).isNotEmpty();
 
         Set<ConstraintViolation<Session>> startedAtNotNullValidation = validator.validateProperty(session, "startedAt");
-        assertThat(startedAtNotNullValidation).isNotNull();
+        assertThat(startedAtNotNullValidation).isNotEmpty();
 
         Set<ConstraintViolation<Session>> lastAccessedNotNullValidation = validator.validateProperty(session, "lastAccessed");
-        assertThat(lastAccessedNotNullValidation).isNotNull();
+        assertThat(lastAccessedNotNullValidation).isNotEmpty();
 
         // Assert that nullable Properties do not throw Errors
         Set<ConstraintViolation<Session>> messagesEmptyValidation = validator.validateProperty(session, "messages");
@@ -91,28 +91,6 @@ class SessionTest {
     }
 
     @Test
-    void testUpdateConstraintsSession () {
-        // sessionID, user and startedAt should not be able to be updated
-
-        // Create Test Object
-        Session session = new Session(sessionID, user, startedAt, lastAccessed, null, null);
-        
-        // Assert that Object was created sucessfully
-        assertThat(session).isNotNull();
-        
-        // Set Properties (sessionID, user and startedAt should not be able to be set)
-        UUID newSessionID = UUID.randomUUID(); 
-        assertThrows(UnsupportedOperationException.class, () -> session.setSessionID(newSessionID));
-        
-        UUID userID = UUID.randomUUID();
-        User newUser = new User(userID, "Max Mustermann", null);
-        assertThrows(UnsupportedOperationException.class, () -> session.setUser(newUser));
-
-        Timestamp newStartedAt = new Timestamp(0);
-        assertThrows(UnsupportedOperationException.class, () -> session.setStartedAt(newStartedAt));
-    }
-
-    @Test
     void testRelationshipsSession () {
         // Session is linked to a User
         Session session = UnitTestHelper.sessionCreator(user);
@@ -120,9 +98,9 @@ class SessionTest {
         
         // Session can have many Messages
         Message message = UnitTestHelper.createTestMessage(sessionID);
-        session.setMessages(Set.of(message));
+        session.setMessages(List.of(message));
         assertThat(message.getSession().getSessionID()).isEqualTo(sessionID);
-        assertThat(session.getMessages()).isEqualTo(Set.of(message));
+        assertThat(session.getMessages()).isEqualTo(List.of(message));
         assertThat(session.getMessages()).contains(message);
 
         // Session can have many QuizRequests

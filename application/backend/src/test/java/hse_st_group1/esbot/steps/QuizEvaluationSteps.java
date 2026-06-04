@@ -96,7 +96,8 @@ public class QuizEvaluationSteps {
         );
         quizAnswerRepository.save(answer);
         Mockito.when(aiService.evaluateAnswer("42")).thenReturn("correct");
-        evaluation = quizEvaluationService.evaluate(answer);
+        quizEvaluationService.evaluate(answer);
+        evaluation = answer.getQuizItem().getQuizEvaluations().iterator().next();
     }
 
     @When("I give an as incorrect interpretable answer")
@@ -109,7 +110,8 @@ public class QuizEvaluationSteps {
         );
         quizAnswerRepository.save(answer);
         Mockito.when(aiService.evaluateAnswer("Rabbit")).thenReturn("Incorrect, pls hava a look in ...");
-        evaluation = quizEvaluationService.evaluate(answer);
+        quizEvaluationService.evaluate(answer);
+        evaluation = answer.getQuizItem().getQuizEvaluations().iterator().next();
     }
 
     @Then("the system evaluates my answer as incorrect")
@@ -133,7 +135,8 @@ public class QuizEvaluationSteps {
         );
         quizAnswerRepository.save(answer);
         Mockito.when(aiService.evaluateAnswer("dgjasdflöasjfdk")).thenReturn("Please make a valid and interpretable input");
-        evaluation = quizEvaluationService.evaluate(answer);
+        quizEvaluationService.evaluate(answer);
+        evaluation = answer.getQuizItem().getQuizEvaluations().iterator().next();
     }
     @Then("the system asks me to make a valid input.")
     public void the_system_asks_me_to_make_a_valid_input() {

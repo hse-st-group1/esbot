@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import hse_st_group1.esbot.AIServiceUnavailableException;
+import hse_st_group1.esbot.NoQuizTopicProvidedException;
 import hse_st_group1.esbot.model.QuizItem;
 import hse_st_group1.esbot.model.QuizRequest;
 import hse_st_group1.esbot.repository.QuizItemRepository;
@@ -41,9 +42,10 @@ public class QuizRequestService {
                 throw new AIServiceUnavailableException("Error: Quiz service is currently unavailable");
             }
 
-            quizRequestRepository.save(quizRequest);
+            //quizRequestRepository.save(quizRequest); //Redundant?
             List<QuizItem> items = new ArrayList<>();
 
+            quizRequestRepository.save(quizRequest);
             for(String question: questions){
                 QuizItem item = new QuizItem(null, quizRequest, question, null, null);
                 items.add(item);
@@ -51,9 +53,9 @@ public class QuizRequestService {
             }
         
             quizRequest.setQuizItems(items);
-            return quizRequestRepository.save(quizRequest);
+            return quizRequest;
         } else {
-            throw new AIServiceUnavailableException("Error: No quiz topic provided.");
+            throw new NoQuizTopicProvidedException("Error: No quiz topic provided.");
         }
     }
 }

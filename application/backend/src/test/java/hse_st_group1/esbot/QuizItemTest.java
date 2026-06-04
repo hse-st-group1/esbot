@@ -55,10 +55,10 @@ class QuizItemTest {
        
         //Assert that NotNull constrainst are implemented 
         Set<ConstraintViolation<QuizItem>> quizItemIDNotNullValidation = validator.validateProperty(quizItem, "quizItemID");
-        assertThat(quizItemIDNotNullValidation).isNotNull();
+        assertThat(quizItemIDNotNullValidation).isNotEmpty();
 
         Set<ConstraintViolation<QuizItem>> quizRequestNotNullValidation = validator.validateProperty(quizItem, "quizRequest");
-        assertThat(quizRequestNotNullValidation).isNotNull();
+        assertThat(quizRequestNotNullValidation).isNotEmpty();
 
         Set<ConstraintViolation<QuizItem>> questionNotEmptyValidation = validator.validateProperty(quizItem, "question");
         assertThat(questionNotEmptyValidation).isNotEmpty();

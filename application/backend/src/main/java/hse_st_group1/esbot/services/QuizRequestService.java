@@ -1,6 +1,5 @@
 package hse_st_group1.esbot.services;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -20,20 +19,20 @@ public class QuizRequestService {
     private final QuizItemRepository quizItemRepository;
     private final AIService aiService;
 
-    public QuizRequestService(QuizRequestRepository quizRequestRepository, AIService aiService, QuizItemRepository quizItemRepository){
+    public QuizRequestService(final QuizRequestRepository quizRequestRepository, final AIService aiService, final QuizItemRepository quizItemRepository){
         this.aiService = aiService;
         this.quizRequestRepository = quizRequestRepository;
         this.quizItemRepository = quizItemRepository;
     }
 
     @Transactional
-    public QuizRequest createQuiz(QuizRequest quizRequest){
+    public QuizRequest createQuiz(final QuizRequest quizRequest){
 
-        String content = quizRequest.getQuizRequestContent();
+        final String content = quizRequest.getQuizRequestContent();
             
         // If no topic was provided (-> no "about ...") then LLM should request topic
         if (content.contains("about") || content.contains("Topic")) {
-            List<String> questions;
+            final List<String> questions;
 
             if(aiService.isAvailable()){
                 questions = aiService.createQuestions(quizRequest.getQuizRequestContent());
@@ -43,15 +42,10 @@ public class QuizRequestService {
             }
 
             //quizRequestRepository.save(quizRequest); //Redundant?
-            List<QuizItem> items = new ArrayList<>();
+            final List<QuizItem> items = questions.stream().map(question -> new QuizItem(null, quizRequest, question, null, null)).toList();
 
             quizRequestRepository.save(quizRequest);
-            for(String question: questions){
-                QuizItem item = new QuizItem(null, quizRequest, question, null, null);
-                items.add(item);
-                quizItemRepository.save(item);
-            }
-        
+            quizItemRepository.saveAll(items);
             quizRequest.setQuizItems(items);
             return quizRequest;
         } else {

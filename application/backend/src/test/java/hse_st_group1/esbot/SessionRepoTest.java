@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
-import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -33,7 +33,7 @@ class SessionRepoTest {
     private MessageRepository messageRepository;
 
     private User user;
-    private Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+    private Instant timestamp = Instant.now();
     private UUID sessionID;
     private Session session;
     private Session newSession;
@@ -44,8 +44,8 @@ class SessionRepoTest {
         user.setUserName("Tron");
         userRepository.save(user);
         session = new Session();
-        session.setStartedAt(new Timestamp(System.currentTimeMillis()));
-        session.setLastAccessed(new Timestamp(System.currentTimeMillis()));
+        session.setStartedAt(Instant.now());
+        session.setLastAccessed(Instant.now());
         session.setUser(user);
         sessionRepository.save(session);
         sessionID = session.getSessionID();
@@ -54,7 +54,7 @@ class SessionRepoTest {
     @Test 
     void createNewSession(){
         newSession = new Session();
-        newSession.setStartedAt(new Timestamp(System.currentTimeMillis()));
+        newSession.setStartedAt(Instant.now());
         newSession.setLastAccessed(newSession.getStartedAt());
         newSession.setUser(user);
         Session savedSession = sessionRepository.save(newSession);
@@ -73,12 +73,12 @@ class SessionRepoTest {
     void createMessages(){
         List<Message> messages = new ArrayList<>();
         Message message = new Message();
-        timestamp = new Timestamp(System.currentTimeMillis());
+        timestamp = Instant.now();
 
         message.setMessageType("Message");
         message.setSession(session);
         message.setSender(false);
-        message.setTimestamp(timestamp);
+        message.setTimestamp(Instant.now());
         message.setMessageContent("Hello To AI");
 
         messageRepository.save(message);
@@ -87,12 +87,12 @@ class SessionRepoTest {
         sessionRepository.save(session);
 
         message = new Message();
-        timestamp = new Timestamp(System.currentTimeMillis());
+        timestamp = Instant.now();
 
         message.setMessageType("Message");
         message.setSession(session);
         message.setSender(true);
-        message.setTimestamp(new Timestamp(System.currentTimeMillis()));
+        message.setTimestamp(Instant.now());
         message.setMessageContent("Hello To Tron");
 
         messageRepository.save(message);
@@ -101,12 +101,12 @@ class SessionRepoTest {
         sessionRepository.save(session);
 
         message = new Message();
-        timestamp = new Timestamp(System.currentTimeMillis());
+        timestamp = Instant.now();
 
         message.setMessageType("Message");
         message.setSession(session);
         message.setSender(true);
-        message.setTimestamp(new Timestamp(System.currentTimeMillis()));
+        message.setTimestamp(Instant.now());
         message.setMessageContent("AI Handshake Complete");
 
         messageRepository.save(message);
@@ -125,7 +125,7 @@ class SessionRepoTest {
 
     @Test
     void updateTimestamp(){
-        timestamp = new Timestamp(System.currentTimeMillis());
+        timestamp = Instant.now();
         sessionID = session.getSessionID();
         session.setLastAccessed(timestamp);
         session = null;

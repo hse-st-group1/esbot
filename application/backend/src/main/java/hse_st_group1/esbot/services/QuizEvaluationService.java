@@ -18,19 +18,19 @@ public class QuizEvaluationService {
     public final AIService aiService;
     public final QuizEvaluationRepository quizEvaluationRepository;
 
-    public QuizEvaluationService(QuizAnswerRepository quizAnswerRepository, AIService aiService, QuizEvaluationRepository quizEvaluationRepository){
+    public QuizEvaluationService(final QuizAnswerRepository quizAnswerRepository, final AIService aiService, final QuizEvaluationRepository quizEvaluationRepository){
         this.quizAnswerRepository = quizAnswerRepository;
         this.aiService = aiService;
         this.quizEvaluationRepository = quizEvaluationRepository;
     }
 
-    public QuizEvaluation evaluate(QuizAnswer answer) {
+    public QuizEvaluation evaluate(final QuizAnswer answer) {
         if(answer.getAnswer().isBlank() || answer.getAnswer().isEmpty()){
             throw new AnswerEmptyException("Error: Answer provided is empty");
         }
         if(aiService.isAvailable()){
-            String evaluation = aiService.evaluateAnswer(answer.getAnswer());
-            QuizEvaluation quizEvaluation = new QuizEvaluation(null, answer.getQuizItem(), answer, evaluation);
+            final String evaluation = aiService.evaluateAnswer(answer.getAnswer());
+            final QuizEvaluation quizEvaluation = new QuizEvaluation(null, answer.getQuizItem(), answer, evaluation);
             quizEvaluationRepository.save(quizEvaluation);
             return quizEvaluation;
         }

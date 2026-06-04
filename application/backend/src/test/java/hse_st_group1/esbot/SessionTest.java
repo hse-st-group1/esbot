@@ -1,7 +1,7 @@
 package hse_st_group1.esbot;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
@@ -21,8 +21,8 @@ class SessionTest {
     // Used Arguments for Tests
     UUID sessionID = UUID.randomUUID();
     User user = UnitTestHelper.userCreator();
-    Timestamp startedAt = new Timestamp(System.currentTimeMillis());
-    Timestamp lastAccessed = new Timestamp(System.currentTimeMillis());
+    Instant startedAt = Instant.now();
+    Instant lastAccessed = Instant.now();
     List<Message> messages = List.of(UnitTestHelper.createTestMessage(UnitTestHelper.sessionCreator(sessionID)));
     Set<QuizRequest> quizRequests = Set.of(UnitTestHelper.quizRequestCreator(UnitTestHelper.sessionCreator(sessionID)));
 

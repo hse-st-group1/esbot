@@ -1,6 +1,6 @@
 package hse_st_group1.esbot.util;
 
-import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -26,8 +26,8 @@ public class UnitTestHelper {
     public static Session sessionCreator(){
         UUID sessionId = UUID.randomUUID();
         User user = userCreator();
-        Timestamp startedAt = new Timestamp(System.currentTimeMillis());
-        Timestamp lastAccessed = new Timestamp(System.currentTimeMillis());
+        Instant startedAt = Instant.now();
+        Instant lastAccessed = Instant.now();
         Session session = new Session(sessionId, user, startedAt, lastAccessed, null, null);
         user.setSessions(new HashSet<Session>());
         return session;
@@ -36,8 +36,8 @@ public class UnitTestHelper {
     public static Session sessionCreator(UUID sessionID){
         UUID sessionId = sessionID;
         User user = userCreator();
-        Timestamp startedAt = new Timestamp(System.currentTimeMillis());
-        Timestamp lastAccessed = new Timestamp(System.currentTimeMillis());
+        Instant startedAt = Instant.now();
+        Instant lastAccessed = Instant.now();
         Session session = new Session(sessionId, user, startedAt, lastAccessed, null, null);
         user.setSessions(Set.of(session));
         return session;
@@ -45,8 +45,8 @@ public class UnitTestHelper {
 
     public static Session sessionCreator(User user){
         UUID sessionId = UUID.randomUUID();
-        Timestamp startedAt = new Timestamp(System.currentTimeMillis());
-        Timestamp lastAccessed = new Timestamp(System.currentTimeMillis());
+        Instant startedAt = Instant.now();
+        Instant lastAccessed = Instant.now();
         Session session = new Session(sessionId, user, startedAt, lastAccessed, null, null);
         user.setSessions(Set.of(session));
         return session;
@@ -98,7 +98,7 @@ public class UnitTestHelper {
     public static QuizAnswer quizAnswerCreator(QuizItem item){
         UUID quizAnswerId = UUID.randomUUID();
         QuizItem quizItem = item;
-        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        Instant timestamp = Instant.now();
         String answer = "My Solution";
         QuizAnswer quizAnswer = new QuizAnswer(quizAnswerId, quizItem, answer, timestamp);
         quizItem.setQuizAnswers(Set.of(quizAnswer));
@@ -130,7 +130,7 @@ public class UnitTestHelper {
             UUID.randomUUID(),
             UnitTestHelper.sessionCreator(),
             "Valid Message!",
-            Timestamp.valueOf("2026-04-14 14:21:00"),
+            Instant.parse("2026-04-14T14:21:00.00Z"),
             false,
             "TEST"
         );
@@ -141,7 +141,7 @@ public class UnitTestHelper {
             UUID.randomUUID(),
             session,
             "Valid Message!",
-            Timestamp.valueOf("2026-04-14 14:21:00"),
+            Instant.parse("2026-04-14T14:21:00.00Z"),
             false,
             "TEST"
         );
@@ -152,7 +152,7 @@ public class UnitTestHelper {
             UUID.randomUUID(),
             UnitTestHelper.sessionCreator(sessionID),
             "Valid Message!",
-            Timestamp.valueOf("2026-04-14 14:21:00"),
+            Instant.parse("2026-04-14T14:21:00.00Z"),
             false,
             "TEST"
         );

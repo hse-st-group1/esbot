@@ -3,7 +3,7 @@ package hse_st_group1.esbot.steps;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,7 +31,7 @@ public class AIFallbackSteps {
 
     private User user;
     private Session session;
-    private Timestamp timestamp;
+    private Instant timestamp;
 
     private Message message;
     private Message aiMessage;
@@ -68,7 +68,7 @@ public class AIFallbackSteps {
         this.user = new User(null, "cucumber_test", null);
         this.user = userRepository.save(user);
         
-        timestamp = new Timestamp(System.currentTimeMillis());
+        timestamp = Instant.now();
         this.session = new Session(null, user, timestamp, timestamp, null, null);
         sharedSession.setSession(this.session);
         this.session = sessionRepository.save(session);
@@ -100,8 +100,8 @@ public class AIFallbackSteps {
 
     @When("I send a message")
     public void i_send_a_message(){
-        timestamp = new Timestamp(System.currentTimeMillis());
-        message = new Message(null, session, null, timestamp, false, "MESSAGE");
+        timestamp = Instant.now();
+        message = new Message(null, session, null, Instant.now(), false, "MESSAGE");
         message.setMessageContent("Hello");
         try{
             aiMessage = messageService.sendMessage(message);

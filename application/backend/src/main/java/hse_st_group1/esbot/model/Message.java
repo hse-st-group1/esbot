@@ -1,6 +1,6 @@
 package hse_st_group1.esbot.model;
 
-import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.UUID;
 
 import jakarta.persistence.Column;
@@ -40,7 +40,7 @@ public class Message {
 
     @NotNull(message = "must not be null") 
     @Column(nullable = false)
-    private Timestamp timestamp;
+    private Instant timestamp;
 
     @NotNull(message = "must not be null")
     @Column(nullable = false)

@@ -1,6 +1,6 @@
 package hse_st_group1.esbot.model;
 
-import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -42,11 +42,11 @@ public class Session {
 
     @NotNull
     @Column(updatable = false, nullable = false)
-    private Timestamp startedAt;
+    private Instant startedAt;
 
     @NotNull
     @Column(nullable = false)
-    private Timestamp lastAccessed;
+    private Instant lastAccessed;
 
     @OneToMany (mappedBy = "session", cascade = CascadeType.REMOVE) //if the session is deleted, all corresponding messages are deleted too
     private List<Message> messages = new ArrayList<>();

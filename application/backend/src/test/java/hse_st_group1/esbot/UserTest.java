@@ -6,7 +6,7 @@ import hse_st_group1.esbot.model.Session;
 import hse_st_group1.esbot.model.User;
 import hse_st_group1.esbot.util.UnitTestHelper;
 
-import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.Set;
 import java.util.UUID;
 
@@ -36,7 +36,7 @@ class UserTest{
     @Test
     void testSettersUser(){
         User user = new User(id, name, Set.of(session));
-        session.setLastAccessed(new Timestamp(System.currentTimeMillis()));
+        session.setLastAccessed(Instant.now());
 
         UUID newId = UUID.randomUUID();
         String newName = "Dummy";

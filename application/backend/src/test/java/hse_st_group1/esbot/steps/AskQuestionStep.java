@@ -2,7 +2,7 @@ package hse_st_group1.esbot.steps;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.sql.Timestamp;
+import java.time.Instant;
 
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +28,7 @@ public class AskQuestionStep{
     private Message answer;
     private Session session;
     private RuntimeException exception;
-    private Timestamp timestamp;
+    private Instant timestamp;
 
 
     @Autowired
@@ -55,14 +55,14 @@ public class AskQuestionStep{
         this.user = new User(null, "cucumber_test", null);
         this.user = userRepository.save(user);
         
-        timestamp = new Timestamp(System.currentTimeMillis());
+        timestamp = Instant.now();
         this.session = new Session(null, user, timestamp, timestamp, null, null);
         this.session = sessionRepository.save(session);
     }
 
     @Given("a Student asks {string}")
     public void student_asks(String questionText){
-    Timestamp now = new Timestamp(System.currentTimeMillis());
+    Instant now = Instant.now();
 
     this.question = new Message(null, session, questionText , now, false,"question");
 }

@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
@@ -36,7 +36,7 @@ class MessageTest {
     @Test
     void testCreateMessage() {
 
-        Timestamp t = new Timestamp(System.currentTimeMillis());
+        Instant t = Instant.now();
         Message message = new Message(this.id, s, this.messageContent,  t, true, "Question");
 
         assertEquals(this.id, message.getMessageID()); 
@@ -52,7 +52,7 @@ class MessageTest {
         Message message = UnitTestHelper.createTestMessage();
         UUID testID = UUID.randomUUID();
         Session testSession = UnitTestHelper.sessionCreator(message.getSession().getUser());
-        Timestamp testTimestamp = new Timestamp(System.currentTimeMillis());
+        Instant testTimestamp = Instant.now();
 
         message.setMessageID(testID);
         message.setSession(testSession);

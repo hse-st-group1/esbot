@@ -7,7 +7,10 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class QuizRequestDTO {
-    String quizRequestContent;
-    Integer count;
-    Difficulty difficulty;
+    //Topic
+    private String quizRequestContent;
+    //Number of questions
+    private Integer count;
+    //Difficulty of questions
+    private Difficulty difficulty;
 }

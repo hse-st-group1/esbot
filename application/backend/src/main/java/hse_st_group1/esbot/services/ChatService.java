@@ -1,6 +1,6 @@
 package hse_st_group1.esbot.services;
 
-import java.sql.Timestamp;
+import java.time.Instant;
 
 import org.springframework.stereotype.Service;
 
@@ -20,20 +20,21 @@ import hse_st_group1.esbot.repository.QuizEvaluationRepository;
 import hse_st_group1.esbot.repository.QuizItemRepository;
 import hse_st_group1.esbot.repository.QuizRequestRepository;
 import hse_st_group1.esbot.repository.SessionRepository;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 public class ChatService {
-    private MessageRepository messageRepository;
-    private QuizRequestRepository quizRequestRepository;
-    private QuizItemRepository quizItemRepository;
-    private QuizEvaluationRepository quizEvaluationRepository;
-    private QuizAnswerRepository quizAnswerRepository;
-    private SessionRepository sessionRepository;
+    private final MessageRepository messageRepository;
+    private final QuizRequestRepository quizRequestRepository;
+    private final QuizItemRepository quizItemRepository;
+    private final QuizEvaluationRepository quizEvaluationRepository;
+    private final QuizAnswerRepository quizAnswerRepository;
+    private final SessionRepository sessionRepository;
     
-    private AIService aiService;
-    private AIServiceUnavailableException exception;
+    private final AIService aiService;
     
-    public ChatService(SessionRepository sessionRepository, MessageRepository messageRepository, AIService aiService, QuizItemRepository quizItemRepository, QuizRequestRepository quizRequestRepository, QuizAnswerRepository quizAnswerRepository, QuizEvaluationRepository quizEvaluationRepository){
+    public ChatService(final SessionRepository sessionRepository, final MessageRepository messageRepository, final AIService aiService, final QuizItemRepository quizItemRepository, final QuizRequestRepository quizRequestRepository, final QuizAnswerRepository quizAnswerRepository, final QuizEvaluationRepository quizEvaluationRepository){
         this.sessionRepository = sessionRepository;
         this.messageRepository = messageRepository;
         this.aiService = aiService;
@@ -43,37 +44,39 @@ public class ChatService {
         this.quizEvaluationRepository = quizEvaluationRepository;
     }
 
-    public Session createNewSession(User user){
-        Session session = new Session();
+    public Session createNewSession(final User user){
+        final Session session = new Session();
         session.setUser(user);
-        session.setStartedAt(new Timestamp(System.currentTimeMillis()));
-        session.setLastAccessed(new Timestamp(System.currentTimeMillis()));
+        session.setStartedAt(Instant.now());
+        session.setLastAccessed(Instant.now());
         user.getSessions().add(session);
         sessionRepository.save(session);
         return session;
     }
 
-    public Message sendMessage(Session session, String messageContent){
-        MessageService messageService = new MessageService(messageRepository, aiService);
-        Message message = new Message();
+    public Message sendMessage(final Session session, final String messageContent){
+        final MessageService messageService = new MessageService(messageRepository, aiService);
+        final Message message = new Message();
         message.setMessageType("Message");
         message.setMessageContent(messageContent);
         message.setSession(session);
         message.setSender(false);
-        message.setTimestamp(new Timestamp(System.currentTimeMillis()));
+        message.setTimestamp(Instant.now());
         session.getMessages().add(message);
         try{
             return messageService.sendMessage(message);
         }
         catch(AIServiceUnavailableException messageServiceUnavailableException){
-            this.exception = messageServiceUnavailableException;
-            throw exception;
+            if(log.isErrorEnabled()){
+                log.error(messageServiceUnavailableException.getMessage(), messageServiceUnavailableException);
+            }
+            throw messageServiceUnavailableException;
         }
     }
 
-    public QuizRequest sendQuizRequest(String quizRequestContent, Session session, Integer count, Difficulty difficulty){
-        QuizRequestService quizRequestService = new QuizRequestService(quizRequestRepository, aiService, quizItemRepository);
-        QuizRequest quizRequest = new QuizRequest();
+    public QuizRequest sendQuizRequest(final String quizRequestContent, final Session session, final Integer count, final Difficulty difficulty){
+        final QuizRequestService quizRequestService = new QuizRequestService(quizRequestRepository, aiService, quizItemRepository);
+        final QuizRequest quizRequest = new QuizRequest();
         if(quizRequestContent.isBlank() || quizRequestContent.isEmpty()){
             throw new NoQuizTopicProvidedException("Error: No quiz topic provided.");
         }
@@ -86,25 +89,29 @@ public class ChatService {
                 return quizRequestService.createQuiz(quizRequest);
             }
             catch(AIServiceUnavailableException quizRequestserviceUnavailableException){
-                this.exception = quizRequestserviceUnavailableException;
-                throw exception;
+                if(log.isErrorEnabled()){
+                    log.error(quizRequestserviceUnavailableException.getMessage(), quizRequestserviceUnavailableException);
+                }
+                throw quizRequestserviceUnavailableException;
             }
         }
     }
 
-    public QuizEvaluation receiveEvaluation(String answer, QuizItem quizItem){
-        QuizEvaluationService quizEvaluationService = new QuizEvaluationService(quizAnswerRepository, aiService, quizEvaluationRepository);
-        QuizAnswer quizAnswer = new QuizAnswer();
+    public QuizEvaluation receiveEvaluation(final String answer, final QuizItem quizItem){
+        final QuizEvaluationService quizEvaluationService = new QuizEvaluationService(quizAnswerRepository, aiService, quizEvaluationRepository);
+        final QuizAnswer quizAnswer = new QuizAnswer();
         quizAnswer.setAnswer(answer);
         quizAnswer.setQuizItem(quizItem);
-        quizAnswer.setTimeStamp(new Timestamp(System.currentTimeMillis()));
+        quizAnswer.setTimeStamp(Instant.now());
         quizAnswerRepository.save(quizAnswer);
         try{
            return quizEvaluationService.evaluate(quizAnswer);
         }
         catch(AIServiceUnavailableException quizEvaluationServiceUnavailableException){
-            this.exception = quizEvaluationServiceUnavailableException;
-            throw exception;
+            if(log.isErrorEnabled()){
+                log.error(quizEvaluationServiceUnavailableException.getMessage(), quizEvaluationServiceUnavailableException);
+            }
+            throw quizEvaluationServiceUnavailableException;
         }
     }
 }

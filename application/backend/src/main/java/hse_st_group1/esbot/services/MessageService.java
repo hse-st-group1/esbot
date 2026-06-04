@@ -1,6 +1,6 @@
 package hse_st_group1.esbot.services;
 
-import java.sql.Timestamp;
+import java.time.Instant;
 
 import org.springframework.stereotype.Service;
 
@@ -15,25 +15,24 @@ public class MessageService {
     private final MessageRepository messageRepository;
     private final AIService aiService;
 
-    public MessageService(MessageRepository messageRepository, AIService aiService){
+    public MessageService(final MessageRepository messageRepository, final AIService aiService){
         this.messageRepository = messageRepository;
         this.aiService = aiService;
     }
     
     @Transactional
-    public Message sendMessage(Message message){
+    public Message sendMessage(final Message message){
         //Send to be implemented
         messageRepository.save(message);
-        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 
-        Message response = new Message();
+        final Message response = new Message();
         response.setMessageType("Message");
         response.setSender(true);
-        response.setTimestamp(timestamp);
+        response.setTimestamp(Instant.now());
         response.setSession(message.getSession());
 
         if (aiService.isAvailable()) {
-            String aiResponse = aiService.responseString(message.getMessageContent());
+            final String aiResponse = aiService.responseString(message.getMessageContent());
             response.setMessageContent(aiResponse);
         } else {
             throw new AIServiceUnavailableException("Error: Message service is currently unavailable");

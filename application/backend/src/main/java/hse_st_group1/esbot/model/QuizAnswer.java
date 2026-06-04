@@ -1,6 +1,6 @@
 package hse_st_group1.esbot.model;
 
-import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.UUID;
 
 import jakarta.persistence.*;
@@ -35,6 +35,6 @@ public class QuizAnswer{
 
     @NotNull
     @Column (nullable = false)
-    private Timestamp timeStamp;
+    private Instant timeStamp;
 
 }

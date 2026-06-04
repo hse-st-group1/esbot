@@ -34,39 +34,38 @@ import org.springframework.web.bind.annotation.GetMapping;
 @RequiredArgsConstructor
 public class ChatServiceController {
 
-    public record QuizItemIdAndQuestion(UUID quizItemId, String quizItemQuestion) {}
-    public record MessageIdAndContent(UUID messageid, String messageQuestion) {}
-
     private final SessionRepository sessionRepository;
     public final ChatService chatService;
     public final UserRepository userRepository;
     public final QuizItemRepository quizItemRepository;
     public final MessageRepository messageRepository;
 
+    public record QuizItemIdAndQuestion(UUID quizItemId, String quizItemQuestion) {}
+    public record MessageIdAndContent(UUID messageid, String messageQuestion) {}
 
     @PostMapping()
-    public ResponseEntity<UUID> createSession(@RequestBody UUID userID) {
+    public ResponseEntity<UUID> createSession(@RequestBody final UUID userID) {
 
-        User user = userRepository.findById(userID).orElseThrow(
+        final User user = userRepository.findById(userID).orElseThrow(
             () -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-        Session session = chatService.createNewSession(user);
+        final Session session = chatService.createNewSession(user);
         return ResponseEntity.ok(session.getSessionID());
     }
 
     
     @GetMapping()
-    public List<UUID> getIdsOfAllSessionsForUser(@RequestBody UUID userID) {
+    public List<UUID> getIdsOfAllSessionsForUser(@RequestBody final UUID userID) {
 
-        User user = userRepository.findById(userID).orElseThrow(
+        final User user = userRepository.findById(userID).orElseThrow(
             () -> new ResponseStatusException(HttpStatus.NOT_FOUND));
         
-        List<Session> sessions = sessionRepository.findByUser(user);
+        final List<Session> sessions = sessionRepository.findByUser(user);
 
         if (sessions.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         } else {
-            List<UUID> listOfSessionIds = new ArrayList<>();
-            for (Session session : sessions) {
+            final List<UUID> listOfSessionIds = new ArrayList<>();
+            for (final Session session : sessions) {
                 listOfSessionIds.add(session.getSessionID());   
             }
             return listOfSessionIds;
@@ -75,64 +74,59 @@ public class ChatServiceController {
 
 
     @PostMapping("/{sessionId}/messages")
-    public ResponseEntity<String> sendMessage(@PathVariable UUID sessionId, @RequestBody String messageContenString) {        
+    public ResponseEntity<String> sendMessage(@PathVariable final UUID sessionId, @RequestBody final String messageContenString) {        
         
-        Session session = sessionRepository.findById(sessionId).orElseThrow(
+        final Session session = sessionRepository.findById(sessionId).orElseThrow(
             () -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
-        Message responseLLM = chatService.sendMessage(session, messageContenString);
+        final Message responseLLM = chatService.sendMessage(session, messageContenString);
         return ResponseEntity.ok(responseLLM.getMessageContent());
         //To Do at a later date: Implement a DTO for Message response to be able to send the response entity
     }
 
 
     @GetMapping("{sessionId}/messages")
-    public List<MessageIdAndContent> getAllMessagesForSession(@PathVariable UUID sessionId) {
-        List<MessageIdAndContent> listOfMessageidsAndContent = new ArrayList<>();
+    public List<MessageIdAndContent> getAllMessagesForSession(@PathVariable final UUID sessionId) {
+        final List<MessageIdAndContent> listOfMessageidsAndContent;
 
-        Session session = sessionRepository.findById(sessionId).orElseThrow(
+        final Session session = sessionRepository.findById(sessionId).orElseThrow(
             () -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
-        List<Message> messages = messageRepository.findBySessionOrderByTimestamp(session);
+        final List<Message> messages = messageRepository.findBySessionOrderByTimestamp(session);
 
         if (messages.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         } else {
-            for (Message message : messages) {
-                MessageIdAndContent messageIdAndContent = new MessageIdAndContent(message.getMessageID(), message.getMessageContent());
-                listOfMessageidsAndContent.add(messageIdAndContent);
-            }
+            listOfMessageidsAndContent = messages.stream().map(message -> new MessageIdAndContent(message.getMessageID(), message.getMessageContent())).toList();
         }
         return listOfMessageidsAndContent;
     }
     
 
     @PostMapping("/{sessionId}/quiz")
-    public String createQuiz(@PathVariable UUID sessionId, @RequestBody QuizRequestDTO quizRequestDTO) {
-        Session session = sessionRepository.findById(sessionId).orElseThrow(
+    public String createQuiz(@PathVariable final UUID sessionId, @RequestBody final QuizRequestDTO quizRequestDTO) {
+        final Session session = sessionRepository.findById(sessionId).orElseThrow(
             () -> new ResponseStatusException(HttpStatus.NOT_FOUND));
         
-            QuizRequest quizRequest = chatService.sendQuizRequest(quizRequestDTO.getQuizRequestContent(), session, quizRequestDTO.getCount(), quizRequestDTO.getDifficulty());
+            final QuizRequest quizRequest = chatService.sendQuizRequest(quizRequestDTO.getQuizRequestContent(), session, quizRequestDTO.getCount(), quizRequestDTO.getDifficulty());
 
-            List<QuizItem> quizItems = quizRequest.getQuizItems();
-            List<QuizItemIdAndQuestion> listOfQuizItemIdsAndQuestions = new ArrayList<>();
-            for (QuizItem item : quizItems) {
-                QuizItemIdAndQuestion quizItemIdAndQuestion = new QuizItemIdAndQuestion(item.getQuizItemID(), item.getQuestion());
-                listOfQuizItemIdsAndQuestions.add(quizItemIdAndQuestion);
-            } 
+            final List<QuizItem> quizItems = quizRequest.getQuizItems();
+            
+            final List<QuizItemIdAndQuestion> listOfQuizItemIdsAndQuestions = quizItems.stream().map(item -> new QuizItemIdAndQuestion(item.getQuizItemID(), item.getQuestion())).toList();
+
         return listOfQuizItemIdsAndQuestions.toString();
     }
     
 
     @PostMapping("/{sessionId}/quiz/{quizItemId}/answer")
     public ResponseEntity<String> evaluateAnswerOfQuizItem(
-        @PathVariable UUID sessionId,
-        @PathVariable UUID quizItemId,
-        @RequestBody String answer) {
+        @PathVariable final UUID sessionId,
+        @PathVariable final UUID quizItemId,
+        @RequestBody final String answer) {
 
-        QuizItem item = quizItemRepository.findById(quizItemId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        final QuizItem item = quizItemRepository.findById(quizItemId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
         
-        String feedback = chatService.receiveEvaluation(answer, item)
+        final String feedback = chatService.receiveEvaluation(answer, item)
             .getEvaluation();
         return ResponseEntity.ok(feedback);
     }

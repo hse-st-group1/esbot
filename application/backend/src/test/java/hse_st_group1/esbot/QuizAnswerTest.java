@@ -11,7 +11,8 @@ import jakarta.validation.Validation;
 
 import java.util.Set;
 import java.util.UUID;
-import java.sql.Timestamp;
+import java.time.Instant;
+
 import hse_st_group1.esbot.model.QuizAnswer;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -23,7 +24,7 @@ class EsbotQuizAnswerEntityTest{
     
     QuizItem quizItem = UnitTestHelper.quizItemCreator();
     UUID id = UUID.randomUUID();
-    Timestamp time = new Timestamp(System.currentTimeMillis());
+    Instant time = Instant.now();
 
     Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
     
@@ -45,7 +46,7 @@ class EsbotQuizAnswerEntityTest{
     void constrainStuffAnswer(){
         QuizAnswer newAnswer = new QuizAnswer();
         newAnswer.setQuizItem(UnitTestHelper.quizItemCreator());
-        newAnswer.setTimeStamp(new Timestamp(System.currentTimeMillis()));
+        newAnswer.setTimeStamp(Instant.now());
         newAnswer.setQuizAnswerID(id);
 
         newAnswer.setAnswer(null);
@@ -72,7 +73,7 @@ class EsbotQuizAnswerEntityTest{
         Set<ConstraintViolation<QuizAnswer>> violations1 = validator.validate(newAnswer);
         assertFalse(violations1.isEmpty());   
 
-        newAnswer.setTimeStamp(new Timestamp(System.currentTimeMillis()));   
+        newAnswer.setTimeStamp(Instant.now());   
         Set<ConstraintViolation<QuizAnswer>> violations2 = validator.validate(newAnswer);
         assertTrue(violations2.isEmpty());
         }
@@ -82,7 +83,7 @@ class EsbotQuizAnswerEntityTest{
         QuizAnswer newAnswer = new QuizAnswer();
         newAnswer.setQuizItem(UnitTestHelper.quizItemCreator());
         newAnswer.setAnswer("Rabbit stuff");
-        newAnswer.setTimeStamp(new Timestamp(System.currentTimeMillis()));   
+        newAnswer.setTimeStamp(Instant.now());   
 
         newAnswer.setQuizAnswerID(null);
         Set<ConstraintViolation<QuizAnswer>> violations1 = validator.validate(newAnswer);
@@ -97,7 +98,7 @@ class EsbotQuizAnswerEntityTest{
     void constrainStuffQuizItem(){
         QuizAnswer newAnswer = new QuizAnswer();
         newAnswer.setAnswer("Rabbit stuff");
-        newAnswer.setTimeStamp(new Timestamp(System.currentTimeMillis()));   
+        newAnswer.setTimeStamp(Instant.now());   
         newAnswer.setQuizAnswerID(id);        
 
         newAnswer.setQuizItem(null);

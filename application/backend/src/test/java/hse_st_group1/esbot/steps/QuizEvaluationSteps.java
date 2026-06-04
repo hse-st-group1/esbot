@@ -3,7 +3,7 @@ package hse_st_group1.esbot.steps;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -92,7 +92,7 @@ public class QuizEvaluationSteps {
             null, 
             quizItem, 
             "42", 
-            new Timestamp(System.currentTimeMillis())
+            Instant.now()
         );
         quizAnswerRepository.save(answer);
         Mockito.when(aiService.evaluateAnswer("42")).thenReturn("correct");
@@ -106,7 +106,7 @@ public class QuizEvaluationSteps {
             null, 
             quizItem, 
             "Rabbit", 
-            new Timestamp(System.currentTimeMillis())
+            Instant.now()
         );
         quizAnswerRepository.save(answer);
         Mockito.when(aiService.evaluateAnswer("Rabbit")).thenReturn("Incorrect, pls hava a look in ...");
@@ -131,7 +131,7 @@ public class QuizEvaluationSteps {
             null, 
             quizItem, 
             "dgjasdflöasjfdk", 
-            new Timestamp(System.currentTimeMillis())
+            Instant.now()
         );
         quizAnswerRepository.save(answer);
         Mockito.when(aiService.evaluateAnswer("dgjasdflöasjfdk")).thenReturn("Please make a valid and interpretable input");

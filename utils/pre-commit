@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+mvn verify -f ~/software_testing/application/backend -P pmd-linter

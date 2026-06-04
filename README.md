@@ -1,10 +1,11 @@
-![CI](https://github.com/hse-st-group1/esbot/actions/workflows/ci.yml/badge.svg)
-
 <p align="center">
   <img src="./assets/esbot_logo.png" alt="ESBot Logo" width="180" />
 </p>
 
 <p align="center">
+  <a href="https://github.com/test/bot/actions/workflows/ci.yml">
+     <img alt="CI" src="https://github.com/hse-st-group1/esbot/actions/workflows/ci.yml/badge.svg">
+  </a>
   <a href="LICENSE"><img alt="Educational" src="https://img.shields.io/badge/status-educational-blue"></a>
   <a href="docs/"><img alt="Docs" src="https://img.shields.io/badge/docs-available-brightgreen"></a>
   <a href="LICENSE"><img alt="License: Apache-2.0" src="https://img.shields.io/badge/license-Apache--2.0-blue"></a>

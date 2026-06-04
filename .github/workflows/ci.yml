@@ -20,7 +20,7 @@ jobs:
       - name: Run Unit Tests
         run: |
           mvn test -f ./application/backend
-      -name: Run BDD Tests
+      - name: Run BDD Tests
         run: |
           mvn surefire:test -Dtest=*Cucumber* -f ./application/backend      
       - name: Run PMD Linter

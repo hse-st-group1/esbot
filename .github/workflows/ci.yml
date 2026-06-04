@@ -29,12 +29,17 @@ jobs:
         uses: dependency-check/Dependency-Check_Action@main
         env:
           JAVA_HOME: /opt/jdk
-        id: Depcheck
+        id: Run Dependency Check
         with:
-          project: 'test'
-          path: '.'
+          project: 'esbot'
+          path: './application/backend/'
           format: 'HTML'
           out: 'reports' # this is the default, no need to specify unless you wish to override it
           args: >
             --failOnCVSS 7
             --enableRetired
+      - name: Upload Test results
+        uses: actions/upload-artifact@master
+        with:
+           name: OWASP-Report
+           path: ${{github.workspace}}/reports

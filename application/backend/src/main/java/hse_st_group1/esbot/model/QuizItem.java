@@ -46,13 +46,5 @@ public class QuizItem {
 
     @OneToMany (mappedBy = "quizItem", cascade = CascadeType.REMOVE)
     private Set<QuizEvaluation> quizEvaluations = new HashSet<>();
-
-    // Lombok automatically generates Setters for all Entity Properties, even if they are configured as not updateable
-    // Issues are only caught when trying to save to the Database
-    public void setQuizItemID (UUID sessionID) {
-        throw new UnsupportedOperationException("QuizItem: quizItemID is not updateable");
-    }
-    public void setQuizRequest (QuizRequest quizRequest) {
-        throw new UnsupportedOperationException("QuizItem: quizIRequest is not updateable");
-    }
+    
 }

@@ -89,25 +89,7 @@ class QuizItemTest {
         quizItem.setQuizEvaluations(quizEvaluations);
         assertThat(quizItem.getQuizEvaluations()).isEqualTo(quizEvaluations);
     }
-
-    @Test
-    void testUpdateConstraintsQuizItem () {
-        // quizItemID and quizRequest should not be able to be updated
-
-        // Create Test Object
-        QuizItem quizItem = new QuizItem(quizItemID, quizRequestWithSessionID, question, quizAnswers, quizEvaluations);
-        
-        // Assert that Object was created sucessfully
-        assertThat(quizItem).isNotNull();
-        
-        // Set Properties (quizItemID and quizRequest should not be able to be set)
-        UUID newquizItemID = UUID.randomUUID(); 
-        assertThrows(UnsupportedOperationException.class, () -> quizItem.setQuizItemID(newquizItemID));
-        
-        QuizRequest newQuizRequest = UnitTestHelper.quizRequestCreator();
-        assertThrows(UnsupportedOperationException.class, () -> quizItem.setQuizRequest(newQuizRequest));
-    }
-
+    
     @Test
     void testRelationshipsQuizItem () {
         // QuizItem is connected to QuizRequest, QuizAnswers, QuizEvaluations

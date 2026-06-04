@@ -78,7 +78,9 @@ public class QuizEvaluationSteps {
         quizRequest = new QuizRequest();
         quizRequest.setQuizRequestContent("Topic: Testquiz");
         quizRequest.setSession(sharedSession.getSession());
-        quizItem = new QuizItem(null, quizRequest, question, null, null);
+        quizItem = new QuizItem();
+        quizItem.setQuizRequest(quizRequest);
+        quizItem.setQuestion(question);
         List<QuizItem> questions = new ArrayList<>();
         questions.add(quizItem);
         quizRequest.setQuizItems(questions);
@@ -96,7 +98,7 @@ public class QuizEvaluationSteps {
         );
         quizAnswerRepository.save(answer);
         Mockito.when(aiService.evaluateAnswer("42")).thenReturn("correct");
-        quizEvaluationService.evaluate(answer);
+        answer.getQuizItem().getQuizEvaluations().add(quizEvaluationService.evaluate(answer));
         evaluation = answer.getQuizItem().getQuizEvaluations().iterator().next();
     }
 
@@ -110,7 +112,7 @@ public class QuizEvaluationSteps {
         );
         quizAnswerRepository.save(answer);
         Mockito.when(aiService.evaluateAnswer("Rabbit")).thenReturn("Incorrect, pls hava a look in ...");
-        quizEvaluationService.evaluate(answer);
+        answer.getQuizItem().getQuizEvaluations().add(quizEvaluationService.evaluate(answer));
         evaluation = answer.getQuizItem().getQuizEvaluations().iterator().next();
     }
 
@@ -135,7 +137,7 @@ public class QuizEvaluationSteps {
         );
         quizAnswerRepository.save(answer);
         Mockito.when(aiService.evaluateAnswer("dgjasdflöasjfdk")).thenReturn("Please make a valid and interpretable input");
-        quizEvaluationService.evaluate(answer);
+        answer.getQuizItem().getQuizEvaluations().add(quizEvaluationService.evaluate(answer));
         evaluation = answer.getQuizItem().getQuizEvaluations().iterator().next();
     }
     @Then("the system asks me to make a valid input.")

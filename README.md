@@ -3,7 +3,7 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/test/bot/actions/workflows/ci.yml">
+  <a href="https://github.com/hse-st-group1/esbot/actions/workflows/ci.yml">
      <img alt="CI" src="https://github.com/hse-st-group1/esbot/actions/workflows/ci.yml/badge.svg">
   </a>
   <a href="LICENSE"><img alt="Educational" src="https://img.shields.io/badge/status-educational-blue"></a>

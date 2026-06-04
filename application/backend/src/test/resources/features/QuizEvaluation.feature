@@ -5,18 +5,21 @@ Feature: Quiz Evaluation
 
 Scenario: Correct answer is submitted
     Given I have a session
+    And AI messaging is available
     And I have a question
     When I give an as correct interpretable answer
     Then the system evaluates my answer as correct
 
 Scenario: Incorrect answer is submitted
     Given I have a session
+    And AI messaging is available
     And I have a question
     When I give an as incorrect interpretable answer
     Then the system evaluates my answer as incorrect
 
 Scenario: Invalid input is submitted
     Given I have a session
+    And AI messaging is available
     And I have a question
     When I give an invalid string as answer
     Then the system asks me to make a valid input.

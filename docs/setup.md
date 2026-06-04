@@ -138,17 +138,36 @@ mvn surefire:test -Dtest=*
 ```
 
 ### Static Code Analysis for PMD and OWASP Dependency Checker Plugin for Maven
+
+**PMD Plugin:**
 ```bash
-mvn clean install
+mvn clean install -P pmd-linter
 ```
 or
 ```bash
-mvn verify
+mvn verify -P pmd-linter
 ```
 
 To view pmd report:
 ```bash
 xdg-open target/site/pmd.html
+```
+
+**OWASP Dependency Checker:**
+```bash
+mvn clean install -P dependency-check
+```
+or
+```bash
+mvn verify -P dependency-check
+```
+**Both at Once:**
+```bash
+mvn clean install -P pmd-linter, dependency-check
+```
+or
+```bash
+mvn verify -P pmd-linter, dependency-check
 ```
 
 ## Create a fresh Springboot Setup from scratch

@@ -17,7 +17,19 @@ jobs:
           distribution: temurin
           java-version: "21"
           cache: maven
-      - name: Run tests
+      - name: Run Unit Tests
         run: |
           cd application/backend 
           mvn test      
+      - name: Run BDD Tests
+        run: |
+          cd application/backend 
+          mvn surefire:test -Dtest=*Cucumber*
+      - name: Run PMD Linter
+        run: |
+          cd application/backend 
+          mvn verify -P pmd-linter
+      - name: Run OWASP Dependency Checker
+        run: |
+          cd application/backend 
+          mvn verify -P dependency-check

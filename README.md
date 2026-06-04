@@ -1,3 +1,5 @@
+![CI](https://github.com/hse-st-group1/esbot/actions/workflows/ci.yml/badge.svg)
+
 <p align="center">
   <img src="./assets/esbot_logo.png" alt="ESBot Logo" width="180" />
 </p>

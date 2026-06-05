@@ -7,7 +7,7 @@ on:
     branches: [ "**" ]
 
 jobs:
-  test:
+  Tests:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
@@ -22,7 +22,17 @@ jobs:
           mvn test -f ./application/backend
       - name: Run BDD Tests
         run: |
-          mvn surefire:test -Dtest=*Cucumber* -f ./application/backend      
+          mvn surefire:test -Dtest=*Cucumber* -f ./application/backend
+  PMDLinting:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - name: Set up Java
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: "21"
+          cache: maven      
       - name: Run PMD Linter
         run: |
           mvn verify -f ./application/backend -P pmd-linter

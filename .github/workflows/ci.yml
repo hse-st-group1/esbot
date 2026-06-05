@@ -31,8 +31,7 @@ jobs:
           java-version: "21"
           cache: maven
       - name: Run BDD Tests
-        run: |
-          mvn surefire:test -Dtest=*Cucumber* -f ./application/backend
+        run: mvn surefire:test -Dtest=*Cucumber* -f ./application/backend
   PMDLinting:
     runs-on: ubuntu-latest
     steps:

@@ -163,11 +163,11 @@ mvn verify -P dependency-check
 ```
 **Both at Once:**
 ```bash
-mvn clean install -P pmd-linter, dependency-check
+mvn clean install -P pmd-linter,dependency-check
 ```
 or
 ```bash
-mvn verify -P pmd-linter, dependency-check
+mvn verify -P pmd-linter,dependency-check
 ```
 
 ## Create a fresh Springboot Setup from scratch

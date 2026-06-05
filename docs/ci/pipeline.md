@@ -56,14 +56,17 @@ As specified in our tech stack:
     - Complete Job 
 
 ### 5. Parity with local
-Same Test that are run in the CI Pipeline are also run locally (see (local-verification.md)[https://github.com/hse-st-group1/esbot/blob/001-esbot-application/docs/ci/local-verification.md])
+Same Test that are run in the CI Pipeline are also run locally (see [local-verification.md](https://github.com/hse-st-group1/esbot/blob/001-esbot-application/docs/ci/local-verification.md))
 
-Unit and BDD Test, Linter and Dependency Check: ```mvn surefire:test -Dtest=* && mvn verify -P pmd-linter,dependency-check```:
-- ```mvn surefire:test -Dtest=*```: Unit and BDD Tests
-- ```mvn verify -P pmd-linter```: PMD Linter Test
-- ```mvn verify -P dependency-check```: OWASP Dependency Check 
+| Test | Job | Local Command |
+| :--- | :--- | :--- |
+| Unit Tests | UnitTest   | `mvn test` |
+| BDD Tests | BDDTest | `mcn surefire:test -Dtest=*Cucumber*` |
+| PMD Linter | PMDLinting | `mvn verify -P dependency-check` |
+| OWASP Dependency Check | DependencyCheck | `mvn verify -P pmd-linter` |
 
-In case the local tests run fine but the CI Pipeline Tests fail: Debug error message and try to repilicate error locally by using ```mvn clean```and then executing the test step command locally step by step
+In case the local tests run fine but the CI Pipeline Tests fail: Debug error message and try to repilicate error locally by using `mvn clean`and then manually replicate the steps in the local environment.  
+If the local dependency check fails while the CI-Pipeline goes through fix the local dependency findings.
 
 ## Exercise 9.2 Enhancements
 ### Action / Tool Implemented

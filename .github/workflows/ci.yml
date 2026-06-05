@@ -33,7 +33,7 @@ jobs:
       - name: Download Dependencies
         run: mvn clean install -DskipTests -f ./application/backend
       - name: Run BDD Tests
-        run: mvn test -Dtest=*Cucumber* -f ./application/backend
+        run: mvn surefire:test -Dtest=*Cucumber* -f ./application/backend
   PMDLinting:
     runs-on: ubuntu-latest
     steps:

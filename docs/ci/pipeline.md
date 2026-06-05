@@ -62,8 +62,8 @@ Same Test that are run in the CI Pipeline are also run locally (see [local-verif
 | :--- | :--- | :--- |
 | Unit Tests | UnitTest   | `mvn test` |
 | BDD Tests | BDDTest | `mcn surefire:test -Dtest=*Cucumber*` |
-| PMD Linter | PMDLinting | `mvn verify -P dependency-check` |
-| OWASP Dependency Check | DependencyCheck | `mvn verify -P pmd-linter` |
+| PMD Linter | PMDLinting | `mvn verify -P pmd-linter` |
+| OWASP Dependency Check | DependencyCheck | `mvn verify -P dependency-check` |
 
 In case the local tests run fine but the CI Pipeline Tests fail: Debug error message and try to repilicate error locally by using `mvn clean`and then manually replicate the steps in the local environment.  
 If the local dependency check fails while the CI-Pipeline goes through fix the local dependency findings.

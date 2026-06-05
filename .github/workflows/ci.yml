@@ -31,7 +31,7 @@ jobs:
           java-version: "21"
           cache: maven
       - name: Download Dependencies
-        run: mvn clean install -Dmaven.test.skip -f ./application/backend
+        run: mvn clean install -DskipTests -f ./application/backend
       - name: Run BDD Tests
         run: mvn test -Dtest=*Cucumber* -f ./application/backend
   PMDLinting:

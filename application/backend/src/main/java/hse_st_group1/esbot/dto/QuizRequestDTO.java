@@ -1,5 +1,7 @@
 package hse_st_group1.esbot.dto;
 
+import java.util.List;
+
 import hse_st_group1.esbot.model.QuizRequest.Difficulty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,4 +15,5 @@ public class QuizRequestDTO {
     private Integer count;
     //Difficulty of questions
     private Difficulty difficulty;
+    private List<QuizItemDTO> quizItemDTOs;
 }

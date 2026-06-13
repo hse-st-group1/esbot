@@ -11,7 +11,6 @@ import hse_st_group1.esbot.converter.EntityToDTO;
 import hse_st_group1.esbot.model.Message;
 import hse_st_group1.esbot.model.QuizItem;
 import hse_st_group1.esbot.dto.MessageDTO;
-import hse_st_group1.esbot.dto.QuizItemDTO;
 import hse_st_group1.esbot.dto.QuizRequestDTO;
 import hse_st_group1.esbot.dto.SessionDTO;
 import hse_st_group1.esbot.dto.SessionMetadataDTO;
@@ -24,7 +23,6 @@ import lombok.RequiredArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
@@ -49,9 +47,6 @@ public class ChatServiceController {
     public final UserRepository userRepository;
     public final QuizItemRepository quizItemRepository;
     public final MessageRepository messageRepository;
-
-    public record QuizItemIdAndQuestion(UUID quizItemId, String quizItemQuestion) {}
-    public record MessageIdAndContent(UUID messageid, String messageQuestion) {}
 
     private final EntityToDTO entityToDTO;
 
@@ -85,14 +80,14 @@ public class ChatServiceController {
     }
 
     @GetMapping("{sessionId}")
-    public ResponseEntity<SessionMetadataDTO> getSessionMetadata(@PathVariable UUID sessionId, @RequestBody UUID userId) { 
+    public ResponseEntity<SessionMetadataDTO> getSessionMetadata(@PathVariable final UUID sessionId, @RequestBody final UUID userId) { 
         
-        Optional<Session> sessionOptional = sessionRepository.findById(sessionId);
+        final Optional<Session> sessionOptional = sessionRepository.findById(sessionId);
 
         if (sessionOptional.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         } else {
-            Session session = sessionRepository.findBySessionID(sessionId);
+            final Session session = sessionRepository.findBySessionID(sessionId);
 
             // Check if Session belongs to requesting user
             if (!session.getUser().getUserID().equals(userId)) {

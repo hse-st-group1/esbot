@@ -23,7 +23,6 @@ import lombok.RequiredArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 
@@ -82,84 +81,63 @@ public class ChatServiceController {
     @GetMapping("{sessionId}")
     public ResponseEntity<SessionMetadataDTO> getSessionMetadata(@PathVariable final UUID sessionId, @RequestBody final UUID userId) { 
         
-        final Optional<Session> sessionOptional = sessionRepository.findById(sessionId);
+        final Session session = sessionRepository.findById(sessionId).orElseThrow(
+            () -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
-        if (sessionOptional.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        } else {
-            final Session session = sessionRepository.findBySessionID(sessionId);
-
-            // Check if Session belongs to requesting user
-            if (!session.getUser().getUserID().equals(userId)) {
-                throw new ResponseStatusException(HttpStatus.FORBIDDEN);
-            } else {                
-                SessionMetadataDTO sessionMetadataDTO = new SessionMetadataDTO(
-                    sessionId,
-                    session.getUser().getUserID(),
-                    session.getStartedAt(),
-                    session.getLastAccessed()
-                );
-
-                return ResponseEntity.ok(sessionMetadataDTO);
-            }
-
-           
-        }
+        // Check if Session belongs to requesting user
+        if (!session.getUser().getUserID().equals(userId)) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+        } 
+                        
+        SessionMetadataDTO sessionMetadataDTO = new SessionMetadataDTO(
+            sessionId,
+            session.getUser().getUserID(),
+            session.getStartedAt(),
+            session.getLastAccessed()
+        );
+        return ResponseEntity.ok(sessionMetadataDTO);
     }
 
     @GetMapping("{sessionId}/complete")
-    public ResponseEntity<SessionDTO> getCompleteSessionData(@PathVariable UUID sessionId, @RequestBody UUID userId) { 
+    public ResponseEntity<SessionDTO> getCompleteSessionData(@PathVariable final UUID sessionId, @RequestBody final UUID userId) { 
         
-        Optional<Session> sessionOptional = sessionRepository.findById(sessionId);
+        Session session = sessionRepository.findById(sessionId).orElseThrow(
+            () -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
-        if (sessionOptional.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        } else {
-            Session session = sessionRepository.findBySessionID(sessionId);
+        // Check if Session belongs to requesting user
+        if (!session.getUser().getUserID().equals(userId)) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+        } 
+        
+        List<Message> messages = session.getMessages();
+        List<MessageDTO> messageDTOs = entityToDTO.messagesToMessageDTOs(messages);
 
-            // Check if Session belongs to requesting user
-            if (!session.getUser().getUserID().equals(userId)) {
-                throw new ResponseStatusException(HttpStatus.FORBIDDEN);
-            } else {
-                List<Message> messages = session.getMessages();
-                List<MessageDTO> messageDTOs = entityToDTO.messagesToMessageDTOs(messages);
+        Set<QuizRequest> quizRequests = session.getQuizRequests();
+        List<QuizRequestDTO> quizRequestDTOs = entityToDTO.quizRequestsToQuizRequestDTOs(quizRequests);
 
-                Set<QuizRequest> quizRequests = session.getQuizRequests();
-                List<QuizRequestDTO> quizRequestDTOs = entityToDTO.quizRequestsToQuizRequestDTOs(quizRequests);
-
-                SessionDTO sessionDTO = new SessionDTO(
-                    sessionId,
-                    session.getUser().getUserID(),
-                    session.getStartedAt(),
-                    session.getLastAccessed(),
-                    messageDTOs,
-                    quizRequestDTOs
-                );
-
-                return ResponseEntity.ok(sessionDTO);
-            }
-
-           
-        }
+        SessionDTO sessionDTO = new SessionDTO(
+            sessionId,
+            session.getUser().getUserID(),
+            session.getStartedAt(),
+            session.getLastAccessed(),
+            messageDTOs,
+            quizRequestDTOs
+        );
+        return ResponseEntity.ok(sessionDTO);        
     }
 
     @DeleteMapping("{sessionId}")
-    public ResponseEntity<String> deleteSession(@PathVariable UUID sessionId, @RequestBody UUID userId) {
+    public ResponseEntity<String> deleteSession(@PathVariable final UUID sessionId, @RequestBody final UUID userId) {
         
-        Optional<Session> sessionOptional = sessionRepository.findById(sessionId);
+        Session session = sessionRepository.findById(sessionId).orElseThrow(
+            () -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
-        if (sessionOptional.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        } else {
-            // Check if Session belongs to requesting user
-            Session session = sessionRepository.findBySessionID(sessionId);
-            if (!session.getUser().getUserID().equals(userId)) {
-                throw new ResponseStatusException(HttpStatus.FORBIDDEN);
-            } else {
-                sessionRepository.deleteById(sessionId);
-                return ResponseEntity.ok("Session sucessfully deleted.");
-            }
-        }
+        if (!session.getUser().getUserID().equals(userId)) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+        } 
+        
+        sessionRepository.deleteById(sessionId);
+        return ResponseEntity.ok("Session sucessfully deleted.");
     }
     
 
@@ -188,25 +166,23 @@ public class ChatServiceController {
 
 
     @GetMapping("{sessionId}/messages")
-    public ResponseEntity<List<MessageDTO>> getAllMessagesForSession(@PathVariable final UUID sessionId, @RequestBody UUID userId) {
+    public ResponseEntity<List<MessageDTO>> getAllMessagesForSession(@PathVariable final UUID sessionId, @RequestBody final UUID userId) {
         final Session session = sessionRepository.findById(sessionId).orElseThrow(
             () -> new ResponseStatusException(HttpStatus.NOT_FOUND));
             
         // Check if Session belongs to requesting user
         if (!session.getUser().getUserID().equals(userId)) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+        } 
+
+        final List<Message> messages = messageRepository.findBySessionOrderByTimestamp(session);
+
+        if (messages.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         } else {
-
-            final List<Message> messages = messageRepository.findBySessionOrderByTimestamp(session);
-
-            if (messages.isEmpty()) {
-                throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-            } else {
-                List<MessageDTO> messageDTOs = entityToDTO.messagesToMessageDTOs(messages);
-                return ResponseEntity.ok(messageDTOs);
-            }
+            List<MessageDTO> messageDTOs = entityToDTO.messagesToMessageDTOs(messages);
+            return ResponseEntity.ok(messageDTOs);
         }
-        
     }
     
 
@@ -215,7 +191,11 @@ public class ChatServiceController {
         final Session session = sessionRepository.findById(sessionId).orElseThrow(
             () -> new ResponseStatusException(HttpStatus.NOT_FOUND));
         
-        final QuizRequest quizRequest = chatService.sendQuizRequest(quizRequestDTO.getQuizRequestContent(), session, quizRequestDTO.getCount(), quizRequestDTO.getDifficulty());
+        final QuizRequest quizRequest = chatService.sendQuizRequest(
+            quizRequestDTO.getQuizRequestContent(), 
+            session, 
+            quizRequestDTO.getCount(), 
+            quizRequestDTO.getDifficulty());
 
         return ResponseEntity.ok(entityToDTO.quizRequestToQuizRequestDTO(quizRequest));
     }

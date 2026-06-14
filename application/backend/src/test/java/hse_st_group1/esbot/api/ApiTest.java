@@ -65,7 +65,7 @@ class ApiTest {
         .when()
             .post("/sessions")
         .then()
-            .statusCode(200)
+            .statusCode(201)
             .extract()
             .as(UUID.class);
 

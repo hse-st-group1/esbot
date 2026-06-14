@@ -11,7 +11,6 @@ import org.springframework.test.context.ActiveProfiles;
 
 import hse_st_group1.esbot.dto.SessionDTO;
 import hse_st_group1.esbot.dto.SessionMetadataDTO;
-import hse_st_group1.esbot.model.QuizRequest;
 import hse_st_group1.esbot.model.Session;
 import hse_st_group1.esbot.model.User;
 import hse_st_group1.esbot.repository.SessionRepository;

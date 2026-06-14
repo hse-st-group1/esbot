@@ -51,6 +51,8 @@ public class ChatServiceController {
 
     private final EntityToDTO entityToDTO;
 
+    private static final String SESSIONBASEURL = "/sessions/";
+
     @PostMapping()
     public ResponseEntity<UUID> createSession(@RequestBody final UUID userID) {
 
@@ -58,7 +60,7 @@ public class ChatServiceController {
             () -> new ResponseStatusException(HttpStatus.NOT_FOUND));
         final Session session = chatService.createNewSession(user);
 
-        URI location = URI.create("/sessions/" + session.getSessionID().toString());
+        URI location = URI.create(SESSIONBASEURL + session.getSessionID().toString());
         return ResponseEntity.created(location).body(session.getSessionID());
     }
 
@@ -164,7 +166,7 @@ public class ChatServiceController {
             responseLLM.getSender(), 
             responseLLM.getMessageType()
         );
-        URI location = URI.create("/sessions/" + session.getSessionID().toString() + "/messages");
+        URI location = URI.create(SESSIONBASEURL + session.getSessionID().toString() + "/messages");
         return ResponseEntity.created(location).body(resonseAsDTO);
         
     }
@@ -202,7 +204,7 @@ public class ChatServiceController {
             quizRequestDTO.getCount(), 
             quizRequestDTO.getDifficulty());
         
-        URI location = URI.create("/sessions/" + sessionId + "/quiz");
+        URI location = URI.create(SESSIONBASEURL + sessionId + "/quiz");
         return ResponseEntity.created(location).body(entityToDTO.quizRequestToQuizRequestDTO(quizRequest));
     }
     
@@ -218,7 +220,7 @@ public class ChatServiceController {
         final String feedback = chatService.receiveEvaluation(answer, item)
             .getEvaluation();
         
-        URI location = URI.create("/sessions/" + sessionId + "quiz/" + quizItemId + "/answer");
+        URI location = URI.create(SESSIONBASEURL + sessionId + "quiz/" + quizItemId + "/answer");
         return ResponseEntity.created(location).body(feedback);
     }
 }

@@ -13,6 +13,8 @@ import hse_st_group1.esbot.dto.SessionDTO;
 import hse_st_group1.esbot.dto.SessionMetadataDTO;
 import hse_st_group1.esbot.model.Session;
 import hse_st_group1.esbot.model.User;
+import hse_st_group1.esbot.repository.QuizEvaluationRepository;
+import hse_st_group1.esbot.repository.QuizItemRepository;
 import hse_st_group1.esbot.repository.SessionRepository;
 import hse_st_group1.esbot.repository.UserRepository;
 
@@ -43,6 +45,12 @@ class ApiTest {
     @Autowired
     private SessionRepository sessionRepository;
 
+    @Autowired
+    private QuizItemRepository quizItemRepository;
+
+    @Autowired
+    private QuizEvaluationRepository quizEvaluationRepository;
+
     private User testUser;
 
     @BeforeAll
@@ -53,6 +61,17 @@ class ApiTest {
         testUser = new User();
         testUser.setUserName("Tester");
         userRepository.save(testUser);
+    }
+
+    //Happy Path
+    @Test
+    void testHealthCheck(){
+        given()
+        .when()
+            .get("/health")
+        .then()
+            .statusCode(200)
+            .body(equalTo("Backend is running and reachable"));
     }
 
     @Test
@@ -131,7 +150,7 @@ class ApiTest {
         sessionRepository.save(session);
 
         assertTrue(sessionRepository.existsById(session.getSessionID()));
-        
+
         given()
             .contentType("application/json")
             .body(("\"%s\"").formatted(testUser.getUserID()))
@@ -144,9 +163,96 @@ class ApiTest {
         assertFalse(sessionRepository.existsById(session.getSessionID()));
     }
 
+    @Test
+    void testSendingAMessage() {
+        Session session = new Session();
+        session.setUser(testUser);
+        session.setStartedAt(Instant.now().truncatedTo(ChronoUnit.MILLIS));
+        session.setLastAccessed(Instant.now().truncatedTo(ChronoUnit.MILLIS));
+        sessionRepository.save(session);
+
+        given()
+            .contentType("application/json")
+            .body("API-Test Message")
+        .when()
+            .post(("/sessions/%s/messages").formatted(session.getSessionID()))
+        .then()
+            .statusCode(201)
+            .body("messageContent", not(emptyString()));
+    }
+
+    //Unhappy Paths
+    @Test
+    void testFakeUserID() {
+        UUID fakeID = UUID.randomUUID();
+        while(testUser.getUserID()==fakeID) {
+            fakeID = UUID.randomUUID();
+        }
+        given()
+            .contentType("application/json")
+            .body(("\"%s\"").formatted(fakeID))
+        .when()
+            .post("/sessions")
+        .then()
+            .statusCode(404);
+    }
+
+      @Test
+    void testEmptyUserID() {
+        given()
+            .contentType("application/json")
+            .body(("\"\""))
+        .when()
+            .post("/sessions")
+        .then()
+            .statusCode(400);
+    }
+
+    @Test
+    void testFakeSessionID(){
+        Session session = new Session();
+        session.setUser(testUser);
+        session.setStartedAt(Instant.now().truncatedTo(ChronoUnit.MILLIS));
+        session.setLastAccessed(Instant.now().truncatedTo(ChronoUnit.MILLIS));
+        sessionRepository.save(session);
+
+        UUID fakeID = UUID.randomUUID();
+        while(session.getSessionID()==fakeID) {
+            fakeID = UUID.randomUUID();
+        }
+        given()
+            .contentType("application/json")
+            .body(("\"%s\"").formatted(testUser.getUserID()))
+        .when()
+            .get(("/sessions/%s").formatted(fakeID))
+        .then()
+            .statusCode(404);
+    }
+
+    @Test
+    void testGetWithNoMessages() {
+        Session session = new Session();
+        session.setUser(testUser);
+        session.setStartedAt(Instant.now().truncatedTo(ChronoUnit.MILLIS));
+        session.setLastAccessed(Instant.now().truncatedTo(ChronoUnit.MILLIS));
+        sessionRepository.save(session);
+
+        given()
+            .contentType("application/json")
+            .body(("\"%s\"").formatted(testUser.getUserID()))
+        .when()
+            .get(("/sessions/%s/messages").formatted(session.getSessionID()))
+        .then()
+            .statusCode(200)
+            .body("", hasSize(0));
+    }
+
+
     @AfterAll
     void cleanup() {
-        userRepository.deleteAll();
+        quizEvaluationRepository.deleteAll();
+        quizItemRepository.deleteAll();
         sessionRepository.deleteAll();
+        userRepository.deleteAll();
     }
 }

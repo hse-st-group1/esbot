@@ -21,6 +21,7 @@ import hse_st_group1.esbot.repository.UserRepository;
 import hse_st_group1.esbot.services.ChatService;
 import lombok.RequiredArgsConstructor;
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -39,6 +40,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 @RestController
 @RequestMapping("/sessions")
 @RequiredArgsConstructor
+@SuppressWarnings({"PMD.CouplingBetweenObjects", "PMD.ExcessiveImports"})
 public class ChatServiceController {
 
     private final SessionRepository sessionRepository;
@@ -55,7 +57,9 @@ public class ChatServiceController {
         final User user = userRepository.findById(userID).orElseThrow(
             () -> new ResponseStatusException(HttpStatus.NOT_FOUND));
         final Session session = chatService.createNewSession(user);
-        return ResponseEntity.ok(session.getSessionID());
+
+        URI location = URI.create("/sessions/" + session.getSessionID().toString());
+        return ResponseEntity.created(location).body(session.getSessionID());
     }
 
     
@@ -160,7 +164,8 @@ public class ChatServiceController {
             responseLLM.getSender(), 
             responseLLM.getMessageType()
         );
-        return ResponseEntity.ok(resonseAsDTO);
+        URI location = URI.create("/sessions/" + session.getSessionID().toString() + "/messages");
+        return ResponseEntity.created(location).body(resonseAsDTO);
         
     }
 

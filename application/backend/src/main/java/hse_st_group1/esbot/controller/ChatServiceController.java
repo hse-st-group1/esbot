@@ -64,7 +64,6 @@ public class ChatServiceController {
         return ResponseEntity.created(location).body(session.getSessionID());
     }
 
-    
     @GetMapping()
     public List<UUID> getIdsOfAllSessionsForUser(@RequestBody final UUID userID) {
 
@@ -73,15 +72,11 @@ public class ChatServiceController {
         
         final List<Session> sessions = sessionRepository.findByUser(user);
 
-        if (sessions.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        } else {
-            final List<UUID> listOfSessionIds = new ArrayList<>();
-            for (final Session session : sessions) {
-                listOfSessionIds.add(session.getSessionID());   
-            }
-            return listOfSessionIds;
+        final List<UUID> listOfSessionIds = new ArrayList<>();
+        for (final Session session : sessions) {
+            listOfSessionIds.add(session.getSessionID());   
         }
+        return listOfSessionIds;
     }
 
     @GetMapping("{sessionId}")
@@ -147,7 +142,6 @@ public class ChatServiceController {
     }
     
 
-
     @PostMapping("/{sessionId}/messages")
     public ResponseEntity<MessageDTO> sendMessage(@PathVariable final UUID sessionId, @RequestBody final String messageContenString) {        
         
@@ -184,12 +178,8 @@ public class ChatServiceController {
 
         final List<Message> messages = messageRepository.findBySessionOrderByTimestamp(session);
 
-        if (messages.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        } else {
-            List<MessageDTO> messageDTOs = entityToDTO.messagesToMessageDTOs(messages);
-            return ResponseEntity.ok(messageDTOs);
-        }
+        List<MessageDTO> messageDTOs = entityToDTO.messagesToMessageDTOs(messages);
+        return ResponseEntity.ok(messageDTOs);
     }
     
 

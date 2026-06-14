@@ -16,13 +16,16 @@ import hse_st_group1.esbot.model.QuizAnswer;
 import hse_st_group1.esbot.model.QuizEvaluation;
 import hse_st_group1.esbot.model.QuizItem;
 import hse_st_group1.esbot.model.QuizRequest;
+import lombok.NoArgsConstructor;
 
 @Component
+@NoArgsConstructor()
+@SuppressWarnings({"PMD.AvoidInstantiatingObjectsInLoops", "PMD.LawOfDemeter"})
 public class EntityToDTO {
-    public List<MessageDTO> messagesToMessageDTOs (List<Message> messages) {
-        List<MessageDTO> messageDTOs = new ArrayList<>();
-        for (Message message : messages) {
-            MessageDTO messageDTO = new MessageDTO( 
+    public final List<MessageDTO> messagesToMessageDTOs (final List<Message> messages) {
+        final List<MessageDTO> messageDTOs = new ArrayList<>();
+        for (final Message message : messages) {
+            final MessageDTO messageDTO = new MessageDTO( 
                 message.getMessageID(), 
                 message.getSession().getSessionID(), 
                 message.getMessageContent(), 
@@ -35,10 +38,10 @@ public class EntityToDTO {
         return messageDTOs;
     }
 
-    public List<QuizRequestDTO> quizRequestsToQuizRequestDTOs (Set<QuizRequest> quizRequests) {
-        List<QuizRequestDTO> quizRequestDTOs = new ArrayList<>();
-        for (QuizRequest quizRequest : quizRequests) {
-            QuizRequestDTO quizRequestDTO = new QuizRequestDTO(
+    public List<QuizRequestDTO> quizRequestsToQuizRequestDTOs (final Set<QuizRequest> quizRequests) {
+        final List<QuizRequestDTO> quizRequestDTOs = new ArrayList<>();
+        for (final QuizRequest quizRequest : quizRequests) {
+           final QuizRequestDTO quizRequestDTO = new QuizRequestDTO(
                 quizRequest.getQuizRequestContent(), 
                 quizRequest.getQuizItemCount(), 
                 quizRequest.getQuizItemDifficulty(),
@@ -51,7 +54,7 @@ public class EntityToDTO {
         return quizRequestDTOs;
     }
 
-    public QuizRequestDTO quizRequestToQuizRequestDTO (QuizRequest quizRequest) {
+    public QuizRequestDTO quizRequestToQuizRequestDTO (final QuizRequest quizRequest) {
         return new QuizRequestDTO(
             quizRequest.getQuizRequestContent(), 
             quizRequest.getQuizItemCount(), 
@@ -62,10 +65,10 @@ public class EntityToDTO {
         );
     }
 
-    public List<QuizAnswerDTO> quizAnswersToQuizAnswerDTOs (Set<QuizAnswer> quizAnswers){
-        List<QuizAnswerDTO> quizAnswerDTOs = new ArrayList<>();
-        for (QuizAnswer quizAnswer : quizAnswers) {
-            QuizAnswerDTO quizAnswerDTO = new QuizAnswerDTO(
+    public List<QuizAnswerDTO> quizAnswersToQuizAnswerDTOs (final Set<QuizAnswer> quizAnswers){
+        final List<QuizAnswerDTO> quizAnswerDTOs = new ArrayList<>();
+        for (final QuizAnswer quizAnswer : quizAnswers) {
+            final QuizAnswerDTO quizAnswerDTO = new QuizAnswerDTO(
                 quizAnswer.getQuizAnswerID(),
                 quizAnswer.getAnswer(),
                 quizAnswer.getTimeStamp()
@@ -75,10 +78,10 @@ public class EntityToDTO {
         return quizAnswerDTOs;
     }
 
-    public List<QuizEvaluationDTO> quizEvaluationsToQuizEvaluationDTOs (Set<QuizEvaluation> quizEvaluations){
-        List<QuizEvaluationDTO> quizEvaluationDTOs = new ArrayList<>();
-        for (QuizEvaluation quizEvaluation : quizEvaluations) {
-            QuizEvaluationDTO quizEvaluationDTO = new QuizEvaluationDTO(
+    public List<QuizEvaluationDTO> quizEvaluationsToQuizEvaluationDTOs (final Set<QuizEvaluation> quizEvaluations){
+        final List<QuizEvaluationDTO> quizEvaluationDTOs = new ArrayList<>();
+        for (final QuizEvaluation quizEvaluation : quizEvaluations) {
+            final QuizEvaluationDTO quizEvaluationDTO = new QuizEvaluationDTO(
                 quizEvaluation.getEvaluationID(), 
                 quizEvaluation.getQuizAnswer().getQuizAnswerID(), 
                 quizEvaluation.getEvaluation()
@@ -88,10 +91,10 @@ public class EntityToDTO {
         return quizEvaluationDTOs;
     }
 
-    public List<QuizItemDTO> quizItemsToQuizItemsDTO (List<QuizItem> quizItems){
-        List<QuizItemDTO> quizItemDTOs = new ArrayList<>();
-        for (QuizItem quizItem : quizItems) {
-            QuizItemDTO quizItemDTO = new QuizItemDTO(
+    public List<QuizItemDTO> quizItemsToQuizItemsDTO (final List<QuizItem> quizItems){
+        final List<QuizItemDTO> quizItemDTOs = new ArrayList<>();
+        for (final QuizItem quizItem : quizItems) {
+            final QuizItemDTO quizItemDTO = new QuizItemDTO(
                 quizItem.getQuizItemID(), 
                 quizItem.getQuizRequest().getQuizID(), 
                 quizItem.getQuestion(), 

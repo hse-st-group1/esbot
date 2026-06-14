@@ -60,7 +60,7 @@ public class ChatServiceController {
             () -> new ResponseStatusException(HttpStatus.NOT_FOUND));
         final Session session = chatService.createNewSession(user);
 
-        URI location = URI.create(SESSIONBASEURL + session.getSessionID().toString());
+        final URI location = URI.create(SESSIONBASEURL + session.getSessionID().toString());
         return ResponseEntity.created(location).body(session.getSessionID());
     }
 
@@ -90,7 +90,7 @@ public class ChatServiceController {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN);
         } 
                         
-        SessionMetadataDTO sessionMetadataDTO = new SessionMetadataDTO(
+        final SessionMetadataDTO sessionMetadataDTO = new SessionMetadataDTO(
             sessionId,
             session.getUser().getUserID(),
             session.getStartedAt(),
@@ -102,7 +102,7 @@ public class ChatServiceController {
     @GetMapping("{sessionId}/complete")
     public ResponseEntity<SessionDTO> getCompleteSessionData(@PathVariable final UUID sessionId, @RequestBody final UUID userId) { 
         
-        Session session = sessionRepository.findById(sessionId).orElseThrow(
+        final Session session = sessionRepository.findById(sessionId).orElseThrow(
             () -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
         // Check if Session belongs to requesting user
@@ -110,13 +110,13 @@ public class ChatServiceController {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN);
         } 
         
-        List<Message> messages = session.getMessages();
-        List<MessageDTO> messageDTOs = entityToDTO.messagesToMessageDTOs(messages);
+        final List<Message> messages = session.getMessages();
+        final List<MessageDTO> messageDTOs = entityToDTO.messagesToMessageDTOs(messages);
 
-        Set<QuizRequest> quizRequests = session.getQuizRequests();
-        List<QuizRequestDTO> quizRequestDTOs = entityToDTO.quizRequestsToQuizRequestDTOs(quizRequests);
+        final Set<QuizRequest> quizRequests = session.getQuizRequests();
+        final List<QuizRequestDTO> quizRequestDTOs = entityToDTO.quizRequestsToQuizRequestDTOs(quizRequests);
 
-        SessionDTO sessionDTO = new SessionDTO(
+        final SessionDTO sessionDTO = new SessionDTO(
             sessionId,
             session.getUser().getUserID(),
             session.getStartedAt(),
@@ -130,7 +130,7 @@ public class ChatServiceController {
     @DeleteMapping("{sessionId}")
     public ResponseEntity<String> deleteSession(@PathVariable final UUID sessionId, @RequestBody final UUID userId) {
         
-        Session session = sessionRepository.findById(sessionId).orElseThrow(
+        final Session session = sessionRepository.findById(sessionId).orElseThrow(
             () -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
         if (!session.getUser().getUserID().equals(userId)) {
@@ -152,7 +152,7 @@ public class ChatServiceController {
 
         final Message responseLLM = chatService.sendMessage(session, messageContenString);
 
-        MessageDTO resonseAsDTO = new MessageDTO(
+        final MessageDTO resonseAsDTO = new MessageDTO(
             responseLLM.getMessageID(), 
             sessionId, 
             responseLLM.getMessageContent(), 
@@ -160,7 +160,7 @@ public class ChatServiceController {
             responseLLM.getSender(), 
             responseLLM.getMessageType()
         );
-        URI location = URI.create(SESSIONBASEURL + session.getSessionID().toString() + "/messages");
+        final URI location = URI.create(SESSIONBASEURL + session.getSessionID().toString() + "/messages");
         return ResponseEntity.created(location).body(resonseAsDTO);
         
     }
@@ -178,7 +178,7 @@ public class ChatServiceController {
 
         final List<Message> messages = messageRepository.findBySessionOrderByTimestamp(session);
 
-        List<MessageDTO> messageDTOs = entityToDTO.messagesToMessageDTOs(messages);
+        final List<MessageDTO> messageDTOs = entityToDTO.messagesToMessageDTOs(messages);
         return ResponseEntity.ok(messageDTOs);
     }
     
@@ -194,7 +194,7 @@ public class ChatServiceController {
             quizRequestDTO.getCount(), 
             quizRequestDTO.getDifficulty());
         
-        URI location = URI.create(SESSIONBASEURL + sessionId + "/quiz");
+        final URI location = URI.create(SESSIONBASEURL + sessionId + "/quiz");
         return ResponseEntity.created(location).body(entityToDTO.quizRequestToQuizRequestDTO(quizRequest));
     }
     
@@ -210,7 +210,7 @@ public class ChatServiceController {
         final String feedback = chatService.receiveEvaluation(answer, item)
             .getEvaluation();
         
-        URI location = URI.create(SESSIONBASEURL + sessionId + "quiz/" + quizItemId + "/answer");
+        final URI location = URI.create(SESSIONBASEURL + sessionId + "quiz/" + quizItemId + "/answer");
         return ResponseEntity.created(location).body(feedback);
     }
 }

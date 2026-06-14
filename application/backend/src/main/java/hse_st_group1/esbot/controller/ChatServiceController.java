@@ -201,8 +201,9 @@ public class ChatServiceController {
             session, 
             quizRequestDTO.getCount(), 
             quizRequestDTO.getDifficulty());
-
-        return ResponseEntity.ok(entityToDTO.quizRequestToQuizRequestDTO(quizRequest));
+        
+        URI location = URI.create("/sessions/" + sessionId + "/quiz");
+        return ResponseEntity.created(location).body(entityToDTO.quizRequestToQuizRequestDTO(quizRequest));
     }
     
 
@@ -216,6 +217,8 @@ public class ChatServiceController {
         
         final String feedback = chatService.receiveEvaluation(answer, item)
             .getEvaluation();
-        return ResponseEntity.ok(feedback);
+        
+        URI location = URI.create("/sessions/" + sessionId + "quiz/" + quizItemId + "/answer");
+        return ResponseEntity.created(location).body(feedback);
     }
 }

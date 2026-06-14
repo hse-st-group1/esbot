@@ -23,6 +23,10 @@ The API Endpoints are automatically documented using OpenAPI.
 
 **Responses:** 200 OK
 
+**Errors:** 
+- 400 – Bad Request - if sessionId is not a UUID
+- 404 – Not Found - if no session with passed sessionId exists
+
 **Returns:** List of sessionIds
 
 **Function:** Get the sessionIds of all Sessions belonging to a user as a list.
@@ -33,7 +37,11 @@ The API Endpoints are automatically documented using OpenAPI.
 
 **Request Body:** UUID userId
 
-**Response:** 200 OK
+**Response:** 201 OK
+
+**Errors:**
+- 400 - Bad request - if userId is not a UUID
+- 404 - Not Found - if no user with passed userId exists
 
 **Returns:** UUID sessionId
 
@@ -52,7 +60,12 @@ The API Endpoints are automatically documented using OpenAPI.
         "difficulty": "EASY",
     } 
 
-**Response:** 200 OK
+**Response:** 201 OK
+
+**Errors:**
+- 400 - Bad Request - if passed values are in wrong format or outside of boundary values (e.g. difficulty is not a value of enum)
+- 400 - Bad Request - if sessionID is not a UUID
+- 404 - NotFound - if session with passed sessionID does not exist
 
 **Returns:** QuizRequestDTO
     
@@ -92,7 +105,12 @@ The API Endpoints are automatically documented using OpenAPI.
 
 **Request Body:** Answer as string
 
-**Response:** 200 OK
+**Response:** 201 OK
+
+**Errors:**
+- 400 - Bad Request - if sessionId or quizItemId are not UUIDs
+- 404 - Not Found - if no session with passed sessionId or no quizItem with passed quizItemId exists
+- 500 - Internal Server Error - if an Evaluation already exists for the quizItemId
 
 **Returns:** Evaluation of answer as string
 
@@ -105,6 +123,11 @@ The API Endpoints are automatically documented using OpenAPI.
 **Request Body:** UUID userId
 
 **Response:** 200 OK
+
+**Errors:**
+- 400 – Bad Request - if the userID passed in the request Body or sessionID  in the path is not a UUID
+- 403 – Forbidden - if session does not match to passed userId
+- 404 – Not Found - if no session with passed sessionId exists
 
 **Returns:** List of MessageDTOs
 
@@ -136,7 +159,11 @@ The API Endpoints are automatically documented using OpenAPI.
 
 **Request Body:** Message from user as string
 
-**Response:** 200 OK
+**Response:** 201 OK
+
+**Errors:**
+- 400 - bad Request - if sessionID is not a UUID
+- 404 - Not Found - if no session with passed sessionID exists
 
 **Returns:** response of LLM as MessageDTO
 
@@ -160,6 +187,11 @@ The API Endpoints are automatically documented using OpenAPI.
 
 **Response:** 200 OK
 
+**Errors:**
+- 400 – Bad Request - if the userID passed in the request Body or sessionID  in the path is not a UUID
+- 403 – Forbidden - if session does not match to passed userId
+- 404 – Not Found - if no session with passed sessionId exists
+
 **Returns:** SessionMetatdataDTO
 
     Example:
@@ -180,6 +212,11 @@ The API Endpoints are automatically documented using OpenAPI.
 
 **Response:** 200 OK
 
+**Errors:**
+- 400 – Bad Request - if the userID passed in the request Body or sessionID  in the path is not a UUID
+- 403 – Forbidden - if session does not match to passed userId
+- 404 – Not Found - if no session with passed sessionId exists
+
 **Returns:** Confirmation that session was deleted as string.
 
 **Function:** Delete a Session based on sessionId.
@@ -191,6 +228,11 @@ The API Endpoints are automatically documented using OpenAPI.
 **Request Body:** UUID userId
 
 **Response:** 200 OK
+
+**Errors:**
+- 400 – Bad Request - if the userID passed in the request Body or sessionID  in the path is not a UUID
+- 403 – Forbidden - if session does not match to passed userId
+- 404 – Not Found - if no session with passed sessionId exists
 
 **Returns:** SessionDTO
 

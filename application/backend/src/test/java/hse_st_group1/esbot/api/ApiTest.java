@@ -2,6 +2,7 @@ package hse_st_group1.esbot.api;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,8 +64,9 @@ class ApiTest {
         userRepository.save(testUser);
     }
 
-    //Happy Path
     @Test
+    @Tag("smoke")
+    @Tag("api")
     void testHealthCheck(){
         given()
         .when()
@@ -75,6 +77,8 @@ class ApiTest {
     }
 
     @Test
+    @Tag("happy-path")
+    @Tag("api")
     void testPostSession(){
         UUID sessionId = 
         given()
@@ -92,6 +96,8 @@ class ApiTest {
     }
 
     @Test
+    @Tag("happy-path")
+    @Tag("api")
     void testGetSessionMetaData(){
         Session session = new Session();
         session.setUser(testUser);
@@ -116,6 +122,8 @@ class ApiTest {
     }
 
     @Test
+    @Tag("happy-path")
+    @Tag("api")
     void testGetSession(){
         Session session = new Session();
         session.setUser(testUser);
@@ -142,6 +150,8 @@ class ApiTest {
     }
 
     @Test
+    @Tag("happy-path")
+    @Tag("api")
     void testDeleteSession(){
         Session session = new Session();
         session.setUser(testUser);
@@ -164,6 +174,8 @@ class ApiTest {
     }
 
     @Test
+    @Tag("happy-path")
+    @Tag("api")
     void testSendingAMessage() {
         Session session = new Session();
         session.setUser(testUser);
@@ -181,8 +193,9 @@ class ApiTest {
             .body("messageContent", not(emptyString()));
     }
 
-    //Unhappy Paths
     @Test
+    @Tag("unhappy-path")
+    @Tag("api")
     void testFakeUserID() {
         UUID fakeID = UUID.randomUUID();
         while(testUser.getUserID()==fakeID) {
@@ -197,7 +210,9 @@ class ApiTest {
             .statusCode(404);
     }
 
-      @Test
+    @Test
+    @Tag("unhappy-path")
+    @Tag("api")
     void testEmptyUserID() {
         given()
             .contentType("application/json")
@@ -209,6 +224,8 @@ class ApiTest {
     }
 
     @Test
+    @Tag("unhappy-path")
+    @Tag("api")
     void testFakeSessionID(){
         Session session = new Session();
         session.setUser(testUser);
@@ -230,6 +247,8 @@ class ApiTest {
     }
 
     @Test
+    @Tag("unhappy-path")
+    @Tag("api")
     void testGetWithNoMessages() {
         Session session = new Session();
         session.setUser(testUser);

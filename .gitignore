@@ -76,3 +76,8 @@ $RECYCLE.BIN/
 
 #specify
 .specify/
+
+########################
+# JMeter
+########################
+jmeter.log

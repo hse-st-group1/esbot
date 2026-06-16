@@ -1,7 +1,7 @@
 # Performance Report
 
 ## 1. Selected Tool:
-Apache JMeter was selected as a performance test tool with the "Custom Thread Groups" Plugin. The reason behind that decision is, that JMeter is easy to setup and is easily extendable via plugins. This combination allowed a fast and intuitive development for diffrent testing scenerios which was rated as overall sufficient for our ESBot application. In bigger and more advanced projects, gatling could deliver more precise control and test results. Therefore gatling should be considered for future performance tests.
+Apache JMeter was selected as a performance test tool with the "Custom Thread Groups" Plugin. The reason behind that decision is, that JMeter is easy to setup and is easily extendable via plugins. This combination allowed a fast and intuitive development for different testing scenerios which was rated as overall sufficient for our ESBot application. In bigger and more advanced projects, gatling could deliver more precise control and test results. Therefore gatling should be considered for future performance tests.
 
 ## 2. Test Environment:
 The performance tests where conducted in a virtual environment. The settings of the VM and the hardware of the host system are documented in the tables below:
@@ -31,7 +31,7 @@ The database was running in a docker container. Started via the [docker-compose-
 |**Stress Test**| 119.56 Transactions/s | 8725.80ms         | 11121.65ms      | 16341.86ms      | 0.00%      | 300                      |
 
 ## 4. Interpretation of Test Results
-The Load Test showed that the given Non-Functional Requirement with 50 virtual users and a response time < 2000ms gets fulfilled even in the 99th percentile. In our Case the Non-Functional Requirement was not specified enough for concurrent users. In the performance aspect it was ambiguous of how the time is measured for a data base query and API processing time. When following our non-functional performance requirements our actual requirement is a response time of >700ms. That showed that our performance requirement gets not fulfilled and more ressources have to be applied to test environment to ensure a faster processing time.
+The Load Test showed that the given Non-Functional Requirement with 50 virtual users and a response time < 2000ms gets fulfilled even in the 99th percentile. In our case the Non-Functional Requirement was not specified enough for concurrent users. In the performance aspect it was ambiguous of how the time is measured for a data base query and API processing time. When following our non-functional performance requirements our actual requirement is a response time of <700ms. That showed that our performance requirement gets not fulfilled and more ressources have to be applied to test environment to ensure a faster processing time.
 The Stress Test showed that the system slowed down tremendously when exceeding 119 virtual users. At that point the response time exceeded 2000ms in the POST session request. Even though the backend and database was able to handle the requests at 300 virtual users with no errors, the response time got frustratingly slow by exceeding the Non-Functional requirement of < 2000ms by 100%. This is also validated by the fact that our throughput was reduced by about 25%.
 
 ## 5. Observation and Recommendations

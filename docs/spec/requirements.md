@@ -17,8 +17,6 @@ The system shall store interactions to provide seamless continuity in conversati
 The system shall provide answers with educational value and a defined structure. 
 - **NF 2: Usability**  
 The system shall have an intuitive, easy-to-use interface, so that it is accessible to first time users without prior training. 
-- **NF 3: Accessbility**  
-The system shall be usable for 
 - **NF 3: Testability**  
 The system shall support unit, integration, mock, performance and load testing.
 - **NF 4: Maintainability**  

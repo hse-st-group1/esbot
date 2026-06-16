@@ -118,6 +118,12 @@ mvn clean install
 mvn spring-boot:run
 ```
 
+### Base URL
+```bash
+http://localhost:8080
+```
+[Link](http://localhost:8080)
+
 ### Test the backend using Maven - Unit Tests
 ```bash
 mvn test

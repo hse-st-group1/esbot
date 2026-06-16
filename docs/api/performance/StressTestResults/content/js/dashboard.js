@@ -133,7 +133,7 @@ $(document).ready(function() {
         widgets: ['zebra']
     });
 
-    var data = {"OkPercent": 100.0, "KoPercent": 0.0};
+    var data = {"OkPercent": 99.99763151038583, "KoPercent": 0.002368489614173042};
     var dataset = [
         {
             "label" : "FAIL",
@@ -173,7 +173,7 @@ $(document).ready(function() {
     });
 
     // Creates APDEX table
-    createTable($("#apdexTable"), {"supportsControllersDiscrimination": true, "overall": {"data": [0.7250481234981065, 1000, 2000, "Total"], "isController": false}, "titles": ["Apdex", "T (Toleration threshold)", "F (Frustration threshold)", "Label"], "items": [{"data": [0.722832303820636, 1000, 2000, "GET_Messages"], "isController": false}, {"data": [0.6412871659766655, 1000, 2000, "GET_Sessions"], "isController": false}, {"data": [0.667385383567862, 1000, 2000, "GET_Session_Data"], "isController": false}, {"data": [0.9561541339319117, 1000, 2000, "GET_Health"], "isController": false}, {"data": [0.727676875142488, 1000, 2000, "POST_Messages"], "isController": false}, {"data": [0.633665592445477, 1000, 2000, "POST_Sessions"], "isController": false}]}, function(index, item){
+    createTable($("#apdexTable"), {"supportsControllersDiscrimination": true, "overall": {"data": [0.5149688543615736, 1000, 2000, "Total"], "isController": false}, "titles": ["Apdex", "T (Toleration threshold)", "F (Frustration threshold)", "Label"], "items": [{"data": [0.5474706479199885, 1000, 2000, "GET_Messages"], "isController": false}, {"data": [0.34683920237590155, 1000, 2000, "GET_Sessions"], "isController": false}, {"data": [0.4060670949321913, 1000, 2000, "GET_Session_Data"], "isController": false}, {"data": [0.894622905027933, 1000, 2000, "GET_Health"], "isController": false}, {"data": [0.5452452884477054, 1000, 2000, "POST_Messages"], "isController": false}, {"data": [0.3466012613875263, 1000, 2000, "POST_Sessions"], "isController": false}]}, function(index, item){
         switch(index){
             case 0:
                 item = item.toFixed(3);
@@ -187,7 +187,7 @@ $(document).ready(function() {
     }, [[0, 0]], 3);
 
     // Create statistics table
-    createTable($("#statisticsTable"), {"supportsControllersDiscrimination": true, "overall": {"data": ["Total", 79483, 0, 0.0, 1346.5691783148523, 0, 28642, 1956.0, 8725.800000000003, 11121.650000000005, 16341.860000000022, 119.5554893723273, 5119.573787589535, 25.53919794529279], "isController": false}, "titles": ["Label", "#Samples", "FAIL", "Error %", "Average", "Min", "Max", "Median", "90th pct", "95th pct", "99th pct", "Transactions/s", "Received", "Sent"], "items": [{"data": ["GET_Messages", 13113, 0, 0.0, 1371.4434530618448, 1, 27885, 368.0, 3732.6000000000004, 6368.5999999999985, 12223.040000000008, 19.736812398685718, 12.16196470876424, 5.030574253961887], "isController": false}, {"data": ["GET_Sessions", 13285, 0, 0.0, 1763.914565299207, 1, 25015, 713.0, 4753.199999999999, 7241.399999999998, 12669.959999999992, 19.985437784136213, 5082.17274368629, 4.196161253505161], "isController": false}, {"data": ["GET_Session_Data", 13218, 0, 0.0, 1647.8980935088548, 1, 26848, 569.0, 4752.300000000001, 7115.349999999995, 12465.249999999987, 19.891498182857916, 7.614590700972904, 5.0700010016854655], "isController": false}, {"data": ["GET_Health", 13365, 0, 0.0, 186.74717545828636, 0, 2794, 8.0, 778.0, 1385.699999999999, 1924.0, 20.23267960003936, 3.8331443773512066, 2.4302925691453527], "isController": false}, {"data": ["POST_Messages", 13159, 0, 0.0, 1347.9357094004122, 1, 28642, 365.0, 3696.0, 6186.0, 12111.99999999999, 19.805929286255054, 9.225968893127904, 4.603331220828811], "isController": false}, {"data": ["POST_Sessions", 13343, 0, 0.0, 1768.4730570336524, 1, 26207, 809.0, 4599.200000000001, 6945.999999999993, 12678.039999999983, 20.07057719267634, 5.272446547685483, 4.233637376580165], "isController": false}]}, function(index, item){
+    createTable($("#statisticsTable"), {"supportsControllersDiscrimination": true, "overall": {"data": ["Total", 42221, 1, 0.002368489614173042, 2540.4292650576617, 0, 31157, 3180.5, 9891.800000000003, 12494.0, 17540.780000000035, 63.347812061605865, 5788.594997782241, 13.517231175308892], "isController": false}, "titles": ["Label", "#Samples", "FAIL", "Error %", "Average", "Min", "Max", "Median", "90th pct", "95th pct", "99th pct", "Transactions/s", "Received", "Sent"], "items": [{"data": ["GET_Messages", 6899, 0, 0.0, 2434.2075663139635, 0, 26538, 1225.0, 7014.0, 9910.0, 15633.0, 10.368495643849164, 6.389083554666424, 2.6427513310982733], "isController": false}, {"data": ["GET_Sessions", 7071, 1, 0.014142271248762552, 3469.596096733142, 32, 30412, 2281.0, 8795.0, 10624.59999999998, 16446.359999999997, 10.617244651587407, 5772.8444877622405, 2.229206640714153], "isController": false}, {"data": ["GET_Session_Data", 7005, 0, 0.0, 3122.1793004996375, 1, 28746, 1977.0, 8327.400000000005, 10126.0, 16204.839999999986, 10.527976915099869, 4.0300738451913976, 2.683400366055728], "isController": false}, {"data": ["GET_Health", 7160, 0, 0.0, 352.5777932960898, 0, 3301, 10.0, 1482.9000000000005, 2026.8499999999995, 2697.340000000002, 10.83417061095038, 2.052567479027709, 1.3013701026825166], "isController": false}, {"data": ["POST_Messages", 6951, 0, 0.0, 2440.3651273198125, 0, 28515, 1250.0, 7035.4000000000015, 9760.199999999999, 15288.439999999988, 10.442597263681966, 4.864343111468829, 2.427088035894832], "isController": false}, {"data": ["POST_Sessions", 7135, 0, 0.0, 3444.155711282411, 46, 31157, 2272.0, 8426.600000000008, 10812.399999999998, 16461.920000000016, 10.705545727759548, 2.8122966804368343, 2.2582010519492797], "isController": false}]}, function(index, item){
         switch(index){
             // Errors pct
             case 3:
@@ -217,7 +217,7 @@ $(document).ready(function() {
     }, [[0, 0]], 0, summaryTableHeader);
 
     // Create error table
-    createTable($("#errorsTable"), {"supportsControllersDiscrimination": false, "titles": ["Type of error", "Number of errors", "% in errors", "% in all samples"], "items": []}, function(index, item){
+    createTable($("#errorsTable"), {"supportsControllersDiscrimination": false, "titles": ["Type of error", "Number of errors", "% in errors", "% in all samples"], "items": [{"data": ["500", 1, 100.0, 0.002368489614173042], "isController": false}]}, function(index, item){
         switch(index){
             case 2:
             case 3:
@@ -228,7 +228,7 @@ $(document).ready(function() {
     }, [[1, 1]]);
 
         // Create top5 errors by sampler
-    createTable($("#top5ErrorsBySamplerTable"), {"supportsControllersDiscrimination": false, "overall": {"data": ["Total", 79483, 0, "", "", "", "", "", "", "", "", "", ""], "isController": false}, "titles": ["Sample", "#Samples", "#Errors", "Error", "#Errors", "Error", "#Errors", "Error", "#Errors", "Error", "#Errors", "Error", "#Errors"], "items": [{"data": [], "isController": false}, {"data": [], "isController": false}, {"data": [], "isController": false}, {"data": [], "isController": false}, {"data": [], "isController": false}, {"data": [], "isController": false}]}, function(index, item){
+    createTable($("#top5ErrorsBySamplerTable"), {"supportsControllersDiscrimination": false, "overall": {"data": ["Total", 42221, 1, "500", 1, "", "", "", "", "", "", "", ""], "isController": false}, "titles": ["Sample", "#Samples", "#Errors", "Error", "#Errors", "Error", "#Errors", "Error", "#Errors", "Error", "#Errors", "Error", "#Errors"], "items": [{"data": [], "isController": false}, {"data": ["GET_Sessions", 7071, 1, "500", 1, "", "", "", "", "", "", "", ""], "isController": false}, {"data": [], "isController": false}, {"data": [], "isController": false}, {"data": [], "isController": false}, {"data": [], "isController": false}]}, function(index, item){
         return item;
     }, [[0, 0]], 0);
 

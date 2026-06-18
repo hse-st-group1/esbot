@@ -1,50 +1,9 @@
 <div class="app">
-  <aside class="sidebar">
-    <div class="session-h">
-      <img src="./assets/esbot_logo.png" width="200">
-      <h2 class="session-h2">sessions</h2>
-    </div>
-    <div class="new-session">
-      <button class="new-session-btn">New Session</button>
-    </div>
-    <div class="sessions">
-      <div class="session">
-        <button class="session-btn">Session 1</button>
-      </div>
-      <div class="session">
-        <button class="session-btn">Session 2</button>
-      </div>
-      <div class="session">
-        <button class="session-btn">Session 3</button>
-      </div>
-    </div>
-  </aside>
+  <app-sidebar></app-sidebar>
+
   <main class="main-content">
-    <div class="action-cards">
-      <button class="chat-btn">Chat</button>
-      <button class="quiz-btn">Quiz</button>
-    </div>
-    <div class="chat-area">
-      <h2 class="message-h2">chat messages</h2>
-      <div class="ai-message">
-        <div class="display-message">
-          <p class="message">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
-        </div>
-      </div>
-      <div class="user-message">
-        <div class="display-message">
-          <p class="message">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
-        </div>
-      </div>
-      <div class="ai-message">
-        <div class="display-message">
-          <p class="message">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
-        </div>
-      </div>
-    </div>
-    <div class="chat-input">
-      <input placeholder="A rabbit wants to communicate..." class="text-input"/>
-      <button class="send-btn">send</button>
-    </div>
+    <app-mode-selector></app-mode-selector>
+    <app-chat-window></app-chat-window>
+    <app-message-input></app-message-input>
   </main>
 </div>

@@ -1,0 +1,38 @@
+.sidebar{
+    width: 200px;
+    flex-direction: column;
+    -ms-flex-align: center;
+}
+
+.new-session-btn{
+    width: 190px;
+    height: 40px;
+}
+
+.session-h{
+    text-align: center;
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+      Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+      "Segoe UI Symbol";
+    color: white;
+    font-variant: small-caps;
+    font-size: larger;
+}
+.new-session{
+    padding-left: 2.5%;
+}
+
+.session-btn{
+    width: 190px;
+    height: 40px;
+}
+
+.session{
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 2.5%;
+}
+
+.sessions{
+    padding-top: 5px;
+}

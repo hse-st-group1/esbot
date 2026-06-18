@@ -12,3 +12,8 @@
 .group{
     width: 100%;
 }
+
+.type{
+    width: 50%;
+    background-color: rgb(1, 207, 207);
+}

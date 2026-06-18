@@ -5,11 +5,11 @@
 
 <div class="sidebar-list-container">
   <mat-nav-list>
-  @for (session of sessionService.sessions(); track session.id) {
+  @for (session of sessionService.sessions(); track session.sessionID) {
     <a 
       mat-list-item 
-      (click)="sessionService.selectSession(session.id)"
-      [class.active-session]="session.id === sessionService.activeSessionId()"
+      (click)="sessionService.selectSession(session.sessionID)"
+      [class.active-session]="session.sessionID === sessionService.activeSessionId()"
     >
       <mat-icon matListItemIcon>chat_bubble_outline</mat-icon>
       <p>Placeholder</p>

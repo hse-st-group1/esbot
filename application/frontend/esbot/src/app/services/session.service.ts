@@ -1,4 +1,9 @@
-import { Injectable, signal, computed } from '@angular/core';
+import { Injectable, signal, computed, inject } from '@angular/core';
+import { Api } from './api';
+import { Observable } from 'rxjs';
+import { Session } from '../models/session.model';
+import { SessionMetadata } from '../models/sessionMetadata.model';
+import { Message } from '../models/message.model';
 
 export interface ChatMessage {
   text: string;
@@ -14,54 +19,86 @@ export interface ChatSession {
   providedIn: 'root'
 })
 export class SessionService {
+
+  private readonly userId = "11111111-1111-1111-1111-111111111111";
+
+  private readonly apiService = inject(Api);
   // Alle Sessions
-  sessions = signal<ChatSession[]>([]);
+  sessions = signal<SessionMetadata[]>([]);
   
   // Die ID der aktuell ausgewählten Session
   activeSessionId = signal<string | null>(null);
 
+  activeSessionData = signal<Session | null>(null);
+
   // Ein "Computed Signal", das automatisch die aktive Session zurückgibt
   activeSession = computed(() => {
-    return this.sessions().find(s => s.id === this.activeSessionId()) || null;
+    return this.sessions().find(s => s.sessionID === this.activeSessionId()) || null;
   });
 
-  // 1. Neue Session anlegen
-  createNewSession() {
-    const newSession: ChatSession = {
-      id: Date.now().toString(), // Simpler unique ID Generator
-      messages: []
+  async getSessions() {
+
+    const sessionIds = await this.apiService.getSessions(this.userId);
+
+    const mappedSessions: SessionMetadata[] = await Promise.all(
+      sessionIds.map(async (sessionId) => {
+        
+        // 1. Hole die Metadaten asynchron vom Server
+        const session = await this.apiService.getSessionMetadata(sessionId, this.userId);
+        
+        // 2. Gib das fertige Objekt an das neue Array zurück
+        return session;
+      })
+    );
+
+    // Jetzt ist "mappedSessions" ein sauberes SessionMetadata[] und du kannst es ins Signal schreiben!
+    this.sessions.set(mappedSessions);
+  }
+
+  async createNewSession() {
+    const timestamp = new Date().toISOString();
+    const newSession: SessionMetadata = {
+      sessionID: await this.apiService.createSession(this.userId),
+      userID: this.userId,
+      startedAt: timestamp,
+      lastAccessed: timestamp,
     };
     
     // Füge die neue Session zur Liste hinzu
     this.sessions.update(list => [...list, newSession]);
     // Wähle sie direkt aus
-    this.activeSessionId.set(newSession.id);
+    this.activeSessionId.set(newSession.sessionID);
   }
 
-  // 2. Session wechseln
-  selectSession(id: string) {
-    this.activeSessionId.set(id);
+  selectSession(sessionId: string) {
+    this.activeSessionId.set(sessionId);
+
   }
 
-  // 3. Nachricht zur aktiven Session hinzufügen
   addMessage(text: string, isMe: boolean) {
-    const currentId = this.activeSessionId();
-    console.log('2. Service addMessage aufgerufen für Session:', currentId);
+    const currentSession = this.activeSessionData();
   
-    if (!currentId) {
-      console.error('❌ Fehler: Keine aktive Session ausgewählt!');
+    if (!currentSession) {
       return;
     }
 
-    this.sessions.update(list => list.map(session => {
-      if (session.id == currentId) {
-        return {
-          ...session,
-          messages: [...session.messages, { text, isMe }]
-        };
-      }
-      console.log('3. Aktuelle Nachrichten im Signal:', this.activeSession()?.messages);
-      return session;
-    }));
+    const newMessage: Message = {
+    // Temporäre ID generieren, damit Angular einen eindeutigen Track-Key hat
+    messageID: 'temp-' + crypto.randomUUID(), 
+    sessionID: currentSession.sessionID,
+    
+    // Hier mappen wir deine Parameter auf die echten Interface-Namen
+    messageContent: text,
+    sender: isMe, // true = Du, false = KI/Bot
+    
+    timestamp: new Date().toISOString(),
+    messageType: 'TEXT' // Oder was auch immer dein Standard-Typ im Backend ist
+  };
+
+  // Jetzt passt es perfekt in das Array rein!
+  this.activeSessionData.set({
+    ...currentSession,
+    messages: [...currentSession.messages, newMessage]
+  });
   }
 }

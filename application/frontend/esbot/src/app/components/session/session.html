@@ -1,11 +1,12 @@
-@if (sessionService.activeSession(); as activeSession) {
+@if (sessionService.activeSessionData(); as activeSession) {
   <div style="padding: 16px; border-bottom: 1px solid #ddd;">
+    <span style="color: gray; font-size: 0.85rem;">Session: {{ activeSession.sessionID }}</span>
   </div>
 
   <div class="scroll-container">
-    @for (msg of activeSession.messages; track msg) {
-      <div class="chat-row" [class.is-me]="msg.isMe" [class.is-other]="!msg.isMe">
-        <app-message-card [content]="msg.text" [isMe]="msg.isMe"></app-message-card>
+    @for (msg of activeSession.messages; track msg.messageID) {
+      <div class="chat-row" [class.is-me]="msg.sender" [class.is-other]="!msg.sender">
+        <app-message-card [content]="msg.messageContent" [isMe]="msg.sender"></app-message-card>
       </div>
     }
     

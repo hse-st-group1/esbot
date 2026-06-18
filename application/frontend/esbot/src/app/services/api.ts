@@ -5,8 +5,8 @@
  */
 
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
-import { map, Observable } from 'rxjs';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { firstValueFrom, map, Observable } from 'rxjs';
 
 import { SessionMetadata } from '../models/sessionMetadata.model';
 import { Session } from '../models/session.model';
@@ -22,16 +22,19 @@ export class Api {
   constructor(private readonly http: HttpClient) {}
 
   // ----- POST /sessions/ -----
-  createSession(userId: string) : Observable<string> {
+  async createSession(userId: string) : Promise<string> {
+
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     const newSessionId = this.http.post<string> (
       `${this.baseURL}`, 
-      userId // String should be same Format as UUID
+      JSON.stringify(userId), // String should be same Format as UUID
+      { headers }
     );
-    return newSessionId;
+    return firstValueFrom(newSessionId);
   }
 
   // ----- GET /sessions/?userId={userId} -----
-  getSessions(userId: string) : Observable<string[]> {
+  async getSessions(userId: string) : Promise<string[]> {
 
     const params = new HttpParams().set('userId', userId); // AI USAGE: 
     // Asked for explaination how request paramters are passed/used 
@@ -41,21 +44,21 @@ export class Api {
       `${this.baseURL}`, 
       {params}
     );
-    return allSessionsForUser;
+    return firstValueFrom(allSessionsForUser);
   }
 
   // ----- GET /sessions/{sessionId}?userId={userId} -----
-  getSessionMetadata(
+  async getSessionMetadata(
     sessionId: string, 
     userId: string
-  ) : Observable<SessionMetadata> {
+  ) : Promise<SessionMetadata> {
     const params = new HttpParams().set('userId', userId); // AI USAGE
 
     const sessionMetadata = this.http.get<SessionMetadata> (
       `${this.baseURL}/${sessionId}`, 
       {params}
     );
-    return sessionMetadata;
+    return firstValueFrom(sessionMetadata);
   }
 
   // ----- GET /sessions/{sessionId}/complete?userId={userId} -----

@@ -12,11 +12,9 @@ import { MessageCard } from '../message-card/message-card';
   styleUrl: './session.scss'
 })
 export class SessionComponent {
-  sessionService = inject(SessionService);
+  public sessionService = inject(SessionService);
 
   onNewMessage(text: string) {
-    // Nachricht über den Service speichern
-    console.log('1. Event im Hauptbereich angekommen:', text);
     this.sessionService.addMessage(text, true);
   }
 }

@@ -18,4 +18,9 @@ import { SessionService } from '../../services/session.service';
 export class Sidebar {
   // Aktuell leer – reiner UI-Container
   sessionService = inject(SessionService);
+
+  ngOnInit() {
+    // 💡 Startet den Ladevorgang, sobald die Komponente bereit ist
+    this.sessionService.getSessions();
+  }
 }

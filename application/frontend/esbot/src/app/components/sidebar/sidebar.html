@@ -1,0 +1,19 @@
+<div class="sidebar-header">
+  <app-button class="new-session-btn", label="New Session", icon="add", (click)="sessionService.createNewSession()">
+  </app-button>
+</div>
+
+<div class="sidebar-list-container">
+  <mat-nav-list>
+  @for (session of sessionService.sessions(); track session.id) {
+    <a 
+      mat-list-item 
+      (click)="sessionService.selectSession(session.id)"
+      [class.active-session]="session.id === sessionService.activeSessionId()"
+    >
+      <mat-icon matListItemIcon>chat_bubble_outline</mat-icon>
+      <p>Placeholder</p>
+    </a>
+  }
+</mat-nav-list>
+</div>

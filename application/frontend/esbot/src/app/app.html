@@ -1,0 +1,31 @@
+<div class="app-layout">
+  <header>
+    <app-toolbar color="primary"></app-toolbar>
+  </header>
+
+  <main>
+    <div class="chat">
+      <mat-sidenav-container autosize>
+        <mat-sidenav mode="side" opened class="sidebar">
+          <app-sidebar></app-sidebar>
+        </mat-sidenav>
+        <mat-sidenav-content class="session-content">
+          <div class="message-container">
+            @if (sessionService.activeSession(); as activeSession) { 
+            <div class="message-container">
+              @for (msg of activeSession.messages; track $index) {
+                <app-message-card [content]="msg.text" [isMe]="msg.isMe"></app-message-card>
+              }
+            </div>
+          } @else {
+            <div class="message-container" style="justify-content: center; align-items: center; color: gray;">
+              <p>Bitte wähle eine Session aus oder erstelle eine neue.</p>
+            </div>
+          }
+          </div>
+          <app-message-input></app-message-input>
+        </mat-sidenav-content>
+      </mat-sidenav-container>
+    </div>
+  </main>
+</div>

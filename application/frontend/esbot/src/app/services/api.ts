@@ -19,7 +19,7 @@ import { QuizRequest } from '../models/quizRequest.model';
 export class Api {
   private readonly baseURL = 'http://localhost:8080/sessions';
 
-  constructor(private readonly http: HttpClient) {}
+  constructor(private readonly http: HttpClient) {} //AI USAGE
 
   // ----- POST /sessions/ -----
   async createSession(userId: string) : Promise<string> {
@@ -76,7 +76,7 @@ export class Api {
   }
 
   // ----- DELETE /sessions/{sessionId}?userId={userId} -----
-  deleteSession(userId: string) : Observable<string> {
+  async deleteSession(userId: string) : Promise<string> {
 
     const params = new HttpParams().set('userId', userId); // AI USAGE
     
@@ -84,7 +84,7 @@ export class Api {
       `${this.baseURL}`, 
       {params}
     );
-    return statusOfDeletion;
+    return firstValueFrom(statusOfDeletion);
   }
 
   // ----- POST /sessions/{sessionId}/messages -----
@@ -104,26 +104,26 @@ export class Api {
   }
 
   // ----- GET /sessions/{sessionId}/messages?userId={userId}  -----
-  getAllMessagesForASession(
+  async getAllMessagesForASession(
     sessionId: string, 
     userId: string
-  ) : Observable<Message[]> {
+  ) : Promise<Message[]> {
     const params = new HttpParams().set('userId', userId); // AI USAGE
 
     const messages = this.http.get<Message[]> (
       `${this.baseURL}/${sessionId}/messages`, 
       {params}
     );
-    return messages;    
+    return firstValueFrom(messages);    
   }
 
   // ----- POST /sessions/{sessionId}/quiz  -----
-  createQuizRequest(
+  async createQuizRequest(
     sessionId: string, 
     quizRequestContent: string, 
     count: number, 
     difficulty: string) 
-    : Observable<QuizRequest> {
+    : Promise<QuizRequest> {
       const quizRequestToSendWithoutQuizItems : QuizRequest = {
         quizRequestContent, 
         count, 
@@ -135,20 +135,20 @@ export class Api {
       `${this.baseURL}/${sessionId}/quiz`, 
       quizRequestToSendWithoutQuizItems
     );
-    return quizRequestReceivedWithQuizItems; 
+    return firstValueFrom(quizRequestReceivedWithQuizItems); 
   }
 
   // ----- POST /sessions/{sessionId}/quiz/{quizItemId}/answer -----
-  createQuizEvaluation(
+  async createQuizEvaluation(
     sessionId: string, 
     quizItemId: string, 
     answer: string
-  ) : Observable <string> {
+  ) : Promise <string> {
     const quizAnswerEvaluation = this.http.post<string> (
       `${this.baseURL}/${sessionId}/quiz/${quizItemId}/answer`, 
       answer
     );
-    return quizAnswerEvaluation;
+    return firstValueFrom(quizAnswerEvaluation);
   }
 
 }

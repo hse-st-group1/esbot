@@ -1,0 +1,16 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100%; /* Füllt die 100vh von der äußeren Hülle aus */
+}
+
+.sidebar-header {
+  padding: 16px;
+  flex: 0 0 auto; /* Verhindert das Schrumpfen */
+}
+
+.sidebar-list-container {
+  flex: 1 1 auto; /* Nimmt den restlichen Platz ein */
+  overflow-y: auto; /* Aktiviert den Scrollbalken, wenn nötig */
+  padding: 0 8px;
+}

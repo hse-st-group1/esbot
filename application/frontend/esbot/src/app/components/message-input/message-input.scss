@@ -1,0 +1,11 @@
+:host {
+  display: flex;
+  justify-content: center;
+  padding: 16px;
+}
+
+.chat-input {
+  --mdc-outlined-text-field-container-shape: 0px !important; 
+  width: 40%;
+  min-width: 100px;
+}

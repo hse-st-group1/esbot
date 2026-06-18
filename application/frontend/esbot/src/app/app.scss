@@ -1,0 +1,41 @@
+
+header {
+  flex: 0 0 auto;
+}
+
+main {
+  flex: 1;
+  min-height: 0; // wichtig bei Flexbox
+}
+
+mat-sidenav-container {
+  height: 100%;
+}
+
+app-toolbar {
+  border-radius: 0px !important;
+}
+
+.app-layout {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.session-content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.message-container {
+  flex: 1;
+  overflow-y: auto;  // Aktiviert den vertikalen Scrollbalken, sobald der Inhalt überläuft
+  padding-bottom: 15px;
+}
+
+.chat {
+  height:100%;
+  margin-right:20%;
+}

@@ -1,0 +1,11 @@
+<mat-form-field appearance="outline" class="chat-input">
+    <input
+        matInput
+        placeholder="Stelle deine Frage"
+        name="messageText"
+        [(ngModel)]="text"
+    >
+    <button mat-icon-button matSuffix (click)="send()">
+        <mat-icon>send</mat-icon>
+    </button>
+</mat-form-field>

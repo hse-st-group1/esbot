@@ -26,14 +26,11 @@ export class MessageInput {
   private readonly sessionService = inject(SessionService);
 
   send() {
-    // 2. Diagnose-Log: Jetzt siehst du sofort in F12, ob der Klick ankommt
-    console.log('MessageInput send() aufgerufen! Text:', this.text);
-
     // Verhindert das Abschicken von leeren Nachrichten (nur Leerzeichen)
     if (this.text.trim()) {
       
       // 3. Nachricht direkt in den Service pushen
-      this.sessionService.addMessage(this.text, true);
+      this.sessionService.addMessage(this.text, false);
       
       // Eingabefeld leeren
       this.text = ''; 

@@ -1,19 +1,8 @@
 import { Injectable, signal, computed, inject } from '@angular/core';
 import { Api } from './api';
-import { Observable } from 'rxjs';
 import { Session } from '../models/session.model';
 import { SessionMetadata } from '../models/sessionMetadata.model';
 import { Message } from '../models/message.model';
-
-export interface ChatMessage {
-  text: string;
-  isMe: boolean;
-}
-
-export interface ChatSession {
-  id: string;
-  messages: ChatMessage[];
-}
 
 @Injectable({
   providedIn: 'root'
@@ -70,35 +59,65 @@ export class SessionService {
     this.activeSessionId.set(newSession.sessionID);
   }
 
-  selectSession(sessionId: string) {
-    this.activeSessionId.set(sessionId);
+  async selectSession(sessionId: string) {
 
+    this.activeSessionId.set(sessionId);
+    this.activeSessionData.set(null);
+
+    try {
+
+      const fullSession = await this.apiService.getCompleteSessionInformation(sessionId, this.userId);
+
+      this.activeSessionData.set(fullSession);
+      
+    } catch (error) {
+      console.error('Fehler beim Laden der Session-Details:', error);
+    }
   }
 
-  addMessage(text: string, isMe: boolean) {
-    const currentSession = this.activeSessionData();
-  
+  async addMessage(text: string, sender: boolean) {
+    let currentSession = this.activeSessionData();
+
     if (!currentSession) {
       return;
     }
 
-    const newMessage: Message = {
-    // Temporäre ID generieren, damit Angular einen eindeutigen Track-Key hat
-    messageID: 'temp-' + crypto.randomUUID(), 
-    sessionID: currentSession.sessionID,
-    
-    // Hier mappen wir deine Parameter auf die echten Interface-Namen
-    messageContent: text,
-    sender: isMe, // true = Du, false = KI/Bot
-    
-    timestamp: new Date().toISOString(),
-    messageType: 'TEXT' // Oder was auch immer dein Standard-Typ im Backend ist
-  };
+    // 1. Deine Nachricht erstellen
+    const userMessage: Message = {
+      messageID: 'temp-' + crypto.randomUUID(), 
+      sessionID: currentSession.sessionID,
+      messageContent: text,
+      sender: sender, 
+      timestamp: new Date().toISOString(),
+      messageType: 'TEXT' 
+    };
 
-  // Jetzt passt es perfekt in das Array rein!
-  this.activeSessionData.set({
-    ...currentSession,
-    messages: [...currentSession.messages, newMessage]
-  });
+    // 2. Deine Nachricht ins Signal schreiben
+    this.activeSessionData.set({
+      ...currentSession,
+      messages: [...currentSession.messages, userMessage]
+    });
+
+    // Auf LLM warten
+    const messageFromLLM = await this.apiService.sendAndReceiveMessage(currentSession.sessionID, text);
+
+    // Aktuellsten Zustand holen (Stale-Closure Schutz)
+    currentSession = this.activeSessionData();
+    if (!currentSession) return;
+
+    const botMessage: Message = {
+      messageID: 'temp-' + crypto.randomUUID(),
+      sessionID: currentSession.sessionID,
+      messageContent: messageFromLLM,
+      sender: true,
+      timestamp: new Date().toISOString(),
+      messageType: 'TEXT'
+    };
+
+    // 3. Die neue Bot-Nachricht an das aktuelle Array anhängen
+    this.activeSessionData.set({
+      ...currentSession,
+      messages: [...currentSession.messages, botMessage]
+    });
   }
 }

@@ -62,17 +62,17 @@ export class Api {
   }
 
   // ----- GET /sessions/{sessionId}/complete?userId={userId} -----
-  getCompleteSessionInformation(
+  async getCompleteSessionInformation(
     sessionId: string, 
     userId: string
-  ) : Observable<Session> {
+  ) : Promise<Session> {
     const params = new HttpParams().set('userId', userId); // AI USAGE
 
     const session = this.http.get<Session> (
       `${this.baseURL}/${sessionId}/complete`, 
       {params}
     );
-    return session;
+    return firstValueFrom(session);
   }
 
   // ----- DELETE /sessions/{sessionId}?userId={userId} -----
@@ -90,17 +90,17 @@ export class Api {
   // ----- POST /sessions/{sessionId}/messages -----
   // IMPORTANT DIFFERENCE TO FRONTEND:
   // returns only the LLM response as a string, not as a Message
-  sendAndReceiveMessage(
+  async sendAndReceiveMessage(
     sessionId: string, 
     messageContent: string
-  ) : Observable<string> {
+  ) : Promise<string> {
     const messageFromLLM = this.http.post<Message> (
       `${this.baseURL}/${sessionId}/messages`,
       messageContent
     ).pipe(
       map(message => message.messageContent) // AI Usage: How to access Object Attributes
     );
-    return messageFromLLM;
+    return firstValueFrom(messageFromLLM);
   }
 
   // ----- GET /sessions/{sessionId}/messages?userId={userId}  -----

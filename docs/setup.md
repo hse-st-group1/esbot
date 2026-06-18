@@ -260,3 +260,44 @@ mvn spring-boot:run
 ```bash
 mvn clean install
 ```
+
+## Start Angular Frontend fo the first time
+Navigate to application/frontend/esbot
+```bash
+cd application/frontend/esbot
+```
+
+Install Dependencies
+```bash
+npm install
+```
+
+Start Frontend (Make sure Backend and Database are started as well)
+```bash
+ng serve
+```
+
+## Start As Full Stack App
+Start Database in Docker
+```bash
+cd ./esbot
+```
+```bash
+docker compose up
+```
+
+In a new Terminal, start the Backend
+```bash
+cd ./esbot/application/backend
+```
+```bash
+mvn spring-boot:run
+```
+
+In a new Terminal, start the Frontend
+```bash
+cd ./esbot/application/frontend/esbot
+```
+```bash
+ng serve
+```

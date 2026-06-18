@@ -8,17 +8,6 @@
 .send-btn{
     width: 100px;
     height: 40px;
-    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-      Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
-      "Segoe UI Symbol";
-    font-size: large;
-    cursor: pointer;
-    border: 1px solid rgb(170, 170, 170);
-    background: #00308f;
-    background: linear-gradient(325deg, rgb(4, 30, 82) 0%, rgb(8, 49, 97) 58%, rgb(0, 81, 202) 100%);
-    border-radius: 10px;
-    color: white;
-    text-align: center;
 }
 
 .chat-input{

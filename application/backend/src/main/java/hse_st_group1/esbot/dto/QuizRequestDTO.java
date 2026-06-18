@@ -15,5 +15,5 @@ public class QuizRequestDTO {
     private Integer count;
     //Difficulty of questions
     private Difficulty difficulty;
-    private List<QuizItemDTO> quizItemDTOs;
+    private List<QuizItemDTO> quizItems;
 }

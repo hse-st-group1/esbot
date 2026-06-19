@@ -23,7 +23,6 @@ export class Api {
 
   // ----- POST /sessions/ -----
   async createSession(userId: string) : Promise<string> {
-
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     const newSessionId = this.http.post<string> (
       `${this.baseURL}`, 

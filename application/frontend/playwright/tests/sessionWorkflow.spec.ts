@@ -5,6 +5,11 @@
 // Cross referenced with https://playwright.dev/docs/writing-tests
 import { test, expect } from '@playwright/test';
 
+test.beforeEach(async ({ page }) => {
+  await page.goto('http://localhost:4200/');
+  await page.evaluate(() => (window as any).initUID());
+});
+
 test('has title', async ({ page }) => {
   await page.goto('http://localhost:4200/');
 
@@ -58,3 +63,17 @@ test('createSession', async ({ page }) => {
   const messageInputField = page.locator('[data-testid="message-input-field"]')
   await expect(messageInputField).toBeVisible();
   });
+
+test('createSessionNoUser', async ({ page }) => {
+    await page.goto('http://localhost:4200/');
+    await page.evaluate(() => {
+      (window as any).changeUID();
+    });
+
+    const dialogPromise = page.waitForEvent('dialog');
+
+    await page.locator('[data-testid="new-session-btn"]').click();
+    const dialog = await dialogPromise;
+    expect(dialog.message()).toBe('You are not logged in');
+    await dialog.accept();
+});

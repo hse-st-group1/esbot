@@ -23,4 +23,12 @@ import { SessionService } from './services/session.service';
 export class App {
   sessionService = inject(SessionService);
   protected readonly sidebarOpen = signal(true);
+  constructor() {
+    (window as any).changeUID = () => {
+      return this.sessionService.changeUID();
+    };
+    (window as any).initUID = () => {
+      return this.sessionService.initUID();
+    };
+  }
 }

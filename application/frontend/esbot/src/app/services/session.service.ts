@@ -9,7 +9,7 @@ import { Message } from '../models/message.model';
 })
 export class SessionService {
 
-  private readonly userId = "11111111-1111-1111-1111-111111111111";
+  private userId = "11111111-1111-1111-1111-111111111111";
 
   private readonly apiService = inject(Api);
   // Alle Sessions
@@ -44,19 +44,33 @@ export class SessionService {
     this.sessions.set(mappedSessions);
   }
 
+  async changeUID(){
+    this.userId = "11111111-1111-1111-1111-111111111122";
+  }
+
+  async initUID(){
+    this.userId = "11111111-1111-1111-1111-111111111111"
+  }
+
   async createNewSession() {
-    const timestamp = new Date().toISOString();
-    const newSession: SessionMetadata = {
-      sessionID: await this.apiService.createSession(this.userId),
-      userID: this.userId,
-      startedAt: timestamp,
-      lastAccessed: timestamp,
-    };
-    
-    // Füge die neue Session zur Liste hinzu
-    this.sessions.update(list => [...list, newSession]);
-    // Wähle sie direkt aus
-    this.activeSessionId.set(newSession.sessionID);
+    try{
+      const timestamp = new Date().toISOString();
+      const newSession: SessionMetadata = {
+        sessionID: await this.apiService.createSession(this.userId),
+        userID: this.userId,
+        startedAt: timestamp,
+        lastAccessed: timestamp,
+      };
+      
+      // Füge die neue Session zur Liste hinzu
+      this.sessions.update(list => [...list, newSession]);
+      // Wähle sie direkt aus
+      this.activeSessionId.set(newSession.sessionID);
+    }
+    catch (error) {
+      alert('You are not logged in')
+      throw error;
+    }
   }
 
   async selectSession(sessionId: string) {

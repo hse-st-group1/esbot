@@ -2,7 +2,7 @@
 
 ## 1. Test execution summary
 | Test Count | Number of tests passed | Number of tests failed | total runtime | framework | framework version |
-|:----------:|------------------------|------------------------|---------------|-----------|-------------------|
+|:----------:|:----------------------:|:----------------------:|:-------------:|:---------:|:-----------------:|
 | 21         | 21                     | 0                      | 25.6s         | playwright| 1.0.0             |
 
 ## 2. Headless output

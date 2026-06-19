@@ -14,3 +14,12 @@
   overflow-y: auto; /* Aktiviert den Scrollbalken, wenn nötig */
   padding: 0 8px;
 }
+
+.sidebar-list-container .active-session {
+  background-color: var(--mat-sys-tertiary);
+}
+
+.sidebar-list-container .active-session p,
+.sidebar-list-container .active-session mat-icon {
+  color: var(--mat-sys-on-tertiary);
+}

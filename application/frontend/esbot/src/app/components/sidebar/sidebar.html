@@ -1,13 +1,21 @@
 <div class="sidebar-header">
-  <app-button class="new-session-btn", label="New Session", icon="add", (click)="sessionService.createNewSession()">
+  <app-button 
+    data-testid="new-session-btn" 
+    class="new-session-btn" 
+    label="New Session" 
+    icon="add" 
+    (click)="sessionService.createNewSession()">
   </app-button>
 </div>
 
 <div class="sidebar-list-container">
-  <mat-nav-list>
+  <mat-nav-list data-testid="list-of-sessions-container">
   @for (session of sessionService.sessions(); track session.sessionID; let i = $index) {
+    <!-- AI USAGE: how to add data-testid for a list of items -->
     <a 
       mat-list-item 
+      [attr.data-testid]="'session-item-' + session.sessionID" 
+      [attr.data-session-id]="session.sessionID"
       (click)="sessionService.selectSession(session.sessionID)"
       [class.active-session]="session.sessionID === sessionService.activeSessionId()"
     >

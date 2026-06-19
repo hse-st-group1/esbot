@@ -11,6 +11,7 @@ import lombok.Data;
 public class SessionDTO {
     private UUID sessionID;
     private UUID userID;
+    private String sessionTitle;
     private Instant startedAt;
     private Instant lastAccessed;
     private List<MessageDTO> messages;

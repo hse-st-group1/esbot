@@ -21,6 +21,7 @@ class SessionTest {
     // Used Arguments for Tests
     UUID sessionID = UUID.randomUUID();
     User user = UnitTestHelper.userCreator();
+    String sessionTitle = "TestSession";
     Instant startedAt = Instant.now();
     Instant lastAccessed = Instant.now();
     List<Message> messages = List.of(UnitTestHelper.createTestMessage(UnitTestHelper.sessionCreator(sessionID)));
@@ -29,7 +30,7 @@ class SessionTest {
     @Test
     void testAllArgsConstructorSession () {
         // Create Test Object
-        Session session = new Session(sessionID, user, startedAt, lastAccessed, null, null);
+        Session session = new Session(sessionID, user, sessionTitle, startedAt, lastAccessed, null, null);
         
         // Assert that Object was created sucessfully
         assertThat(session).isNotNull();

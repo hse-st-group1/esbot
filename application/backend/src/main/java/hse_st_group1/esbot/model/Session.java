@@ -40,6 +40,9 @@ public class Session {
     @JoinColumn(updatable = false) //cannot be overwritten
     private User user;
 
+    @Column
+    private String sessionTitle;
+
     @NotNull
     @Column(updatable = false, nullable = false)
     private Instant startedAt;

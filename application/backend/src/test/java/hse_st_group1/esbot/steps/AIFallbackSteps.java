@@ -31,6 +31,7 @@ public class AIFallbackSteps {
 
     private User user;
     private Session session;
+    private String sessionTitle = "TestSession";
     private Instant timestamp;
 
     private Message message;
@@ -69,7 +70,7 @@ public class AIFallbackSteps {
         this.user = userRepository.save(user);
         
         timestamp = Instant.now();
-        this.session = new Session(null, user, timestamp, timestamp, null, null);
+        this.session = new Session(null, user, sessionTitle, timestamp, timestamp, null, null);
         sharedSession.setSession(this.session);
         this.session = sessionRepository.save(session);
     }

@@ -83,7 +83,12 @@ class ApiTest {
         UUID sessionId = 
         given()
             .contentType("application/json")
-            .body(("\"%s\"").formatted(testUser.getUserID()))
+            .body("""
+                {
+                    "userID": "%s",
+                    "sessionTitle": "Test Session"
+                }
+                """.formatted(testUser.getUserID()))
         .when()
             .post("/sessions")
         .then()
@@ -203,7 +208,12 @@ class ApiTest {
         }
         given()
             .contentType("application/json")
-            .body(("\"%s\"").formatted(fakeID))
+            .body("""
+                {
+                    "userID": "%s",
+                    "sessionTitle": "Test Session"
+                }
+                """.formatted(fakeID))
         .when()
             .post("/sessions")
         .then()

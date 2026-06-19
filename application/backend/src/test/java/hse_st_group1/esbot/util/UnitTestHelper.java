@@ -26,9 +26,10 @@ public class UnitTestHelper {
     public static Session sessionCreator(){
         UUID sessionId = UUID.randomUUID();
         User user = userCreator();
+        String sessionTitle = "TestSession";
         Instant startedAt = Instant.now();
         Instant lastAccessed = Instant.now();
-        Session session = new Session(sessionId, user, startedAt, lastAccessed, null, null);
+        Session session = new Session(sessionId, user, sessionTitle, startedAt, lastAccessed, null, null);
         user.setSessions(new HashSet<Session>());
         return session;
     }
@@ -36,18 +37,20 @@ public class UnitTestHelper {
     public static Session sessionCreator(UUID sessionID){
         UUID sessionId = sessionID;
         User user = userCreator();
+        String sessionTitle = "TestSession";
         Instant startedAt = Instant.now();
         Instant lastAccessed = Instant.now();
-        Session session = new Session(sessionId, user, startedAt, lastAccessed, null, null);
+        Session session = new Session(sessionId, user, sessionTitle, startedAt, lastAccessed, null, null);
         user.setSessions(Set.of(session));
         return session;
     }
 
     public static Session sessionCreator(User user){
         UUID sessionId = UUID.randomUUID();
+        String sessionTitle = "TestSession";
         Instant startedAt = Instant.now();
         Instant lastAccessed = Instant.now();
-        Session session = new Session(sessionId, user, startedAt, lastAccessed, null, null);
+        Session session = new Session(sessionId, user, sessionTitle, startedAt, lastAccessed, null, null);
         user.setSessions(Set.of(session));
         return session;
     }

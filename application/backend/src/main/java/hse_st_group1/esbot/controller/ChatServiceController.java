@@ -11,6 +11,7 @@ import org.springframework.web.server.ResponseStatusException;
 import hse_st_group1.esbot.converter.EntityToDTO;
 import hse_st_group1.esbot.model.Message;
 import hse_st_group1.esbot.model.QuizItem;
+import hse_st_group1.esbot.dto.CreateSessionDTO;
 import hse_st_group1.esbot.dto.MessageDTO;
 import hse_st_group1.esbot.dto.QuizRequestDTO;
 import hse_st_group1.esbot.dto.SessionDTO;
@@ -56,11 +57,11 @@ public class ChatServiceController {
 
     // ----- POST /sessions/ -----
     @PostMapping()
-    public ResponseEntity<UUID> createSession(@RequestBody final UUID userId) {
+    public ResponseEntity<UUID> createSession(@RequestBody final CreateSessionDTO createSessionDTO) {
 
-        final User user = userRepository.findById(userId).orElseThrow(
+        final User user = userRepository.findById(createSessionDTO.getUserID()).orElseThrow(
             () -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-        final Session session = chatService.createNewSession(user);
+        final Session session = chatService.createNewSession(user, createSessionDTO.getSessionTitle());
 
         final URI location = URI.create(SESSIONBASEURL + session.getSessionID().toString());
         return ResponseEntity.created(location).body(session.getSessionID());
@@ -97,6 +98,7 @@ public class ChatServiceController {
         final SessionMetadataDTO sessionMetadataDTO = new SessionMetadataDTO(
             sessionId,
             session.getUser().getUserID(),
+            session.getSessionTitle(),
             session.getStartedAt(),
             session.getLastAccessed()
         );
@@ -124,6 +126,7 @@ public class ChatServiceController {
         final SessionDTO sessionDTO = new SessionDTO(
             sessionId,
             session.getUser().getUserID(),
+            session.getSessionTitle(),
             session.getStartedAt(),
             session.getLastAccessed(),
             messageDTOs,

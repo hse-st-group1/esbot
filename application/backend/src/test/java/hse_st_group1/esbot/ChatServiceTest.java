@@ -46,6 +46,7 @@ class ChatServiceTest {
     private ChatService chatService;
     private Session session;
     private Message message;
+    private String sessionTitle = "TestSession";
 
     @BeforeEach
     void setUp(){
@@ -66,7 +67,7 @@ class ChatServiceTest {
     
     @Test
     void createNewSessionTest(){
-        this.session = chatService.createNewSession(user);
+        this.session = chatService.createNewSession(user, sessionTitle);
         assertNotNull(this.session);
         sessionRepository.save(session);
     }
@@ -74,7 +75,7 @@ class ChatServiceTest {
     @Test
     void sendMessageTestAIServiceAvailable(){
         String messageContent = "Hello AI";
-        this.session = chatService.createNewSession(user);
+        this.session = chatService.createNewSession(user, sessionTitle);
 
         Mockito.when(aiServiceMock.isAvailable()).thenReturn(true);
         Mockito.when(aiServiceMock.responseString(Mockito.anyString())).thenReturn("Hello from ESbot");
@@ -100,7 +101,7 @@ class ChatServiceTest {
     @Test
     void sendMessageTestAIServiceNotAvailable(){
         String messageContent = "Hello AI";
-        this.session = chatService.createNewSession(user);
+        this.session = chatService.createNewSession(user, sessionTitle);
         Mockito.when(aiServiceMock.isAvailable()).thenReturn(false);
         Mockito.when(aiServiceMock.responseString(Mockito.anyString())).thenReturn("Hello from ESbot");
         try{
@@ -126,7 +127,7 @@ class ChatServiceTest {
     @Test
     void sendQuizRequestAIServiceAvailableTest(){
         String quizTopic = "Software Testing";
-        this.session = chatService.createNewSession(user);
+        this.session = chatService.createNewSession(user, sessionTitle);
         Mockito.when(aiServiceMock.isAvailable()).thenReturn(true);
         Mockito.when(aiServiceMock.createQuestions(Mockito.anyString())).thenReturn(List.of("Question 1: How Many Test Questions?", "Question 2: How Hard Are The Test Questions?", "Question 3: What Is A Rabbyte?"));
         QuizRequest request = null;
@@ -196,7 +197,7 @@ class ChatServiceTest {
 
     @Test
     void evaluateAnswerAIServiceAvailableTest(){
-        this.session = chatService.createNewSession(user);
+        this.session = chatService.createNewSession(user, sessionTitle);
         QuizRequest request = null;
         QuizEvaluation evaluation = null;
         Mockito.when(aiServiceMock.isAvailable()).thenReturn(true);
@@ -225,7 +226,7 @@ class ChatServiceTest {
     }
     @Test
     void evaluateAnswerWithEmptyAnswerTest(){
-        this.session = chatService.createNewSession(user);
+        this.session = chatService.createNewSession(user, sessionTitle);
         QuizRequest request = null;
         QuizEvaluation evaluation = null;
         Mockito.when(aiServiceMock.isAvailable()).thenReturn(true);
@@ -245,7 +246,7 @@ class ChatServiceTest {
     }
     @Test
     void evaluateAnswerAIServiceNotAvailableTest(){
-        this.session = chatService.createNewSession(user);
+        this.session = chatService.createNewSession(user, sessionTitle);
         QuizRequest request = null;
         QuizEvaluation evaluation = null;
         Mockito.when(aiServiceMock.isAvailable()).thenReturn(true, false);

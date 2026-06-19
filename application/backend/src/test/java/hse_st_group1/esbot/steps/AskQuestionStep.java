@@ -29,6 +29,7 @@ public class AskQuestionStep{
     private Session session;
     private RuntimeException exception;
     private Instant timestamp;
+    private String sessionTitle = "TestSession";
 
 
     @Autowired
@@ -56,7 +57,7 @@ public class AskQuestionStep{
         this.user = userRepository.save(user);
         
         timestamp = Instant.now();
-        this.session = new Session(null, user, timestamp, timestamp, null, null);
+        this.session = new Session(null, user, sessionTitle, timestamp, timestamp, null, null);
         this.session = sessionRepository.save(session);
     }
 

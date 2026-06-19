@@ -33,7 +33,7 @@ public class ChatService {
     private final SessionRepository sessionRepository;
     
     private final AIService aiService;
-    
+
     public ChatService(final SessionRepository sessionRepository, final MessageRepository messageRepository, final AIService aiService, final QuizItemRepository quizItemRepository, final QuizRequestRepository quizRequestRepository, final QuizAnswerRepository quizAnswerRepository, final QuizEvaluationRepository quizEvaluationRepository){
         this.sessionRepository = sessionRepository;
         this.messageRepository = messageRepository;
@@ -44,9 +44,16 @@ public class ChatService {
         this.quizEvaluationRepository = quizEvaluationRepository;
     }
 
-    public Session createNewSession(final User user){
+    public User createUser (String userName) {
+        final User user = new User();
+        user.setUserName(userName);
+        return user;
+    }
+
+    public Session createNewSession(final User user, String title){
         final Session session = new Session();
         session.setUser(user);
+        session.setSessionTitle(title);
         session.setStartedAt(Instant.now());
         session.setLastAccessed(Instant.now());
         user.getSessions().add(session);

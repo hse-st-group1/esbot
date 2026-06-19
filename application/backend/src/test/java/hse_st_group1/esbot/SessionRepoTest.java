@@ -44,6 +44,7 @@ class SessionRepoTest {
         user.setUserName("Tron");
         userRepository.save(user);
         session = new Session();
+        session.setSessionTitle("TestSession");
         session.setStartedAt(Instant.now());
         session.setLastAccessed(Instant.now());
         session.setUser(user);
@@ -54,6 +55,7 @@ class SessionRepoTest {
     @Test 
     void createNewSession(){
         newSession = new Session();
+        newSession.setSessionTitle("TestSession");
         newSession.setStartedAt(Instant.now());
         newSession.setLastAccessed(newSession.getStartedAt());
         newSession.setUser(user);

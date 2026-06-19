@@ -333,15 +333,20 @@ npm init playwright@latest
 -	install Playwright browsers
 -	install Playwright OS dependencies (if host system is Linux)
 
+Install Dependencies:
+```bash 
+npm install
+```
+
 With the Databse, Backend and Frontend running
 
 **Playwright commands:**
-Runs the end-to-end tests.
+Runs the end-to-end tests. --> Headless run (CI-style)
 ```bash 
 npx playwright test 
 ```
 
-Starts the interactive UI mode.
+Starts the interactive UI mode. -->  Interactive / headed run
 ```bash 
 npx playwright test --ui
 ```

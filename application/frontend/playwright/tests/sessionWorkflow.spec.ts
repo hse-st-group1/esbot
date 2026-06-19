@@ -15,6 +15,18 @@ test('has title', async ({ page }) => {
 test('createSession', async ({ page }) => {
   await page.goto('http://localhost:4200/');
 
+  /* Flaky Test: 
+  Sessions are loaded asynchronously on page init.
+  The test may count the number of sessions before the initial api call + rendering finishes,
+  so the baseline may not reflect the final rendered state.
+
+  When a new session is created, additional old sessions may still be retrieved
+  from the initial load, making the "+1 session" assertion unreliable.
+  */
+
+  // AI USAGE: Fix for flaky test: 
+  await page.waitForLoadState('networkidle'); // wait for sessions to actually load
+
   // Count the number of retrived sessions
   const listOfSessions = page.locator('[data-testid^="session-item-"]') //AI USAGE: How to count items with similar, but not same, data-testid
   const numberOfSessions = await listOfSessions.count();

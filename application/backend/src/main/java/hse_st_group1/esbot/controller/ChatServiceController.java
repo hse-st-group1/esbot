@@ -98,7 +98,9 @@ public class ChatServiceController {
         final SessionMetadataDTO sessionMetadataDTO = new SessionMetadataDTO(
             sessionId,
             session.getUser().getUserID(),
-            session.getSessionTitle(),
+            session.getSessionTitle() == null || session.getSessionTitle().isBlank()
+                ? "Session"
+                : session.getSessionTitle(),
             session.getStartedAt(),
             session.getLastAccessed()
         );
@@ -126,7 +128,9 @@ public class ChatServiceController {
         final SessionDTO sessionDTO = new SessionDTO(
             sessionId,
             session.getUser().getUserID(),
-            session.getSessionTitle(),
+            session.getSessionTitle() == null || session.getSessionTitle().isBlank()
+                ? "Session"
+                : session.getSessionTitle(),
             session.getStartedAt(),
             session.getLastAccessed(),
             messageDTOs,

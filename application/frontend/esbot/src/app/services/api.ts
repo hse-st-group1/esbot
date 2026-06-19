@@ -22,12 +22,35 @@ export class Api {
   constructor(private readonly http: HttpClient) {} //AI USAGE
 
   // ----- POST /sessions/ -----
-  async createSession(userId: string) : Promise<string> {
+  async createSession(userId: string, sessionTitle: string) : Promise<string> {
 
+    if (!sessionTitle || sessionTitle.trim() === "")
+    {
+      const newSessionId = this.createSessionWithoutTitle(userId);
+      return newSessionId;
+    }
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     const newSessionId = this.http.post<string> (
       `${this.baseURL}`, 
-      JSON.stringify(userId), // String should be same Format as UUID
+      {
+        userID: userId,
+        sessionTitle: sessionTitle
+      },
+      { headers }
+    );
+    return firstValueFrom(newSessionId);
+  }
+
+  async createSessionWithoutTitle(userId: string) : Promise<string> {
+
+    const date = Date.now().toString();
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    const newSessionId = this.http.post<string> (
+      `${this.baseURL}`, 
+      {
+        userID: userId,
+        sessionTitle: "Session " + date
+      },
       { headers }
     );
     return firstValueFrom(newSessionId);

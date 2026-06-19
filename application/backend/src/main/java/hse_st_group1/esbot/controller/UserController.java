@@ -28,8 +28,8 @@ public class UserController {
     private static final String USERBASEURL = "/user/";
 
     @PostMapping()
-    public ResponseEntity<UUID> createUser(@RequestBody String userName) {
-        User user = chatService.createUser(userName);
+    public ResponseEntity<UUID> createUser(@RequestBody final String userName) {
+        final User user = chatService.createUser(userName);
 
         if (user.getUserID() == null) {
             throw new ResponseStatusException(HttpStatus.NO_CONTENT);

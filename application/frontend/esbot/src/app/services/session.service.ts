@@ -46,11 +46,13 @@ export class SessionService {
 
   async createNewSession() {
     const timestamp = new Date().toISOString();
+    const sessionTitle = "Placeholder2";
     const newSession: SessionMetadata = {
-      sessionID: await this.apiService.createSession(this.userId),
+      sessionID: await this.apiService.createSession(this.userId, sessionTitle),
       userID: this.userId,
       startedAt: timestamp,
       lastAccessed: timestamp,
+      sessionTitle: sessionTitle,
     };
     
     // Füge die neue Session zur Liste hinzu

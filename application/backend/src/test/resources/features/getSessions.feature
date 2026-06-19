@@ -6,7 +6,7 @@ Scenario: Create and receive a new session
     When I create a new session
     Then I receive a new session
 
-Scenario: Create and receive a new session
+Scenario: Get old sessions
     Given I have an account
     And I am logged in
     And I have old sessions

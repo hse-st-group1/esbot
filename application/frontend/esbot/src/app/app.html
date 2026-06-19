@@ -16,7 +16,12 @@
             @if (sessionService.activeSessionData(); as activeSession) { 
               <div class="message-container">
                 @for (msg of activeSession.messages; track msg.messageID) {
-                  <app-message-card [content]="msg.messageContent" [isMe]="!msg.sender"></app-message-card>
+                  <app-message-card 
+                    [content]="msg.messageContent" 
+                    [isMe]="!msg.sender"
+                    [attr.data-testid]="!msg.sender ? 'user-message-' : 'bot-message-'+msg.messageID"
+                  >
+                  </app-message-card>
                 }
               </div>
             } @else {

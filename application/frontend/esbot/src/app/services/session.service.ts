@@ -65,7 +65,7 @@ export class SessionService {
       // Füge die neue Session zur Liste hinzu
       this.sessions.update(list => [...list, newSession]);
       // Wähle sie direkt aus
-      this.activeSessionId.set(newSession.sessionID);
+      this.selectSession(newSession.sessionID);
     }
     catch (error) {
       alert('You are not logged in')

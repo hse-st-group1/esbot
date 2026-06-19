@@ -56,9 +56,6 @@ test('createSession', async ({ page }) => {
   await expect(activeSession).toHaveCount(1);
   await expect(activeSession).toBeVisible();
 
-  // Click on active session to open it 
-  await activeSession.click();
-
   // Check that Message input field appears
   const messageInputField = page.locator('[data-testid="message-input-field"]')
   await expect(messageInputField).toBeVisible();

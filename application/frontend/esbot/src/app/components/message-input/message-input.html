@@ -6,7 +6,7 @@
         name="messageText"
         [(ngModel)]="text"
     >
-    <button mat-icon-button matSuffix (click)="send()">
+    <button data-testid="send-message-button" mat-icon-button matSuffix (click)="send()">
         <mat-icon>send</mat-icon>
     </button>
 </mat-form-field>

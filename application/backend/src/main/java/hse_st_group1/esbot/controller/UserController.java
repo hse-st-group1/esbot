@@ -31,9 +31,6 @@ public class UserController {
     public ResponseEntity<UUID> createUser(@RequestBody String userName) {
         User user = chatService.createUser(userName);
 
-        System.out.println("User: " + user);
-        System.out.println("UUID: " + user.getUserID());
-
         if (user.getUserID() == null) {
             throw new ResponseStatusException(HttpStatus.NO_CONTENT);
         }

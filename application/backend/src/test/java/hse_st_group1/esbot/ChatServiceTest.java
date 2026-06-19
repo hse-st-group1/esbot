@@ -58,7 +58,7 @@ class ChatServiceTest {
         quizItemRepository = Mockito.mock(QuizItemRepository.class);
         quizAnswerRepository = Mockito.mock(QuizAnswerRepository.class);
         quizEvaluationRepository = Mockito.mock(QuizEvaluationRepository.class);
-        chatService = new ChatService(sessionRepository, messageRepository, aiServiceMock, quizItemRepository, quizRequestRepository, quizAnswerRepository, quizEvaluationRepository);
+        chatService = new ChatService(sessionRepository, messageRepository, aiServiceMock, quizItemRepository, quizRequestRepository, quizAnswerRepository, quizEvaluationRepository, userRepository);
 
         user = new User();
         user.setUserName("Tron");

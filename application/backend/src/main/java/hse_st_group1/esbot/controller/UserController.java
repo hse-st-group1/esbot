@@ -3,18 +3,15 @@ package hse_st_group1.esbot.controller;
 import java.net.URI;
 import java.util.UUID;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
-import hse_st_group1.esbot.converter.EntityToDTO;
-import hse_st_group1.esbot.dto.CreateSessionDTO;
 import hse_st_group1.esbot.model.User;
-import hse_st_group1.esbot.repository.MessageRepository;
-import hse_st_group1.esbot.repository.QuizItemRepository;
-import hse_st_group1.esbot.repository.SessionRepository;
-import hse_st_group1.esbot.repository.UserRepository;
 import hse_st_group1.esbot.services.ChatService;
 import lombok.RequiredArgsConstructor;
 
@@ -31,8 +28,16 @@ public class UserController {
     private static final String USERBASEURL = "/user/";
 
     @PostMapping()
-    public ResponseEntity<UUID> createUser(String userName) {
+    public ResponseEntity<UUID> createUser(@RequestBody String userName) {
         User user = chatService.createUser(userName);
+
+        System.out.println("User: " + user);
+        System.out.println("UUID: " + user.getUserID());
+
+        if (user.getUserID() == null) {
+            throw new ResponseStatusException(HttpStatus.NO_CONTENT);
+        }
+
         final URI location = URI.create(USERBASEURL);
         return ResponseEntity.created(location).body(user.getUserID());
     }

@@ -20,11 +20,13 @@ import hse_st_group1.esbot.repository.QuizEvaluationRepository;
 import hse_st_group1.esbot.repository.QuizItemRepository;
 import hse_st_group1.esbot.repository.QuizRequestRepository;
 import hse_st_group1.esbot.repository.SessionRepository;
+import hse_st_group1.esbot.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
 public class ChatService {
+    private final UserRepository userRepository;
     private final MessageRepository messageRepository;
     private final QuizRequestRepository quizRequestRepository;
     private final QuizItemRepository quizItemRepository;
@@ -34,7 +36,7 @@ public class ChatService {
     
     private final AIService aiService;
 
-    public ChatService(final SessionRepository sessionRepository, final MessageRepository messageRepository, final AIService aiService, final QuizItemRepository quizItemRepository, final QuizRequestRepository quizRequestRepository, final QuizAnswerRepository quizAnswerRepository, final QuizEvaluationRepository quizEvaluationRepository){
+    public ChatService(final SessionRepository sessionRepository, final MessageRepository messageRepository, final AIService aiService, final QuizItemRepository quizItemRepository, final QuizRequestRepository quizRequestRepository, final QuizAnswerRepository quizAnswerRepository, final QuizEvaluationRepository quizEvaluationRepository, UserRepository userRepository){
         this.sessionRepository = sessionRepository;
         this.messageRepository = messageRepository;
         this.aiService = aiService;
@@ -42,12 +44,13 @@ public class ChatService {
         this.quizItemRepository = quizItemRepository;
         this.quizAnswerRepository = quizAnswerRepository;
         this.quizEvaluationRepository = quizEvaluationRepository;
+        this.userRepository = userRepository;
     }
 
     public User createUser (String userName) {
         final User user = new User();
         user.setUserName(userName);
-        return user;
+        return userRepository.save(user);
     }
 
     public Session createNewSession(final User user, String title){

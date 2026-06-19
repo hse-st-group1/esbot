@@ -1,8 +1,9 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { Button } from '../button/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { SessionService } from '../../services/session.service';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-sidebar',
@@ -10,12 +11,13 @@ import { SessionService } from '../../services/session.service';
   imports: [
     Button,
     MatIconModule,
-    MatListModule
+    MatListModule,
+    DatePipe
   ],
   templateUrl: './sidebar.html',
   styleUrl: './sidebar.scss'
 })
-export class Sidebar {
+export class Sidebar implements OnInit{
   // Aktuell leer – reiner UI-Container
   sessionService = inject(SessionService);
 

@@ -2,6 +2,7 @@
 // - For Debugging & Bug Fixing 
 // - Explain how to write playwright tests (generated examples)
 // - As specified below (marked: 'AI USAGE')
+// Cross referenced with https://playwright.dev/docs/writing-tests
 import { test, expect } from '@playwright/test';
 
 test('has title', async ({ page }) => {

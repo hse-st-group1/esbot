@@ -10,6 +10,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -57,16 +58,16 @@ class ChatServiceTest {
         quizItemRepository = Mockito.mock(QuizItemRepository.class);
         quizAnswerRepository = Mockito.mock(QuizAnswerRepository.class);
         quizEvaluationRepository = Mockito.mock(QuizEvaluationRepository.class);
-        chatService = new ChatService(sessionRepository, messageRepository, aiServiceMock, quizItemRepository, quizRequestRepository, quizAnswerRepository, quizEvaluationRepository);
+        chatService = new ChatService(sessionRepository, messageRepository, aiServiceMock, quizItemRepository, quizRequestRepository, quizAnswerRepository, quizEvaluationRepository, userRepository);
 
-        user = new User();
-        user.setUserName("Tron");
-        userRepository.save(user);
+        this.user = new User();
+        this.user.setUserName("Tron");
+        this.userRepository.save(user);
     }
     
     @Test
     void createNewSessionTest(){
-        this.session = chatService.createNewSession(user);
+        this.session = chatService.createNewSession(this.user);
         assertNotNull(this.session);
         sessionRepository.save(session);
     }

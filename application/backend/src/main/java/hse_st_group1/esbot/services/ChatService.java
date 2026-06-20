@@ -37,7 +37,7 @@ public class ChatService {
     
     private final AIService aiService;
     
-    public ChatService(final SessionRepository sessionRepository, final MessageRepository messageRepository, final AIService aiService, final QuizItemRepository quizItemRepository, final QuizRequestRepository quizRequestRepository, final QuizAnswerRepository quizAnswerRepository, final QuizEvaluationRepository quizEvaluationRepository, UserRepository userRepository){
+    public ChatService(final SessionRepository sessionRepository, final MessageRepository messageRepository, final AIService aiService, final QuizItemRepository quizItemRepository, final QuizRequestRepository quizRequestRepository, final QuizAnswerRepository quizAnswerRepository, final QuizEvaluationRepository quizEvaluationRepository, final UserRepository userRepository){
         this.sessionRepository = sessionRepository;
         this.messageRepository = messageRepository;
         this.aiService = aiService;

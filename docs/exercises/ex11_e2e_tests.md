@@ -56,8 +56,8 @@ After completing this exercise, you should be able to:
 
 ## Pre-requisites
 
-- Your ESBot repository with a running backend (from Exercise 8.4 / Exercise 10) and at least the session, message, and quiz endpoints implemented.
-- A working frontend. Ensure it covers session creation, chat, and quiz flows, and that it exposes stable `data-testid` selectors (or equivalent) for automated testing.
+- Your ESBot repository with a running backend (from Exercise 8.4 / Exercise 10) and the enpoints you have implemented.
+- A working frontend. Ensure it covers either session creation, chat, or quiz flows, and that it exposes stable `data-testid` selectors (or equivalent) for automated testing. You only need to implement a single flow.
 - Node.js 18+ (required for Cypress and Playwright; not required for Selenium-only setups).
 - Your BDD scenarios from **Exercise 5** — use these as the source of user flows to automate.
 - ESBot application description: [`docs/esbot.md`](../esbot.md)
@@ -84,7 +84,7 @@ For each test case, record the following in `docs/ui/manual-tests/report.md`:
 
 ### Deliverables (11.1)
 
-- `docs/ui/manual-tests/report.md` — completed test report for all six test cases.
+- `docs/ui/manual-tests/report.md` — completed test report for your test cases.
 - Screenshots or screen recordings for any failed test cases (stored in `docs/ui/manual-tests/screenshots/`).
 - A short paragraph at the end of the report reflecting on the manual testing experience: What was straightforward? What was tedious or error-prone? How could automation help?
 

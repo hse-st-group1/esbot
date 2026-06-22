@@ -156,3 +156,6 @@ The message is displayed in the chat and a response is returned correctly.
 
 Status:
 PASS
+
+## Manual-Testing Reflection
+Manual testing was intuitive for the implemented user interface. On the other hand it also took a long time to setup because user data had to be changed in the database (hard coded testuser) and made some tests tedious. In TC-UI-04 no result was send back with no  UI notification and HTTP status code 500. The reason behind that are database restrictions implemented in the backend. In our UI and in the backend no input-validation is done, for that reason this manual test was unsuccessful. In comparison manual tests take way longer than automated tests and always require user input. Going forward it is recommended to use automation wherever possible.

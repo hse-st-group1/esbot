@@ -1,0 +1,96 @@
+@use '@angular/material' as mat;
+
+// Basis-Styles laden
+@include mat.core();
+
+// Standard-Palette für den Compiler
+$chat-theme: mat.define-theme((
+  color: (
+    theme-type: light,
+    primary: mat.$blue-palette,
+  )
+));
+
+/* ==========================================================================
+   1. GLOBALER HINTERGRUND & FARB-VARIABLEN
+   ========================================================================== */
+:root {
+  // Deine Hauptfarben
+  --mat-sys-primary: #15293F;
+  --mat-sys-on-primary: #FFFFFF;
+
+  --mat-sys-secondary: #4A607A;       // Für sekundäre Buttons, inaktive Tabs, Sub-Header
+  --mat-sys-on-secondary: #FFFFFF;    // Text auf Schieferblau
+  
+  --mat-sys-tertiary: #64FFDA;       // Material 3 lenkt color="accent" automatisch hierhin
+  --mat-sys-on-tertiary: #15293F;
+
+  // Die exakten Farbwerte für deine Hintergründe
+  --app-bg-eisblau: #EBF1F6;         // Der helle Chathintergrund
+  --app-sidebar-dark: #DCE4EC;       // Etwas dunkleres, edles Eisblau für die linke Spalte
+}
+
+// Theme global anwenden
+html {
+  @include mat.all-component-themes($chat-theme);
+  @include mat.all-component-typographies($chat-theme);
+  height: 100%;
+  --mat-list-active-indicator-shape: 8px;
+}
+
+body {
+  margin: 0;
+  height: 100%;
+  font-family: 'Inter', sans-serif;
+  background-color: var(--app-bg-eisblau);
+}
+
+// Die linke Spalte (Sidebar) -> Farbe & rechter Begrenzungsstrich
+.sidebar, mat-sidenav {
+  background-color: var(--app-sidebar-dark) !important;
+  border-right: 1px solid rgba(21, 41, 63, 0.08) !important;
+  border-radius: 0 !important; 
+  
+  width: 15vw !important;  
+  min-width: 240px !important;  
+}
+
+// Der Chathintergrund im hellen Eisblau
+.session-content, mat-sidenav-content {
+  background-color: var(--app-bg-eisblau) !important;
+}
+
+// Der "+ New Session" Button Fix -> Moderner Tech-Radius (8px) statt Pille
+// Der "+ New Session" Button Fix -> Zentriert mit deinen Wunschmaßen
+.cstm-btn, [color="accent"] {
+  background-color: var(--mat-sys-primary)!important;
+  color: var(--mat-sys-on-primary)!important;
+  font-weight: 600 !important;
+  border-radius: 8px !important; 
+  
+  font-size: 16px !important;
+
+  display: flex !important;      
+  margin: 10px auto !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  
+  mat-icon {
+    color: ar(--mat-sys-on-primary)!important;
+  }
+}
+
+// Primäre Knöpfe (Dunkelblau) -> Gleicher Radius für einheitliches Design
+[color="primary"] {
+  background-color: #15293F !important;
+  color: #FFFFFF !important;
+}
+
+.mat-mdc-form-field .mdc-notched-outline__leading {
+  border-radius: 8px 0 0 8px;
+}
+
+.mat-mdc-form-field .mdc-notched-outline__trailing {
+  border-radius: 0 8px 8px 0;
+}

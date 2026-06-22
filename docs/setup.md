@@ -260,3 +260,107 @@ mvn spring-boot:run
 ```bash
 mvn clean install
 ```
+
+## Start Angular Frontend fo the first time
+Navigate to application/frontend/esbot
+```bash
+cd application/frontend/esbot
+```
+
+Install Dependencies
+```bash
+npm install
+```
+
+Start Frontend (Make sure Backend and Database are started as well)
+```bash
+ng serve
+```
+
+## Start As Full Stack App
+Start Database in Docker
+```bash
+cd ./esbot
+```
+```bash
+docker compose up
+```
+
+In a new Terminal, start the Backend
+```bash
+cd ./esbot/application/backend
+```
+```bash
+mvn spring-boot:run
+```
+
+In a new Terminal, start the Frontend
+```bash
+cd ./esbot/application/frontend/esbot
+```
+```bash
+ng serve
+```
+
+Base URL: 
+```bash
+http://localhost:4200
+```
+[Link](http://localhost:4200/)
+
+### End-to-End Tests
+
+**Install Playwright**
+
+Navigate to frontend folder and create folder for playwright
+```bash
+cd ./esbot/application/frontend
+```
+```bash 
+mkdir playwright
+```
+```bash 
+cd playwright
+```
+
+Install Playwright:
+```bash 
+npm init playwright@latest
+```
+-	for TypeScript
+-	put end-to-end tests in folder tests
+-	no GitHub Actions workflows
+-	install Playwright browsers
+-	install Playwright OS dependencies (if host system is Linux)
+
+Install Dependencies:
+```bash 
+npm install
+```
+
+With the Databse, Backend and Frontend running
+
+**Playwright commands:**
+Runs the end-to-end tests. --> Headless run (CI-style)
+```bash 
+npx playwright test 
+```
+
+Starts the interactive UI mode. -->  Interactive / headed run
+```bash 
+npx playwright test --ui
+```
+    
+Runs the tests in a specific file.
+```bash 
+npx playwright test example
+```
+    
+Runs the tests in debug mode.
+```bash 
+npx playwright test --debug
+```
+    
+
+
+

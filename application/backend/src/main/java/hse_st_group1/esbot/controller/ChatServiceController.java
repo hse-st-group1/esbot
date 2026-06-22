@@ -4,6 +4,7 @@ import hse_st_group1.esbot.repository.MessageRepository;
 import hse_st_group1.esbot.repository.QuizItemRepository;
 import hse_st_group1.esbot.repository.SessionRepository;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -53,10 +54,11 @@ public class ChatServiceController {
 
     private static final String SESSIONBASEURL = "/sessions/";
 
+    // ----- POST /sessions/ -----
     @PostMapping()
-    public ResponseEntity<UUID> createSession(@RequestBody final UUID userID) {
+    public ResponseEntity<UUID> createSession(@RequestBody final UUID userId) {
 
-        final User user = userRepository.findById(userID).orElseThrow(
+        final User user = userRepository.findById(userId).orElseThrow(
             () -> new ResponseStatusException(HttpStatus.NOT_FOUND));
         final Session session = chatService.createNewSession(user);
 
@@ -64,10 +66,11 @@ public class ChatServiceController {
         return ResponseEntity.created(location).body(session.getSessionID());
     }
 
+    // ----- GET /sessions/?userId={userId} -----
     @GetMapping()
-    public List<UUID> getIdsOfAllSessionsForUser(@RequestBody final UUID userID) {
+    public List<UUID> getIdsOfAllSessionsForUser(@RequestParam final UUID userId) {
 
-        final User user = userRepository.findById(userID).orElseThrow(
+        final User user = userRepository.findById(userId).orElseThrow(
             () -> new ResponseStatusException(HttpStatus.NOT_FOUND));
         
         final List<Session> sessions = sessionRepository.findByUser(user);
@@ -79,8 +82,9 @@ public class ChatServiceController {
         return listOfSessionIds;
     }
 
+    // ----- GET /sessions/{sessionId}?userId={userId} -----
     @GetMapping("{sessionId}")
-    public ResponseEntity<SessionMetadataDTO> getSessionMetadata(@PathVariable final UUID sessionId, @RequestBody final UUID userId) { 
+    public ResponseEntity<SessionMetadataDTO> getSessionMetadata(@PathVariable final UUID sessionId, @RequestParam final UUID userId) { 
         
         final Session session = sessionRepository.findById(sessionId).orElseThrow(
             () -> new ResponseStatusException(HttpStatus.NOT_FOUND));
@@ -99,8 +103,9 @@ public class ChatServiceController {
         return ResponseEntity.ok(sessionMetadataDTO);
     }
 
+    // ----- GET /sessions/{sessionId}/complete?userId={userId} -----
     @GetMapping("{sessionId}/complete")
-    public ResponseEntity<SessionDTO> getCompleteSessionData(@PathVariable final UUID sessionId, @RequestBody final UUID userId) { 
+    public ResponseEntity<SessionDTO> getCompleteSessionData(@PathVariable final UUID sessionId, @RequestParam final UUID userId) { 
         
         final Session session = sessionRepository.findById(sessionId).orElseThrow(
             () -> new ResponseStatusException(HttpStatus.NOT_FOUND));
@@ -127,8 +132,9 @@ public class ChatServiceController {
         return ResponseEntity.ok(sessionDTO);        
     }
 
+    // ----- DELETE /sessions/{sessionId} -----
     @DeleteMapping("{sessionId}")
-    public ResponseEntity<String> deleteSession(@PathVariable final UUID sessionId, @RequestBody final UUID userId) {
+    public ResponseEntity<String> deleteSession(@PathVariable final UUID sessionId, @RequestParam final UUID userId) {
         
         final Session session = sessionRepository.findById(sessionId).orElseThrow(
             () -> new ResponseStatusException(HttpStatus.NOT_FOUND));
@@ -141,7 +147,7 @@ public class ChatServiceController {
         return ResponseEntity.ok("Session sucessfully deleted.");
     }
     
-
+    // ----- POST /sessions/{sessionId}/messages -----
     @PostMapping("/{sessionId}/messages")
     public ResponseEntity<MessageDTO> sendMessage(@PathVariable final UUID sessionId, @RequestBody final String messageContenString) {        
         
@@ -165,9 +171,9 @@ public class ChatServiceController {
         
     }
 
-
+    // ----- GET /sessions/{sessionId}/messages?userId={userId} -----
     @GetMapping("{sessionId}/messages")
-    public ResponseEntity<List<MessageDTO>> getAllMessagesForSession(@PathVariable final UUID sessionId, @RequestBody final UUID userId) {
+    public ResponseEntity<List<MessageDTO>> getAllMessagesForSession(@PathVariable final UUID sessionId, @RequestParam final UUID userId) {
         final Session session = sessionRepository.findById(sessionId).orElseThrow(
             () -> new ResponseStatusException(HttpStatus.NOT_FOUND));
             
@@ -182,7 +188,7 @@ public class ChatServiceController {
         return ResponseEntity.ok(messageDTOs);
     }
     
-
+    // ----- POST /sessions/{sessionId}/quiz -----
     @PostMapping("/{sessionId}/quiz")
     public ResponseEntity<QuizRequestDTO> createQuiz(@PathVariable final UUID sessionId, @RequestBody final QuizRequestDTO quizRequestDTO) {
         final Session session = sessionRepository.findById(sessionId).orElseThrow(
@@ -198,7 +204,7 @@ public class ChatServiceController {
         return ResponseEntity.created(location).body(entityToDTO.quizRequestToQuizRequestDTO(quizRequest));
     }
     
-
+    // ----- POST /sessions/{sessionId}/quiz/{quizItemId}/answer -----
     @PostMapping("/{sessionId}/quiz/{quizItemId}/answer")
     public ResponseEntity<String> evaluateAnswerOfQuizItem(
         @PathVariable final UUID sessionId,

@@ -1,0 +1,25 @@
+@if (sessionService.activeSessionData(); as activeSession) {
+  <div style="padding: 16px; border-bottom: 1px solid #ddd;">
+    <span style="color: gray; font-size: 0.85rem;">Session: {{ activeSession.sessionID }}</span>
+  </div>
+
+  <div class="scroll-container">
+    @for (msg of activeSession.messages; track msg.messageID) {
+      <div class="chat-row" [class.is-me]="msg.sender" [class.is-other]="!msg.sender">
+        <app-message-card [content]="msg.messageContent" [isMe]="msg.sender"></app-message-card>
+      </div>
+    }
+    
+    @if (activeSession.messages.length === 0) {
+      <p style="text-align: center; color: gray; margin-top: 20px;">
+        Schreibe die erste Nachricht in dieser Session.
+      </p>
+    }
+  </div>
+
+  <app-message-input></app-message-input>
+} @else {
+  <div style="display: flex; justify-content: center; align-items: center; height: 100%;">
+    <h3 style="color: gray;">Bitte wähle eine Session aus oder erstelle eine neue.</h3>
+  </div>
+}

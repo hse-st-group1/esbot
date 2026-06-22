@@ -6,7 +6,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import hse_st_group1.esbot.model.User;
 
-public interface UserRepository extends JpaRepository<User, UUID> {
 
+public interface UserRepository extends JpaRepository<User, UUID> {
+    User findByUserName(String userName);
     
 }

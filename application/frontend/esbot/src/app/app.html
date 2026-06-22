@@ -1,0 +1,43 @@
+<div class="app-layout">
+  <header>
+    <app-toolbar color="primary"></app-toolbar>
+  </header>
+
+  <main>
+    <div class="chat">
+      <mat-sidenav-container autosize>
+        <mat-sidenav mode="side" opened class="sidebar">
+          <app-sidebar></app-sidebar>
+        </mat-sidenav>
+        
+        <mat-sidenav-content class="session-content">
+          <div class="message-container">
+            
+            @if (sessionService.activeSessionData(); as activeSession) { 
+              <div class="message-container">
+                @for (msg of activeSession.messages; track msg.messageID) {
+                  <app-message-card 
+                    [content]="msg.messageContent" 
+                    [isMe]="!msg.sender"
+                    [attr.data-testid]="!msg.sender ? 'user-message-' : 'bot-message-'+msg.messageID"
+                  >
+                  </app-message-card>
+                }
+              </div>
+            } @else {
+              <div class="message-container" style="justify-content: center; align-items: center; color: gray;">
+                <p>Bitte wähle eine Session aus oder erstelle eine neue.</p>
+              </div>
+            }
+            
+          </div>
+          
+          @if (sessionService.activeSessionData()) {
+            <app-message-input></app-message-input>
+          }
+          
+        </mat-sidenav-content>
+      </mat-sidenav-container>
+    </div>
+  </main>
+</div>

@@ -10,7 +10,7 @@ import lombok.Data;
 @AllArgsConstructor
 public class SessionMetadataDTO {
     private UUID sessionID;
-    private UUID userId;
+    private UUID userID;
     private Instant startedAt;
     private Instant lastAccessed;
 }

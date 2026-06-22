@@ -1,11 +1,13 @@
 package hse_st_group1.esbot.services;
 
+import hse_st_group1.esbot.repository.UserRepository;
 import java.time.Instant;
 
 import org.springframework.stereotype.Service;
 
 import hse_st_group1.esbot.AIServiceUnavailableException;
 import hse_st_group1.esbot.NoQuizTopicProvidedException;
+import hse_st_group1.esbot.UnknownUserException;
 import hse_st_group1.esbot.model.Message;
 import hse_st_group1.esbot.model.QuizAnswer;
 import hse_st_group1.esbot.model.QuizEvaluation;
@@ -25,6 +27,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Service
 public class ChatService {
+    private final UserRepository userRepository;
     private final MessageRepository messageRepository;
     private final QuizRequestRepository quizRequestRepository;
     private final QuizItemRepository quizItemRepository;
@@ -34,7 +37,7 @@ public class ChatService {
     
     private final AIService aiService;
     
-    public ChatService(final SessionRepository sessionRepository, final MessageRepository messageRepository, final AIService aiService, final QuizItemRepository quizItemRepository, final QuizRequestRepository quizRequestRepository, final QuizAnswerRepository quizAnswerRepository, final QuizEvaluationRepository quizEvaluationRepository){
+    public ChatService(final SessionRepository sessionRepository, final MessageRepository messageRepository, final AIService aiService, final QuizItemRepository quizItemRepository, final QuizRequestRepository quizRequestRepository, final QuizAnswerRepository quizAnswerRepository, final QuizEvaluationRepository quizEvaluationRepository, final UserRepository userRepository){
         this.sessionRepository = sessionRepository;
         this.messageRepository = messageRepository;
         this.aiService = aiService;
@@ -42,16 +45,22 @@ public class ChatService {
         this.quizItemRepository = quizItemRepository;
         this.quizAnswerRepository = quizAnswerRepository;
         this.quizEvaluationRepository = quizEvaluationRepository;
+        this.userRepository = userRepository;
     }
 
     public Session createNewSession(final User user){
-        final Session session = new Session();
-        session.setUser(user);
-        session.setStartedAt(Instant.now());
-        session.setLastAccessed(Instant.now());
-        user.getSessions().add(session);
-        sessionRepository.save(session);
-        return session;
+        if(user != null){
+            final Session session = new Session();
+            session.setUser(user);
+            session.setStartedAt(Instant.now());
+            session.setLastAccessed(Instant.now());
+            user.getSessions().add(session);
+            sessionRepository.save(session);
+            return session;
+        }
+        else{
+            throw new UnknownUserException("Unknown User: Please create an account");
+        }
     }
 
     public Message sendMessage(final Session session, final String messageContent){

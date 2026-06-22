@@ -107,7 +107,7 @@ class ApiTest {
 
         SessionMetadataDTO sessionMetadata = given()
             .contentType("application/json")
-            .body(("\"%s\"").formatted(testUser.getUserID()))
+            .queryParam("userId", testUser.getUserID())
         .when()
             .get(("/sessions/%s").formatted(session.getSessionID()))
         .then()
@@ -116,7 +116,7 @@ class ApiTest {
             .as(SessionMetadataDTO.class);
         
         assertEquals(session.getSessionID(), sessionMetadata.getSessionID());
-        assertEquals(session.getUser().getUserID(), sessionMetadata.getUserId());
+        assertEquals(session.getUser().getUserID(), sessionMetadata.getUserID());
         assertEquals(session.getStartedAt(), sessionMetadata.getStartedAt());
         assertEquals(session.getLastAccessed(), sessionMetadata.getLastAccessed());
     }
@@ -133,7 +133,7 @@ class ApiTest {
 
         SessionDTO returnedSession = given()
             .contentType("application/json")
-            .body(("\"%s\"").formatted(testUser.getUserID()))
+            .queryParam("userId", testUser.getUserID())
         .when()
             .get(("/sessions/%s/complete").formatted(session.getSessionID()))
         .then()
@@ -142,7 +142,7 @@ class ApiTest {
             .as(SessionDTO.class);
         
         assertEquals(session.getSessionID(), returnedSession.getSessionID());
-        assertEquals(session.getUser().getUserID(), returnedSession.getUserId());
+        assertEquals(session.getUser().getUserID(), returnedSession.getUserID());
         assertEquals(session.getStartedAt(), returnedSession.getStartedAt());
         assertEquals(session.getLastAccessed(), returnedSession.getLastAccessed());
         assertThat(returnedSession.getMessages()).isEmpty();
@@ -163,7 +163,7 @@ class ApiTest {
 
         given()
             .contentType("application/json")
-            .body(("\"%s\"").formatted(testUser.getUserID()))
+            .queryParam("userId", testUser.getUserID())
         .when()
             .delete(("/sessions/%s").formatted(session.getSessionID()))
         .then()
@@ -239,7 +239,7 @@ class ApiTest {
         }
         given()
             .contentType("application/json")
-            .body(("\"%s\"").formatted(testUser.getUserID()))
+            .queryParam("userId", testUser.getUserID())
         .when()
             .get(("/sessions/%s").formatted(fakeID))
         .then()
@@ -258,7 +258,7 @@ class ApiTest {
 
         given()
             .contentType("application/json")
-            .body(("\"%s\"").formatted(testUser.getUserID()))
+            .queryParam("userId", testUser.getUserID())
         .when()
             .get(("/sessions/%s/messages").formatted(session.getSessionID()))
         .then()
